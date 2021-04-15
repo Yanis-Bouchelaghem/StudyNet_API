@@ -1,7 +1,39 @@
 from django.db import models
+from django.utils import timezone
 from django.contrib.auth.models import BaseUserManager
 from django.utils.translation import ugettext_lazy as _
 # Create your models here.
+
+class UserManager(BaseUserManager):
+
+    def _create_user(self, email,first_name,last_name, password,is_staff, is_superuser, user_type,is_active,is_complete):
+        """
+        Creates and saves a User with the given email and password.
+        """
+        if not email:
+            raise ValueError('The user must have an Email.')
+        if not first_name:
+            raise ValueError('The user must have a first name.')
+        if not last_name:
+            raise ValueError('The user must have a last name.')
+        email = self.normalize_email(email)
+        user = self.model(email=email,
+                          is_staff=is_staff, is_active=is_active,
+                          is_superuser=is_superuser,
+                          date_joined=timezone.now(),is_complete=is_complete)
+        user.first_name=first_name
+        user.last_name=last_name
+        user.user_type=user_type
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_user(self, email,first_name,last_name, password, user_type,is_staff=False,is_active=True,is_complete=True):
+        return self._create_user(email,first_name,last_name,password, is_staff, False,user_type,is_active,is_complete)
+
+    def create_superuser(self, email, password,first_name,last_name):
+        return self._create_user(email,first_name,last_name,password, is_staff=True,
+         is_superuser=True,user_type=self.model.Types.Superuser,is_active=True,is_complete=True)
 
 class User(AbstractBaseUser, PermissionsMixin):
     """
@@ -31,7 +63,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         help_text=_('Designates whether this user\'s data is complete.'))
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
 
-    objects = CustomUserManager()
+    objects = UserManager()
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name','last_name']
