@@ -114,6 +114,13 @@ class Teacher(models.Model):
     grade = models.CharField(_('grade'), max_length=10, choices=Grades.choices, blank=False)
     sections = models.ManyToManyField('Management.Section', verbose_name=_('sections'),through='TeacherSection')
 
+    def __str__(self):
+        return self.user.email
+        
+    class Meta:
+        verbose_name = _('Teacher')
+        verbose_name_plural = _('Teachers')
+
 class TeacherSection(models.Model):
     """
         The through table to represent the relation-ship between a teacher and the sections he teaches.
@@ -121,3 +128,10 @@ class TeacherSection(models.Model):
     """
     teacher = models.ForeignKey('Teacher', verbose_name=_('teacher'), on_delete=models.CASCADE)
     section = models.ForeignKey('Management.Section', verbose_name=_('section'), on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.section.code + ' ; ' + self.teacher.user.last_name + self.teacher.user.first_name
+        
+    class Meta:
+        verbose_name = _('Teacher-Section')
+        verbose_name_plural = _('Teachers-Sections')
