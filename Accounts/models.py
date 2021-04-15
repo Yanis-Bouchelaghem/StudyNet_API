@@ -6,7 +6,6 @@ from django.utils.http import urlquote
 from django.core.mail import send_mail
 from django.utils.translation import ugettext_lazy as _
 
-
 class UserManager(BaseUserManager):
     """
     The manager that will handle the creation of users.
@@ -100,3 +99,25 @@ class User(AbstractBaseUser, PermissionsMixin):
         """
         send_mail(subject, message, from_email, [self.email])
         
+class Teacher(models.Model):
+    """
+    """
+    class Grades(models.TextChoices):
+        MAB = "MAB","MAB"
+        MAA = "MAA","MAA"
+        MCB = "MCB","MCB"
+        MCA = "MCA","MCA"
+        PR = "PR","Pr"
+        DOC = "DOC","Doc"
+
+    user = models.OneToOneField('User', verbose_name=_('user'), primary_key=True, on_delete=models.CASCADE)
+    grade = models.CharField(_('grade'), max_length=10, choices=Grades.choices, blank=False)
+    sections = models.ManyToManyField('Management.Section', verbose_name=_('sections'),through='TeacherSection')
+
+class TeacherSection(models.Model):
+    """
+        The through table to represent the relation-ship between a teacher and the sections he teaches.
+        (explicitly declared to be able to reference it later.)
+    """
+    teacher = models.ForeignKey('Teacher', verbose_name=_('teacher'), on_delete=models.CASCADE)
+    section = models.ForeignKey('Management.Section', verbose_name=_('section'), on_delete=models.CASCADE)

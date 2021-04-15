@@ -19,7 +19,7 @@ class Specialty(models.Model):
         help_text=_('A code that uniquely identifies this specialty.'))
     name = models.CharField(_('name'),max_length=80,blank=False,
         help_text=_('A human friendly name.'))
-    Department = models.ForeignKey(Department, verbose_name=_('Department'), on_delete=models.CASCADE)
+    Department = models.ForeignKey('Department', verbose_name=_('Department'), on_delete=models.CASCADE)
 
 class Section(models.Model):
     """
@@ -29,4 +29,4 @@ class Section(models.Model):
         help_text=_('A code that uniquely identifies this section.'))
     number_of_groups = models.IntegerField(_('number of groups'),
         help_text=_('The number of groups this section is divided into.'))
-    specialty = models.ForeignKey(Specialty, verbose_name=_('specialty'), on_delete=models.CASCADE)
+    specialty = models.ForeignKey('Specialty', verbose_name=_('specialty'), on_delete=models.CASCADE)
