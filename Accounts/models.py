@@ -1,12 +1,18 @@
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.contrib.auth.models import BaseUserManager
+from django.utils.http import urlquote
+from django.core.mail import send_mail
 from django.utils.translation import ugettext_lazy as _
-# Create your models here.
+
 
 class UserManager(BaseUserManager):
-
-    def _create_user(self, email,first_name,last_name, password,is_staff, is_superuser, user_type,is_active,is_complete):
+    """
+    The manager that will handle the creation of users.
+    """
+    def _create_user(self, email,first_name,last_name, password,is_staff, is_superuser,
+     user_type,is_active,is_complete):
         """
         Creates and saves a User with the given email and password.
         """
