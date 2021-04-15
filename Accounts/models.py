@@ -34,12 +34,14 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_user(self, email,first_name,last_name, password, user_type,is_staff=False,is_active=True,is_complete=True):
-        return self._create_user(email,first_name,last_name,password, is_staff, False,user_type,is_active,is_complete)
+    def create_user(self, email,first_name,last_name, password, user_type,is_staff=False,
+    is_active=True,is_complete=True):
+        return self._create_user(email,first_name,last_name,password, is_staff, False,
+        user_type,is_active,is_complete)
 
     def create_superuser(self, email, password,first_name,last_name):
         return self._create_user(email,first_name,last_name,password, is_staff=True,
-         is_superuser=True,user_type=self.model.Types.Superuser,is_active=True,is_complete=True)
+         is_superuser=True,user_type=self.model.Types.SUPERUSER,is_active=True,is_complete=True)
 
 class User(AbstractBaseUser, PermissionsMixin):
     """
@@ -49,15 +51,15 @@ class User(AbstractBaseUser, PermissionsMixin):
     Email, first_name, last_name and password are required. Other fields are optional.
     """
     class Types(models.TextChoices):
-        Superuser = "SUPERUSER",_("Superuser")
-        Administrator = "ADMINISTRATOR",_("Administator")
-        Teacher = "TEACHER",_("Teacher")
-        Student = "STUDENT",_("Student")
+        SUPERUSER = "SUPERUSER",_("Superuser")
+        ADMINISTRATOR = "ADMINISTRATOR",_("Administator")
+        TEACHER = "TEACHER",_("Teacher")
+        STUDENT = "STUDENT",_("Student")
     id = models.AutoField(primary_key=True)
     email = models.EmailField(_('email address'), max_length=254, unique=True)
     first_name = models.CharField(_('first name'), max_length=30, blank=False, null=False)
     last_name = models.CharField(_('last name'), max_length=30, blank=False,null=False)
-    user_type = models.CharField(max_length=40,choices=Types.choices,default=Types.Student,
+    user_type = models.CharField(max_length=40,choices=Types.choices,default=Types.STUDENT,
         help_text=_('Determines the type of user this is.'))
     is_staff = models.BooleanField(_('staff status'), default=False,
         help_text=_('Designates whether the user can log into this admin '
@@ -97,3 +99,4 @@ class User(AbstractBaseUser, PermissionsMixin):
         Sends an email to this User.
         """
         send_mail(subject, message, from_email, [self.email])
+        
