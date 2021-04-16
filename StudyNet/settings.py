@@ -55,7 +55,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'StudyNet.urls'
-AUTH_USER_MODEL = 'Accounts.User' # Users is the app name
+AUTH_USER_MODEL = 'Accounts.User' # Accounts is the app name
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
