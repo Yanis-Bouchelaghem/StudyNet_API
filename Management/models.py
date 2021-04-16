@@ -1,4 +1,5 @@
 from django.db import models
+from utilities import ChoiceArrayField
 from django.utils.translation import ugettext_lazy as _
 # Create your models here.
 
@@ -51,3 +52,25 @@ class Section(models.Model):
     class Meta:
         verbose_name = _('Section')
         verbose_name_plural = _('Sections')
+
+
+class Module(models.Model):
+    """
+        Represents a module with a code, a name and the types of sessions it can have.
+    """
+    class Types(models.TextChoices):
+        LECTURE = "LECTURE",_("Lecture")
+        DIRECTED_STUDIES = "DIRECTED", _("Directed studies")
+        PRACTICAL_WORK = "PRACTICAL",_("Practical work")
+
+    code = models.CharField(_("code"),primary_key=True, max_length=30, blank=False)
+    name = models.CharField(_("name"), max_length=80, blank=False)
+    types= ChoiceArrayField(base_field=models.CharField(choices=Types.choices, max_length=15),
+        verbose_name=_('types'),default=list)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = _('Module')
+        verbose_name_plural = _('Modules')
