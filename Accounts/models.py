@@ -54,7 +54,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         ADMINISTRATOR = "ADMINISTRATOR",_("Administator")
         TEACHER = "TEACHER",_("Teacher")
         STUDENT = "STUDENT",_("Student")
-    id = models.AutoField(primary_key=True)
+    id = models.BigAutoField(primary_key=True)
     email = models.EmailField(_('email address'), max_length=254, unique=True)
     first_name = models.CharField(_('first name'), max_length=30, blank=False, null=False)
     last_name = models.CharField(_('last name'), max_length=30, blank=False,null=False)
@@ -101,6 +101,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         
 class Teacher(models.Model):
     """
+        Represents a teacher with their user data, their grade and the sections they teach.
     """
     class Grades(models.TextChoices):
         MAB = "MAB","MAB"
@@ -135,3 +136,4 @@ class TeacherSection(models.Model):
     class Meta:
         verbose_name = _('Teacher-Section')
         verbose_name_plural = _('Teachers-Sections')
+
