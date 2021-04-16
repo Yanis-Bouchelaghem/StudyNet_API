@@ -54,7 +54,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         ADMINISTRATOR = "ADMINISTRATOR",_("Administator")
         TEACHER = "TEACHER",_("Teacher")
         STUDENT = "STUDENT",_("Student")
-    id = models.BigAutoField(primary_key=True)
+    id = models.BigAutoField(_('id'), primary_key=True)
     email = models.EmailField(_('email address'), max_length=254, unique=True)
     first_name = models.CharField(_('first name'), max_length=30, blank=False, null=False)
     last_name = models.CharField(_('last name'), max_length=30, blank=False,null=False)
@@ -113,7 +113,7 @@ class Teacher(models.Model):
 
     user = models.OneToOneField('User', verbose_name=_('user'), primary_key=True, on_delete=models.CASCADE)
     grade = models.CharField(_('grade'), max_length=10, choices=Grades.choices, blank=False)
-    sections = models.ManyToManyField('Management.Section', verbose_name=_('sections'),through='TeacherSection')
+    sections = models.ManyToManyField('Management.Section', verbose_name=_('sections'),through='Management.TeacherSection')
 
     def __str__(self):
         return self.user.email
@@ -121,21 +121,6 @@ class Teacher(models.Model):
     class Meta:
         verbose_name = _('Teacher')
         verbose_name_plural = _('Teachers')
-
-class TeacherSection(models.Model):
-    """
-        The through table to represent the relation-ship between a teacher and the sections he teaches.
-        (explicitly declared to be able to reference it later.)
-    """
-    teacher = models.ForeignKey('Teacher', verbose_name=_('teacher'), on_delete=models.CASCADE)
-    section = models.ForeignKey('Management.Section', verbose_name=_('section'), on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.section.code + ' ; ' + self.teacher.user.last_name + self.teacher.user.first_name
-
-    class Meta:
-        verbose_name = _('Teacher-Section')
-        verbose_name_plural = _('Teachers-Sections')
 
 class Student(models.Model):
     """
