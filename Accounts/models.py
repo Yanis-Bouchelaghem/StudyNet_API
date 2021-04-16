@@ -144,3 +144,11 @@ class Student(models.Model):
     user = models.OneToOneField('User', verbose_name=_('user'), primary_key=True, on_delete=models.CASCADE)
     section = models.ForeignKey('Management.Section', verbose_name=_('section'), on_delete=models.CASCADE)
     registration_number = models.CharField(_('registration number'), max_length=20)
+
+#Uncomment this when needing to add extra data to the admin users.
+#(obviously gonna have to handle this extra data yourself if you add any.)
+#class Admin(models.Model):
+#    """
+#        Represents an admin with their user data...
+#    """
+#    user = models.OneToOneField('user', verbose_name=_('user'), primary_key=True, on_delete=models.CASCADE)
