@@ -98,7 +98,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         Sends an email to this User.
         """
         send_mail(subject, message, from_email, [self.email])
-        
+
 class Teacher(models.Model):
     """
         Represents a teacher with their user data, their grade and the sections they teach.
@@ -117,7 +117,7 @@ class Teacher(models.Model):
 
     def __str__(self):
         return self.user.email
-        
+
     class Meta:
         verbose_name = _('Teacher')
         verbose_name_plural = _('Teachers')
@@ -132,8 +132,15 @@ class TeacherSection(models.Model):
 
     def __str__(self):
         return self.section.code + ' ; ' + self.teacher.user.last_name + self.teacher.user.first_name
-        
+
     class Meta:
         verbose_name = _('Teacher-Section')
         verbose_name_plural = _('Teachers-Sections')
 
+class Student(models.Model):
+    """
+        Represents a student with their user data, their registration number and the section they belong to.
+    """
+    user = models.OneToOneField('User', verbose_name=_('user'), primary_key=True, on_delete=models.CASCADE)
+    section = models.ForeignKey('Management.Section', verbose_name=_('section'), on_delete=models.CASCADE)
+    registration_number = models.CharField(_('registration number'), max_length=20)
