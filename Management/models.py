@@ -95,7 +95,7 @@ class TeacherSection(models.Model):
             models.UniqueConstraint(fields=['teacher','section'], name='unique_teachers_section')
         ]
 
-class Assignement(models.Model):
+class Assignment(models.Model):
     """
         Represents which section,module and group each teacher is assigned to teach.
     """
@@ -109,8 +109,8 @@ class Assignement(models.Model):
         return self.teacher_section.teacher.user.last_name + ' ' + self.teacher_section.teacher.user.first_name + ' ; ' + self.teacher_section.section.code + ' ; ' + self.module.code + ' ; ' + self.module_type
 
     class Meta:
-        verbose_name = _('Assignement')
-        verbose_name_plural = _('Assignements')
+        verbose_name = _('Assignment')
+        verbose_name_plural = _('Assignemnts')
         constraints = [
             models.UniqueConstraint(fields=['teacher_section','module','module_type'], name='unique_assignement')
         ]
