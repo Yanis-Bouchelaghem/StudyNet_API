@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'Accounts',
     'Management',
     'Sessions',
+    'Homeworks',
 ]
 
 MIDDLEWARE = [
