@@ -106,7 +106,7 @@ class Assignment(models.Model):
     concerned_groups = ArrayField(base_field=models.IntegerField())
 
     def __str__(self):
-        return self.teacher_section.teacher.user.last_name + ' ' + self.teacher_section.teacher.user.first_name + ' ; ' + self.teacher_section.section.code + ' ; ' + self.module.code + ' ; ' + self.module_type
+        return self.teacher_section.teacher.user.last_name + ' ' + self.teacher_section.teacher.user.first_name + ' ; ' + self.teacher_section.section.code + ' ; ' + self.module.code + ' ; ' + dict(Module.Types.choices)[self.module_type]
 
     class Meta:
         verbose_name = _('Assignment')
