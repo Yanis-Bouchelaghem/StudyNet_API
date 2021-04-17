@@ -10,7 +10,7 @@ class Department(models.Model):
         Represents a department with a code and a name.
     """
     code = models.CharField(_('code'),max_length=30,primary_key=True,blank=False,
-        help_text=_('A code that uniquely identifies this section.'))
+        help_text=_('A code that uniquely identifies this department.'))
     name = models.CharField(_('name'),max_length=80,blank=False,
         help_text=_('A human friendly name.'))
 
