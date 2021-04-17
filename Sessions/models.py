@@ -28,4 +28,9 @@ class Session(models.Model):
     meeting_password = models.CharField(_('meeting password'), max_length=50, blank=True)
     comment = models.TextField(_('comment'), blank=True)
 
+    def __str__(self):
+        return self.meeting_link
 
+    class Meta:
+        verbose_name = _('Session  ')
+        verbose_name_plural = _('Sessions')

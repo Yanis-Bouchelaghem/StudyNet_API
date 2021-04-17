@@ -13,3 +13,10 @@ class Homework(models.Model):
     title = models.CharField(_("title"), max_length=150)
     due_date = models.DateTimeField(_("due date"), auto_now=False, auto_now_add=False)
     comment = models.TextField(_("comment"))
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = _('Homework')
+        verbose_name_plural = _('Homeworks')
