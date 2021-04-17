@@ -110,7 +110,7 @@ class Assignment(models.Model):
 
     class Meta:
         verbose_name = _('Assignment')
-        verbose_name_plural = _('Assignemnts')
+        verbose_name_plural = _('Assignments')
         constraints = [
-            models.UniqueConstraint(fields=['teacher_section','module','module_type'], name='unique_assignement')
+            models.UniqueConstraint(fields=['teacher_section','module','module_type'], name='unique_assignment')
         ]
