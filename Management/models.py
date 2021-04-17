@@ -44,7 +44,7 @@ class Section(models.Model):
     """
     code = models.CharField(_('code'), max_length=30,primary_key=True,blank=False,
         help_text=_('A code that uniquely identifies this section.'))
-    number_of_groups = models.IntegerField(_('number of groups'),
+    number_of_groups = models.PositiveSmallIntegerField(_('number of groups'),
         help_text=_('The number of groups this section is divided into.'))
     specialty = models.ForeignKey('Specialty', verbose_name=_('specialty'), on_delete=models.CASCADE)
 
