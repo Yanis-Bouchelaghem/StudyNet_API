@@ -104,7 +104,7 @@ class Assignment(models.Model):
     module = models.ForeignKey('Module', verbose_name=_('module'), on_delete=models.CASCADE)
     module_type = models.CharField(_('module type'), choices=Module.Types.choices,max_length=15)
     concerned_groups = ArrayField(base_field=models.IntegerField())
-
+    #TODO : change the above integerField to PositiveSmallIntegerField.
     def __str__(self):
         return self.teacher_section.teacher.user.last_name + ' ' + self.teacher_section.teacher.user.first_name + ' ; ' + self.teacher_section.section.code + ' ; ' + self.module.code + ' ; ' + dict(Module.Types.choices)[self.module_type]
 
