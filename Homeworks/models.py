@@ -16,8 +16,7 @@ class Homework(models.Model):
     concerned_groups = ArrayField(base_field=models.PositiveSmallIntegerField(), verbose_name=_('concerned groups'))
     title = models.CharField(_("title"), max_length=150)
     due_date = models.DateTimeField(_("due date"), auto_now=False, auto_now_add=False)
-    comment = models.TextField(_("comment"))
-    #TODO : make the above comment blank=True, it's supposed to be optional.
+    comment = models.TextField(_("comment"), blank=True)
     def __str__(self):
         return self.title
 
