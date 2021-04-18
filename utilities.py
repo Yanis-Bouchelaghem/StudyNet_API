@@ -1,5 +1,7 @@
 from django import forms
 from django.contrib.postgres.fields import ArrayField
+from django.db import models
+from django.utils.translation import ugettext_lazy as _
 
 class ChoiceArrayField(ArrayField):
     """
@@ -19,3 +21,8 @@ class ChoiceArrayField(ArrayField):
         # care for it.
         # pylint:disable=bad-super-call
         return super(ArrayField, self).formfield(**defaults)
+
+class ActionTypes(models.TextChoices):
+    ADD = "ADD",_("Add")
+    UPDATE = "UPDATE",_("Update")
+    DELETE = "DELETE",_("Delete")

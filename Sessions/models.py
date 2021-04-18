@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
 from Management.models import Module
+from utilities import ActionTypes
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 # Create your models here.
@@ -39,14 +40,10 @@ class Session(models.Model):
 
 class SessionHistory(models.Model):
     """
-        Represents an entry in the history of all sessions, contains all data about
+        Represents an entry in the history of all sessions, contains a copy of all the data about
         the session with the addition of the action(Add,update,delete) date, type and author.
 
     """
-    class ActionTypes(models.TextChoices):
-        ADD = "ADD",_("Add")
-        UPDATE = "UPDATE",_("Update")
-        DELETE = "DELETE",_("Delete")
 
     id = models.BigAutoField(_('id'), primary_key=True)
     teacher = models.ForeignKey('Accounts.Teacher', verbose_name=_('teacher'), on_delete=models.DO_NOTHING)
