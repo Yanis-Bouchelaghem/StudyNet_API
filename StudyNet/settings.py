@@ -40,6 +40,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'Accounts',
+    'Management',
+    'Sessions',
+    'Homeworks',
+    'External',
 ]
 
 MIDDLEWARE = [
@@ -53,7 +58,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'StudyNet.urls'
-
+AUTH_USER_MODEL = 'Accounts.User' # Accounts is the app name
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
