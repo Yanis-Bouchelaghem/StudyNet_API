@@ -14,6 +14,8 @@ psycopg2==2.8.6
 psycopg2-binary==2.8.6
 pycparser==2.20
 pylint==2.7.4
+pylint-django==2.4.3
+pylint-plugin-utils==0.6
 pytz==2021.1
 sqlparse==0.4.1
 toml==0.10.2

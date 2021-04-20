@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 '''
 
 from pathlib import Path
+from datetime import timedelta
 import environ
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -40,12 +41,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'knox',
     'Accounts',
     'Management',
     'Sessions',
     'Homeworks',
     'External',
 ]
+
+#Setting the global authentication system:
+REST_FRAMEWORK={
+    'DEFAULT_AUTHENTICATION_CLASSES': ('knox.auth.TokenAuthentication',),
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -58,7 +66,10 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'StudyNet.urls'
+
+#Using a customized user model
 AUTH_USER_MODEL = 'Accounts.User' # Accounts is the app name
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -77,6 +88,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'StudyNet.wsgi.application'
 
+#knox settings
+REST_KNOX = {
+  'SECURE_HASH_ALGORITHM': 'cryptography.hazmat.primitives.hashes.SHA512',
+  'AUTH_TOKEN_CHARACTER_LENGTH': 64,
+  'TOKEN_TTL': timedelta(days=7), #Tokens expire after 7 days of no use.
+  'USER_SERIALIZER': 'knox.serializers.UserSerializer',
+  'TOKEN_LIMIT_PER_USER': None,
+  'AUTO_REFRESH': True, #The lifetime of a token refreshes after each use.
+}
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
