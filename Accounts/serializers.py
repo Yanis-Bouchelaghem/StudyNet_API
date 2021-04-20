@@ -16,3 +16,11 @@ class CreateStudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
         fields = '__all__'
+    
+    def create(self, validated_data):
+        user_data = validated_data.pop('user')
+
+        #Create the user
+        user = User.objects.create_user(**user_data,user_type=User.Types.STUDENT)
+        #Create the student account and assign to it the created user
+        return Student.objects.create(**validated_data,user=user)
