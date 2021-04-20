@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
+from knox.models import AuthToken
 #Custom imports
 from .models import Student
 from .serializers import CreateStudentSerializer
@@ -20,5 +21,11 @@ class StudentList(APIView):
     def post(self,request):
         serializer = CreateStudentSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data,status=status.HTTP_201_CREATED)
+        student = serializer.save()
+        #return the student data + a token to authenticate this student.
+        return Response(
+            {
+            "student" : serializer.data,
+            "token": AuthToken.objects.create(user=student.user)[1]
+            },
+            status=status.HTTP_201_CREATED)
