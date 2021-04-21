@@ -7,7 +7,7 @@ from rest_framework.permissions import IsAuthenticated
 from knox.models import AuthToken
 #Custom imports
 from .models import Student,Teacher
-from .serializers import CreateStudentSerializer,CreateTeacherSerializer
+from .serializers import CreateStudentSerializer,TeacherSerializer,CreateTeacherSerializer
 
 # Create your views here.
 class StudentList(APIView):
@@ -35,7 +35,7 @@ class TeacherList(APIView):
     #permission_classes=[IsAuthenticated]
     def get(self,request):
         teachers = Teacher.objects.all()
-        serializer = CreateTeacherSerializer(teachers,many=True)
+        serializer = TeacherSerializer(teachers,many=True)
         return Response(serializer.data)
 
     def post(self,request):
@@ -43,8 +43,9 @@ class TeacherList(APIView):
         serializer.is_valid(raise_exception=True)
         teacher = serializer.save()
         #return the student data + a token to authenticate this student.
+
         return Response(
             {
-            "teacher" : serializer.data
+            "teacher" : TeacherSerializer(teacher).data
             },
             status=status.HTTP_201_CREATED)
