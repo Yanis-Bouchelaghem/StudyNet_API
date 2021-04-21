@@ -1,8 +1,19 @@
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
+from django.contrib.auth import authenticate
+
 from Management.models import Section,TeacherSection
 from .models import User,Student,Teacher
 
+class LoginSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    password = serializers.CharField()
+
+    def validate(self, data):
+        user = authenticate(**data)
+        if user and user.is_active:
+            return user
+        raise serializers.ValidationError('Incorrect credentials.')
 
 class CreateUserSerializer(serializers.ModelSerializer):
     """
