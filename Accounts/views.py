@@ -43,7 +43,6 @@ class TeacherList(APIView):
         serializer.is_valid(raise_exception=True)
         teacher = serializer.save()
         #return the student data + a token to authenticate this student.
-
         return Response(
             {
             "teacher" : TeacherSerializer(teacher).data
