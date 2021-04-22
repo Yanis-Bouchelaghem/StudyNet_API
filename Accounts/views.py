@@ -16,13 +16,15 @@ class StudentList(APIView):
     """
         Retrieves the list of students or create a student.
     """
-    #TODO : Require authentication when done with login view (uncomment below).
-    #permission_classes=[IsAuthenticated]
+    permission_classes=[]
+
+    # Retrieves the list of students.
     def get(self,request):
         students = Student.objects.all()
         serializer = CreateStudentSerializer(students,many=True)
         return Response(serializer.data)
     
+    # Creates a student.
     def post(self,request):
         serializer = CreateStudentSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -38,29 +40,34 @@ class StudentList(APIView):
 class TeacherList(APIView):
     """
         Retrieves the list of teachers or create a teacher.
+        Requires authentication.
     """
-    #TODO : Require authentication when done with login view (uncomment below).
-    #permission_classes=[IsAuthenticated]
     def get(self,request):
         teachers = Teacher.objects.all()
         serializer = TeacherSerializer(teachers,many=True)
         return Response(serializer.data)
 
     def post(self,request):
-        serializer = CreateTeacherSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        teacher = serializer.save()
-        #return the student data + a token to authenticate this student.
-        return Response(
-            {
-            "teacher" : TeacherSerializer(teacher).data
-            },
-            status=status.HTTP_201_CREATED)
+        #Check if the user that is creating the teacher is an admin.
+        if request.user.user_type == User.Types.ADMINISTRATOR:
+            serializer = CreateTeacherSerializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            teacher = serializer.save()
+            #return the teacher data + a token to authenticate this teacher.
+            return Response(
+                {
+                "teacher" : TeacherSerializer(teacher).data
+                },
+                status=status.HTTP_201_CREATED)
+        else:
+            return Response({'Forbidden':'Only administators may create teacher accounts.'},
+                status=status.HTTP_403_FORBIDDEN)
 
 class Login(APIView):
     """
         Requires email and password, returns the relevant user data + an authentication token.
     """
+    permission_classes = []
     def post(self, request):
         serializer = LoginSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)

@@ -12,6 +12,7 @@ class Session(models.Model):
         and a comment.
     """
     class DaysOfWeek(models.TextChoices):
+        #TODO : Change days representation to ints
         SUNDAY = "SUNDAY",_("Sunday")
         MONDAY = "MONDAY",_("Monday")
         TUESDAY = "TUESDAY",_("Tuesday")
