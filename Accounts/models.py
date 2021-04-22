@@ -129,6 +129,7 @@ class Student(models.Model):
     #TODO:Add group field.
     user = models.OneToOneField('User', verbose_name=_('user'), primary_key=True, on_delete=models.CASCADE)
     section = models.ForeignKey('Management.Section', verbose_name=_('section'), on_delete=models.CASCADE)
+    group = models.PositiveSmallIntegerField(_('group'))
     registration_number = models.CharField(_('registration number'), max_length=20)
 
 #Uncomment this when needing to add extra data to the admin users.
