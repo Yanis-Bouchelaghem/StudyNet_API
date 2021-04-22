@@ -36,6 +36,13 @@ class CreateStudentSerializer(serializers.ModelSerializer):
         model = Student
         fields = '__all__'
     
+    def validate(self, attrs):
+        #Check that the group exists in the section.
+        group = attrs['group']
+        section = Section.objects.get(code=attrs['section'])
+        if group < 1 or group > section.number_of_groups:
+            raise serializers.ValidationError({'group':'This group does not exist in given section.'})
+
     def create(self, validated_data):
         user_data = validated_data.pop('user')
 
