@@ -11,20 +11,19 @@ class Session(models.Model):
         the start time and end time, the meeting link and optionally the meeting number, password
         and a comment.
     """
-    class DaysOfWeek(models.TextChoices):
-        #TODO : Change days representation to ints
-        SUNDAY = "SUNDAY",_("Sunday")
-        MONDAY = "MONDAY",_("Monday")
-        TUESDAY = "TUESDAY",_("Tuesday")
-        WEDNESDAY = "WEDNESDAY",_("Wednesday")
-        THURSDAY = "THURSDAY",_("Thursday")
-        FRIDAY = "FRIDAY",_("Friday")
-        SATURDAY = "SATURDAY",_("Saturday")
+    class DaysOfWeek(models.IntegerChoices):
+        SATURDAY = 0,_("Saturday")
+        SUNDAY = 1,_("Sunday")
+        MONDAY = 2,_("Monday")
+        TUESDAY = 3,_("Tuesday")
+        WEDNESDAY = 4,_("Wednesday")
+        THURSDAY = 5,_("Thursday")
+
 
     id = models.BigAutoField(_('id'), primary_key=True)
     assignment = models.ForeignKey('Management.Assignment', verbose_name=_('assignment'), on_delete=models.CASCADE)
     concerned_groups = ArrayField(base_field=models.PositiveSmallIntegerField(), verbose_name=_('Concerned groups'))
-    day = models.CharField(_('day'), choices=DaysOfWeek.choices, max_length=15)
+    day = models.IntegerField(_('day'),choices=DaysOfWeek.choices)
     start_time = models.TimeField(_('start time'), auto_now=False, auto_now_add=False)
     end_time = models.TimeField(_('end time'), auto_now=False, auto_now_add=False)
     meeting_link = models.CharField(_('meeting link'), max_length=400)
@@ -52,7 +51,7 @@ class SessionHistory(models.Model):
     module = models.ForeignKey('Management.Module', verbose_name=_('module'), on_delete=models.DO_NOTHING)
     module_type = models.CharField(_('module type'), choices=Module.Types.choices,max_length=15)
     concerned_groups = ArrayField(base_field=models.PositiveSmallIntegerField(), verbose_name=_('Concerned groups'))
-    day = models.CharField(_('day'), choices=Session.DaysOfWeek.choices, max_length=15)
+    day = models.IntegerField(_('day'),choices=Session.DaysOfWeek.choices)
     start_time = models.TimeField(_('start time'), auto_now=False, auto_now_add=False)
     end_time = models.TimeField(_('end time'), auto_now=False, auto_now_add=False)
     meeting_link = models.CharField(_('meeting link'), max_length=400)
