@@ -1,5 +1,7 @@
 from rest_framework.test import APITestCase
+from knox.models import AuthToken
 from Management.models import Department,Specialty,Section
+from Accounts.models import User,Teacher,Student
 class TestSetup(APITestCase):
 
     def setUp(self):
@@ -35,6 +37,23 @@ class TestSetup(APITestCase):
                 self.section2.code
             ]
         }
+        #Create an admin user and a token.
+        self.admin_user = User.objects.create_user(email='admin@me.com',first_name='admin',last_name='admin',
+        password='adminpass',user_type=User.Types.ADMINISTRATOR)
+        self.admin_user_token = AuthToken.objects.create(user=self.admin_user)
+        
+        #Create a teacher user, their account and a token.
+        self.teacher_user = User.objects.create_user(email='teacher@me.com',first_name='teacher',last_name='teacher',
+        password='teacherpass',user_type=User.Types.TEACHER)
+        self.teacher_user_token = AuthToken.objects.create(user=self.teacher_user)
+        self.teacher_account = Teacher.objects.create(user=self.teacher_user,grade='MAB')
+        
+        #Create a student user, their account and a token.
+        self.student_user = User.objects.create_user(email='student@me.com',first_name='student',last_name='student',
+        password='studentpass',user_type=User.Types.STUDENT)
+        self.student_user_token = AuthToken.objects.create(user=self.student_user)
+        self.student_account = Student.objects.create(user=self.student_user,section=self.section1,
+        registration_number='151638468951',group=1)
         return super().setUp()
 
 
