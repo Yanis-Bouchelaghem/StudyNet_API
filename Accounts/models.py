@@ -126,7 +126,6 @@ class Student(models.Model):
     """
         Represents a student with their user data, their registration number and the section they belong to.
     """
-    #TODO:Add group field.
     user = models.OneToOneField('User', verbose_name=_('user'), primary_key=True, on_delete=models.CASCADE)
     section = models.ForeignKey('Management.Section', verbose_name=_('section'), on_delete=models.CASCADE)
     group = models.PositiveSmallIntegerField(_('group'))

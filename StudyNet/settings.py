@@ -56,7 +56,13 @@ REST_FRAMEWORK={
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ],
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json',
 }
+
+#SECURITY WARNING : Only use MD5 hasher to speed up unit testing, it is NOT suited for production.
+#PASSWORD_HASHERS = [
+#    'django.contrib.auth.hashers.MD5PasswordHasher',
+#]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
