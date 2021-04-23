@@ -54,7 +54,14 @@ class TestSetup(APITestCase):
         self.student_user_token = AuthToken.objects.create(user=self.student_user)
         self.student_account = Student.objects.create(user=self.student_user,section=self.section1,
         registration_number='151638468951',group=1)
+
+        #Create a superuser and a token.
+        self.super_user = User.objects.create_superuser(email='superuser@me.com',first_name='superuser',last_name='superuser',
+        password='superuserpass')
+        self.super_user_token = AuthToken.objects.create(user=self.super_user)
         return super().setUp()
+
+        
 
 
     def tearDown(self):

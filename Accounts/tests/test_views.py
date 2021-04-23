@@ -55,3 +55,45 @@ class TestViews(TestSetup):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.admin_user_token[1])
         result = self.client.post(url,self.teacher_data)
         self.assertEqual(result.status_code,status.HTTP_201_CREATED)
+
+    def test_login_anonymous(self):
+        """
+        Ensures that logging in with no/wrong credentials is refused.
+        """
+        url = reverse('login')
+        #Test no credentials.
+        result = self.client.post(url)
+        self.assertEqual(result.status_code,status.HTTP_400_BAD_REQUEST)
+        #Test wrong credentials.
+        wrong_credentials = {'email':'wrongemail@me.com','password':'wrongpassword'}
+        result = self.client.post(url,wrong_credentials)
+        self.assertEqual(result.status_code,status.HTTP_400_BAD_REQUEST)
+
+    def test_login_student(self):
+        """
+        Ensures that the login view returns the student and a token when logging in with
+        a student account credentials.
+        """
+        url = reverse('login')
+        credentials = {'email':self.student_user.email,'password':'studentpass'}
+        result = self.client.post(url,credentials)
+        self.assertEqual(result.status_code,status.HTTP_201_CREATED)
+
+    def test_login_teacher(self):
+        """
+        Ensures that the login view returns the teacher and a token when logging in with
+        a teacher account credentials.
+        """
+        url = reverse('login')
+        credentials = {'email':self.teacher_user.email,'password':'teacherpass'}
+        result = self.client.post(url,credentials)
+        self.assertEqual(result.status_code,status.HTTP_201_CREATED)
+
+    def test_login_superuser(self):
+        """
+        Ensures that logging in with a superuser is refused.
+        """
+        url = reverse('login')
+        credentials = {'email':self.super_user.email,'password':'superuserpass'}
+        result = self.client.post(url,credentials)
+        self.assertEqual(result.status_code,status.HTTP_400_BAD_REQUEST)
