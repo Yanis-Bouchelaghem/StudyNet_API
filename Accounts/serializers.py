@@ -42,7 +42,7 @@ class CreateStudentSerializer(serializers.ModelSerializer):
         section = Section.objects.get(code=attrs['section'])
         if group < 1 or group > section.number_of_groups:
             raise serializers.ValidationError({'group':'This group does not exist in given section.'})
-
+        return attrs
     def create(self, validated_data):
         user_data = validated_data.pop('user')
 
