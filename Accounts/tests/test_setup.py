@@ -28,8 +28,8 @@ class TestSetup(APITestCase):
             "user": {
                 "email": "teacher1@me.com",
                 "password": "userpass",
-                "first_name": "yanis",
-                "last_name": "bouch"
+                "first_name": "teacher1",
+                "last_name": "teacher1"
             },
             "grade": "MAB",
             "sections": [

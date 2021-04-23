@@ -3,8 +3,10 @@ from rest_framework import status
 
 from .test_setup import TestSetup
 
-class TestViews(TestSetup):
-
+class TestUserRegister(TestSetup):
+    """
+    Unit tests for the registration of users through the API.
+    """
     def test_student_register_no_data(self):
         """
         Ensures that we cannot create a student account with no data.
@@ -47,7 +49,7 @@ class TestViews(TestSetup):
         result = self.client.post(url,self.teacher_data)
         self.assertEqual(result.status_code,status.HTTP_403_FORBIDDEN)
 
-    def test_teacher_register(self):
+    def test_teacher_register_admin(self):
         """
         Ensures that an admin can create a teacher account.
         """
@@ -56,6 +58,10 @@ class TestViews(TestSetup):
         result = self.client.post(url,self.teacher_data)
         self.assertEqual(result.status_code,status.HTTP_201_CREATED)
 
+class TestLogin(TestSetup):
+    """
+    Unit tests for logging in through the API.
+    """
     def test_login_anonymous(self):
         """
         Ensures that logging in with no/wrong credentials is refused.
