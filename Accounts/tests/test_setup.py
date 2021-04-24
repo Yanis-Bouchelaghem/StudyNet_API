@@ -5,13 +5,13 @@ from Accounts.models import User,Teacher,Student
 class TestSetup(APITestCase):
 
     def setUp(self):
-        #Create mock department, specialty and sections
+        #Create dummy department, specialty and sections
         self.department = Department.objects.create(code='CS',name='Computer science')
         self.specialty = Specialty.objects.create(Department=self.department,code='GD',name='Game design')
         self.section1 = Section.objects.create(code='GD A',specialty=self.specialty,number_of_groups=3)
         self.section2 = Section.objects.create(code='GD B',specialty=self.specialty,number_of_groups=4)
-        #Mock student.
-        self.student_data = {
+        #Dummy student data.
+        self.valid_student_data = {
             "user": {
                 "email": "student1@me.com",
                 "password": "userpass",
@@ -23,8 +23,8 @@ class TestSetup(APITestCase):
             "section": self.section1.code
         }
 
-        #Mock teacher
-        self.teacher_data = {
+        #Dock teacher data.
+        self.valid_teacher_data = {
             "user": {
                 "email": "teacher1@me.com",
                 "password": "userpass",

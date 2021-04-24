@@ -20,7 +20,7 @@ class TestUserRegister(TestSetup):
         Ensures that we can create a student account with valid data.
         """
         url = reverse('student_list')
-        result = self.client.post(url,self.student_data)
+        result = self.client.post(url,self.valid_student_data)
         self.assertEqual(result.status_code,status.HTTP_201_CREATED)
 
     def test_teacher_register_anonymous(self):
@@ -28,7 +28,7 @@ class TestUserRegister(TestSetup):
         Ensures that we cannot create a teacher account if we are not authenticated.
         """
         url = reverse('teacher_list')
-        result = self.client.post(url)
+        result = self.client.post(url,self.valid_teacher_data)
         self.assertEqual(result.status_code,status.HTTP_401_UNAUTHORIZED)
 
     def test_teacher_register_student(self):
@@ -38,7 +38,7 @@ class TestUserRegister(TestSetup):
         url = reverse('teacher_list')
         student = self.create_dummy_student()
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + student['token'])
-        result = self.client.post(url,self.teacher_data)
+        result = self.client.post(url,self.valid_teacher_data)
         self.assertEqual(result.status_code,status.HTTP_403_FORBIDDEN)
 
     def test_teacher_register_teacher(self):
@@ -48,7 +48,7 @@ class TestUserRegister(TestSetup):
         url = reverse('teacher_list')
         teacher = self.create_dummy_teacher()
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + teacher['token'])
-        result = self.client.post(url,self.teacher_data)
+        result = self.client.post(url,self.valid_teacher_data)
         self.assertEqual(result.status_code,status.HTTP_403_FORBIDDEN)
 
     def test_teacher_register_admin(self):
@@ -58,7 +58,7 @@ class TestUserRegister(TestSetup):
         url = reverse('teacher_list')
         admin = self.create_dummy_admin()
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + admin['token'])
-        result = self.client.post(url,self.teacher_data)
+        result = self.client.post(url,self.valid_teacher_data)
         self.assertEqual(result.status_code,status.HTTP_201_CREATED)
 
 class TestLogin(TestSetup):
@@ -126,7 +126,7 @@ class TestLogout(TestSetup):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + 'wrongtoken')
         result = self.client.post(url)
         self.assertEqual(result.status_code,status.HTTP_401_UNAUTHORIZED)
-    
+
     def test_logout_student(self):
         """
         Ensures that a student is able to logout.
@@ -136,7 +136,7 @@ class TestLogout(TestSetup):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + student['token'])
         result = self.client.post(url)
         self.assertEqual(result.status_code,status.HTTP_204_NO_CONTENT)
-    
+
     def test_logout_teacher(self):
         """
         Ensures that a teacher is able to logout.
@@ -146,7 +146,7 @@ class TestLogout(TestSetup):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + teacher['token'])
         result = self.client.post(url)
         self.assertEqual(result.status_code,status.HTTP_204_NO_CONTENT)
-    
+
     def test_logout_admin(self):
         """
         Ensures that an admin is able to logout.
@@ -173,7 +173,7 @@ class TestLogoutAll(TestSetup):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + 'wrongtoken')
         result = self.client.post(url)
         self.assertEqual(result.status_code,status.HTTP_401_UNAUTHORIZED)
-    
+
     def test_logout_all_student(self):
         """
         Ensures that a student is able to logout all tokens.
@@ -183,7 +183,7 @@ class TestLogoutAll(TestSetup):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + student['token'])
         result = self.client.post(url)
         self.assertEqual(result.status_code,status.HTTP_204_NO_CONTENT)
-    
+
     def test_logout_teacher(self):
         """
         Ensures that a teacher is able to logout all tokens.
@@ -193,7 +193,7 @@ class TestLogoutAll(TestSetup):
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + teacher['token'])
         result = self.client.post(url)
         self.assertEqual(result.status_code,status.HTTP_204_NO_CONTENT)
-    
+
     def test_logout_admin(self):
         """
         Ensures that an admin is able to logout all tokens.
