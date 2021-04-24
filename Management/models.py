@@ -29,11 +29,11 @@ class Specialty(models.Model):
         help_text=_('A code that uniquely identifies this specialty.'))
     name = models.CharField(_('name'),max_length=80,blank=False,
         help_text=_('A human friendly name.'))
-    Department = models.ForeignKey('Department', verbose_name=_('Department'), on_delete=models.CASCADE)
+    department = models.ForeignKey('Department', verbose_name=_('department'), on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
-        
+
     class Meta:
         verbose_name = _('Specialty')
         verbose_name_plural = _('Specialties')
