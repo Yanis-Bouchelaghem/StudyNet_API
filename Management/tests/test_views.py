@@ -37,7 +37,7 @@ class TestSpecialtyRetrieve(TestSetup):
         #Test filter by a non existing department
         result = self.client.get(url,{'department':'NonExistant'})
         self.assertEqual(result.status_code,status.HTTP_200_OK)
-        self.assertEqual(len(result.data),Specialty.objects.filter(Department='NonExistant'))
+        self.assertEqual(len(result.data),Specialty.objects.filter(Department='NonExistant').count())
 
 class TestSectionRetrieve(TestSetup):
     def test_sections_retrieve(self):
@@ -61,4 +61,4 @@ class TestSectionRetrieve(TestSetup):
         #Test filter by a non existing department
         result = self.client.get(url,{'specialty':'NonExistant'})
         self.assertEqual(result.status_code,status.HTTP_200_OK)
-        self.assertEqual(len(result.data),Section.objects.filter(Department='NonExistant'))
+        self.assertEqual(len(result.data),Section.objects.filter(specialty='NonExistant').count())
