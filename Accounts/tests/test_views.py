@@ -11,7 +11,7 @@ class TestUserRegister(TestSetup):
         """
         Ensures that we cannot create a student account with no data.
         """
-        url = reverse('student-list')
+        url = reverse('student_list')
         result = self.client.post(url)
         self.assertEqual(result.status_code,status.HTTP_400_BAD_REQUEST)
 
@@ -19,7 +19,7 @@ class TestUserRegister(TestSetup):
         """
         Ensures that we can create a student account with valid data.
         """
-        url = reverse('student-list')
+        url = reverse('student_list')
         result = self.client.post(url,self.student_data)
         self.assertEqual(result.status_code,status.HTTP_201_CREATED)
 
@@ -27,7 +27,7 @@ class TestUserRegister(TestSetup):
         """
         Ensures that we cannot create a teacher account if we are not authenticated.
         """
-        url = reverse('teacher-list')
+        url = reverse('teacher_list')
         result = self.client.post(url)
         self.assertEqual(result.status_code,status.HTTP_401_UNAUTHORIZED)
 
@@ -35,7 +35,7 @@ class TestUserRegister(TestSetup):
         """
         Ensures that a student cannot create a teacher account.
         """
-        url = reverse('teacher-list')
+        url = reverse('teacher_list')
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.student_user_token[1])
         result = self.client.post(url,self.teacher_data)
         self.assertEqual(result.status_code,status.HTTP_403_FORBIDDEN)
@@ -44,7 +44,7 @@ class TestUserRegister(TestSetup):
         """
         Ensures that a teacher cannot create another teacher account.
         """
-        url = reverse('teacher-list')
+        url = reverse('teacher_list')
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.teacher_user_token[1])
         result = self.client.post(url,self.teacher_data)
         self.assertEqual(result.status_code,status.HTTP_403_FORBIDDEN)
@@ -53,7 +53,7 @@ class TestUserRegister(TestSetup):
         """
         Ensures that an admin can create a teacher account.
         """
-        url = reverse('teacher-list')
+        url = reverse('teacher_list')
         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.admin_user_token[1])
         result = self.client.post(url,self.teacher_data)
         self.assertEqual(result.status_code,status.HTTP_201_CREATED)
