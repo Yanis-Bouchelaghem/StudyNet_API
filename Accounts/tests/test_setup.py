@@ -6,8 +6,9 @@ class TestSetup(APITestCase):
 
     def setUp(self):
         #Create dummy department, specialty and sections
-        self.department = Department.objects.create(code='CS',name='Computer science')
-        self.specialty = Specialty.objects.create(Department=self.department,code='GD',name='Game design')
+        self.department1 = Department.objects.create(code='CS',name='Computer science')
+        self.department2 = Department.objects.create(code='Med',name='Medicine')
+        self.specialty = Specialty.objects.create(Department=self.department1,code='GD',name='Game design')
         self.section1 = Section.objects.create(code='GD A',specialty=self.specialty,number_of_groups=3)
         self.section2 = Section.objects.create(code='GD B',specialty=self.specialty,number_of_groups=4)
         #Dummy student data.
