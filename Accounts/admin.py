@@ -48,12 +48,31 @@ class CustomUserAdmin(UserAdmin):
     inlines = []
 
     def get_inlines(self,request, obj):
+        #Insert the information relevant to this type of user.
         if obj :
             if obj.user_type == User.Types.STUDENT:
                 return [StudentInline,]
             elif obj.user_type == User.Types.TEACHER:
                 return [TeacherInline,]
         return self.inlines
+
+    def save_model(self, request, obj, form, change):
+        if not change:
+            #If a student or a teacher is being created, mark him as incomplete and keep him deactivated.
+            if obj.user_type == User.Types.STUDENT or obj.user_type == User.Types.TEACHER:
+                obj.is_complete = False
+                obj.is_active = False
+        else:
+            if not obj.is_complete:
+                #If a student has his information completed, mark him as complete and activate him.
+                if obj.user_type == User.Types.STUDENT and hasattr(obj,'student'):
+                    obj.is_complete = True
+                    obj.is_active = True
+                #If a teacher has his information completed, mark him as complete and activate him.
+                elif obj.user_type == User.Types.TEACHER and hasattr(obj,'teacher'):
+                    obj.is_complete = True
+                    obj.is_active = True
+        super().save_model(request, obj, form, change)
 
 # Register your models here.
 
