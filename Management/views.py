@@ -28,7 +28,7 @@ class SpecialtyList(APIView):
     def get_queryset(self):
         department = self.request.query_params.get('department',None)
         if department:
-            return Specialty.objects.filter(Department=department)
+            return Specialty.objects.filter(department=department)
         return Specialty.objects.all()
     
     def get(self,request):
