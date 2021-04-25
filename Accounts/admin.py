@@ -4,6 +4,23 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .models import User,Teacher,Student
 
+#Inlines
+class StudentInline(admin.TabularInline):
+    model = Student
+    verbose_name = _('Student')
+    verbose_name_plural = _('Student') #There is only going to be one student reference.
+    extra = 1
+    show_change_link=True
+    can_delete = False
+
+class TeacherInline(admin.TabularInline):
+    model = Teacher
+    verbose_name = _('Teacher')
+    verbose_name_plural = _('Teacher') #There is only going to be one teacher reference.
+    extra = 1
+    show_change_link=True
+    can_delete = False
+
 class CustomUserAdmin(UserAdmin):
     # The forms to add and change user instances.
     # The fields to be used in displaying the User model.
@@ -29,6 +46,14 @@ class CustomUserAdmin(UserAdmin):
     readonly_fields = ('id','last_login','date_joined')
     ordering = ('email',)
     inlines = []
+
+    def get_inlines(self,request, obj):
+        if obj :
+            if obj.user_type == User.Types.STUDENT:
+                return [StudentInline,]
+            elif obj.user_type == User.Types.TEACHER:
+                return [TeacherInline,]
+        return self.inlines
 
 # Register your models here.
 
