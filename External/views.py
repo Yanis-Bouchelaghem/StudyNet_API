@@ -20,6 +20,6 @@ class AppVersionCheckView(APIView):
             version_object = AppVersionSupport.objects.get(version=version)
             if version_object.is_supported:
                 #This version exists and is supported.
-                return Response({'supported':'Version ' + version + ' is supported.'},status=status.HTTP_200_OK)
+                return Response({'supported':True},status=status.HTTP_200_OK)
         #This version does not exist or is not supported.
-        return Response({'not_supported':'Version ' + version + ' is not supported.'},status=status.HTTP_400_BAD_REQUEST)
+        return Response({'supported':False},status=status.HTTP_400_BAD_REQUEST)
