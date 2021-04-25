@@ -14,16 +14,23 @@ from .serializers import (CreateUserSerializer,CreateStudentSerializer,TeacherSe
 # Create your views here.
 class StudentList(APIView):
     """
-        Retrieves the list of students or create a student.
+        Retrieves the list of students based on a section or create a student.
     """
     permission_classes=[]
 
+    #Students can be filtered by section.
+    def get_queryset(self):
+        section = self.request.query_params.get('section',None)
+        if section:
+            return Student.objects.filter(section=section)
+        return Student.objects.all()
+
     # Retrieves the list of students.
     def get(self,request):
-        students = Student.objects.all()
+        students = self.get_queryset()
         serializer = CreateStudentSerializer(students,many=True)
         return Response(serializer.data)
-    
+
     # Creates a student.
     def post(self,request):
         serializer = CreateStudentSerializer(data=request.data)

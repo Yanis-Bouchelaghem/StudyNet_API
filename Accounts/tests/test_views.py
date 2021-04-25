@@ -2,11 +2,95 @@ from django.urls import reverse
 from rest_framework import status
 
 from .test_setup import TestSetup
-
+from Accounts.models import User,Student,Teacher
 class TestUserRegister(TestSetup):
     """
     Unit tests for the registration of users through the API.
     """
+    def test_student_retrieve(self):
+        """
+        Ensures that we can retrieve all students.
+        """
+        #Create a few students just for this specific test.
+        student_user1 = User.objects.create_user(email='student1@me.com',first_name='student',last_name='student',
+            password='studentpass',user_type=User.Types.STUDENT)
+        student_user2 = User.objects.create_user(email='student2@me.com',first_name='student',last_name='student',
+            password='studentpass',user_type=User.Types.STUDENT)
+        student_user3 = User.objects.create_user(email='student3@me.com',first_name='student',last_name='student',
+            password='studentpass',user_type=User.Types.STUDENT)
+        Student.objects.create(user=student_user1,section=self.section1,
+            registration_number='151638468951',group=1)
+        Student.objects.create(user=student_user2,section=self.section2,
+            registration_number='151638468951',group=1)
+        Student.objects.create(user=student_user3,section=self.section1,
+            registration_number='151638468951',group=1)
+
+        url = reverse('student_list')
+        #We expect to retrieve all student accounts.
+        result = self.client.get(url)
+        self.assertEqual(result.status_code,status.HTTP_200_OK)
+        self.assertEqual(len(result.data),Student.objects.all().count())
+        #Deactivate a student then retrieve again, we expect to retrieve even the deactivated accounts.
+        student_user1.is_active = False
+        student_user1.save()
+        result = self.client.get(url)
+        self.assertEqual(result.status_code,status.HTTP_200_OK)
+        self.assertEqual(len(result.data),Student.objects.all().count())
+
+    def test_student_by_section_retrieve(self):
+        """
+        Ensures that we can retrieve students based on section.
+        """
+        #Create a student
+        self.create_dummy_student()
+        url = reverse('student_list')
+        #Test filter by an existing section
+        result = self.client.get(url,{'section':self.section1.code})
+        self.assertEqual(result.status_code,status.HTTP_200_OK)
+        self.assertEqual(len(result.data),Student.objects.filter(section=self.section1.code).count())
+        #Test filter by a non existent section
+        result = self.client.get(url,{'section':'NonExistent'})
+        self.assertEqual(result.status_code,status.HTTP_200_OK)
+        self.assertEqual(len(result.data),Student.objects.filter(section='NonExistent').count())
+
+    def test_teacher_retrieve_anonymous(self):
+        """
+        Ensures that a token is required to retrieve teachers.
+        """
+        url = reverse('teacher_list')
+        result = self.client.get(url)
+        self.assertEqual(result.status_code,status.HTTP_401_UNAUTHORIZED)
+
+    def test_teacher_retrieve(self):
+        """
+        Ensures that we can retrieve all teachers.
+        """
+        #Create a few teachers just for this test.
+        teacher_user1 = User.objects.create_user(email='teacher1@me.com',first_name='teacher',last_name='teacher',
+            password='teacherpass',user_type=User.Types.TEACHER)
+        teacher_user2 = User.objects.create_user(email='teacher2@me.com',first_name='teacher',last_name='teacher',
+            password='teacherpass',user_type=User.Types.TEACHER)
+        teacher_user3 = User.objects.create_user(email='teacher3@me.com',first_name='teacher',last_name='teacher',
+            password='teacherpass',user_type=User.Types.TEACHER)
+        Teacher.objects.create(user=teacher_user1,grade='MAB')
+        Teacher.objects.create(user=teacher_user2,grade='MAA')
+        Teacher.objects.create(user=teacher_user3,grade='MCB')
+
+        url = reverse('teacher_list')
+        #Use a student token for retrieval.
+        student = self.create_dummy_student()
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + student['token'])
+        #We expect to retrieve all teacher accounts.
+        result = self.client.get(url)
+        self.assertEqual(result.status_code,status.HTTP_200_OK)
+        self.assertEqual(len(result.data),Teacher.objects.all().count())
+        #Deactivate a teacher then retrieve again, we expect to retrieve even the deactivated accounts.
+        teacher_user1.is_active = False
+        teacher_user1.save()
+        result = self.client.get(url)
+        self.assertEqual(result.status_code,status.HTTP_200_OK)
+        self.assertEqual(len(result.data),Teacher.objects.all().count())
+
     def test_student_register_no_data(self):
         """
         Ensures that we cannot create a student account with no data.
@@ -25,7 +109,7 @@ class TestUserRegister(TestSetup):
 
     def test_teacher_register_anonymous(self):
         """
-        Ensures that we cannot create a teacher account if we are not authenticated.
+        Ensures that a token is required to create a teacher account.
         """
         url = reverse('teacher_list')
         result = self.client.post(url,self.valid_teacher_data)
