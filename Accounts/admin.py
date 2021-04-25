@@ -10,7 +10,6 @@ class StudentInline(admin.TabularInline):
     verbose_name = _('Student')
     verbose_name_plural = _('Student') #There is only going to be one student reference.
     extra = 1
-    show_change_link=True
     can_delete = False
 
 class TeacherInline(admin.TabularInline):
@@ -43,7 +42,7 @@ class CustomUserAdmin(UserAdmin):
     
     list_display = ('email', 'first_name', 'last_name','user_type')
     search_fields = ('email', 'first_name', 'last_name')
-    readonly_fields = ('id','last_login','date_joined')
+    readonly_fields = ('id','last_login','date_joined','is_complete',)
     ordering = ('email',)
     inlines = []
 
@@ -73,6 +72,16 @@ class CustomUserAdmin(UserAdmin):
                     obj.is_complete = True
                     obj.is_active = True
         super().save_model(request, obj, form, change)
+
+    def get_readonly_fields(self, request, obj=None):
+        temp_readonly_fields = self.readonly_fields
+        if obj:
+            #Cannot edit the user type after the user has been created.
+            temp_readonly_fields += ('user_type',)
+            #If the account is not complete, don't let the user activate it.
+            if not obj.is_complete:
+                temp_readonly_fields += ('is_active',)
+        return temp_readonly_fields
 
 # Register your models here.
 
