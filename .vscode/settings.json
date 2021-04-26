@@ -1,0 +1,11 @@
+{
+    "python.linting.pylintArgs": [
+        "--django-settings-module=StudyNet.settings",//Tell the linter that the settings file is in StudyNet app
+        "--load-plugins=pylint_django",
+        "--generated-members=objects",
+        "--disable=django-not-configured",
+        "--disable=C0111", // missing docstring
+    ],
+    "python.linting.pylintEnabled": true,
+    "python.linting.enabled": true
+}

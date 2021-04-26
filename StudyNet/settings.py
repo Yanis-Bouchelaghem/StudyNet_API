@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 '''
 
 from pathlib import Path
+from datetime import timedelta
+import os
 import environ
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,7 +30,7 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool('DEBUG',default=False)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['study-net-api.herokuapp.com','127.0.0.1']
 
 
 # Application definition
@@ -40,10 +42,32 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'knox',
+    'Accounts',
+    'Management',
+    'Sessions',
+    'Homeworks',
+    'External',
 ]
+
+#Setting the global authentication system:
+REST_FRAMEWORK={
+    'DEFAULT_AUTHENTICATION_CLASSES': ('knox.auth.TokenAuthentication',),
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json',
+}
+
+#SECURITY WARNING : Only use MD5 hasher to speed up unit testing, it is NOT suited for production.
+#PASSWORD_HASHERS = [
+#    'django.contrib.auth.hashers.MD5PasswordHasher',
+#]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -53,6 +77,9 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'StudyNet.urls'
+
+#Using a customized user model
+AUTH_USER_MODEL = 'Accounts.User' # Accounts is the app name
 
 TEMPLATES = [
     {
@@ -72,6 +99,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'StudyNet.wsgi.application'
 
+#knox settings
+REST_KNOX = {
+  'SECURE_HASH_ALGORITHM': 'cryptography.hazmat.primitives.hashes.SHA512',
+  'AUTH_TOKEN_CHARACTER_LENGTH': 64,
+  'TOKEN_TTL': timedelta(days=7), #Tokens expire after 7 days of no use.
+  'USER_SERIALIZER': 'knox.serializers.UserSerializer',
+  'TOKEN_LIMIT_PER_USER': None,
+  'AUTO_REFRESH': True, #The lifetime of a token refreshes after each use.
+}
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
@@ -86,6 +122,10 @@ DATABASES = {
     }
 }
 
+#The database can also be configured using environment variables (useful for deployment).
+import dj_database_url
+db_from_env = dj_database_url.config(conn_max_age=600)
+DATABASES['default'].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -124,6 +164,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
