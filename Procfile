@@ -1,0 +1,1 @@
+web: gunicorn StudyNet.wsgi --log-file -
