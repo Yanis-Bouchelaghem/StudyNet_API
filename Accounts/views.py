@@ -37,12 +37,9 @@ class StudentList(APIView):
         serializer.is_valid(raise_exception=True)
         student = serializer.save()
         #return the student data + a token to authenticate this student.
-        return Response(
-            {
-            "student" : serializer.data,
-            "token": AuthToken.objects.create(user=student.user)[1]
-            },
-            status=status.HTTP_201_CREATED)
+        student_data = serializer.data
+        student_data["token"] = AuthToken.objects.create(user=student.user)[1]
+        return Response(student_data, status=status.HTTP_201_CREATED)
 
 class TeacherList(APIView):
     """
@@ -61,11 +58,7 @@ class TeacherList(APIView):
             serializer.is_valid(raise_exception=True)
             teacher = serializer.save()
             #return the teacher data + a token to authenticate this teacher.
-            return Response(
-                {
-                "teacher" : TeacherSerializer(teacher).data
-                },
-                status=status.HTTP_201_CREATED)
+            return Response(TeacherSerializer(teacher).data, status=status.HTTP_201_CREATED)
         else:
             return Response({'Forbidden':'Only administators may create teacher accounts.'},
                 status=status.HTTP_403_FORBIDDEN)
