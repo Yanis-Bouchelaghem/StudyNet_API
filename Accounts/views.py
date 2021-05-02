@@ -37,10 +37,10 @@ class StudentList(APIView):
         serializer.is_valid(raise_exception=True)
         student = serializer.save()
         #return the student data + a token to authenticate this student.
-        student_data = serializer.data
+        student_data = StudentSerializer(student).data
         student_data["token"] = AuthToken.objects.create(user=student.user)[1]
         #Using StudentSerializer for the display to show the section detail.
-        return Response(StudentSerializer(student).data, status=status.HTTP_201_CREATED)
+        return Response(student_data, status=status.HTTP_201_CREATED)
 
 class TeacherList(APIView):
     """
