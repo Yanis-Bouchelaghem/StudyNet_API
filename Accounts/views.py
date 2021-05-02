@@ -8,8 +8,8 @@ from knox.models import AuthToken
 
 #Custom imports
 from .models import User,Student,Teacher
-from .serializers import (CreateUserSerializer,CreateStudentSerializer,TeacherSerializer,
-    CreateTeacherSerializer,LoginSerializer)
+from .serializers import (CreateUserSerializer, StudentSerializer, CreateStudentSerializer,
+    TeacherSerializer, CreateTeacherSerializer, LoginSerializer)
 
 # Create your views here.
 class StudentList(APIView):
@@ -39,7 +39,8 @@ class StudentList(APIView):
         #return the student data + a token to authenticate this student.
         student_data = serializer.data
         student_data["token"] = AuthToken.objects.create(user=student.user)[1]
-        return Response(student_data, status=status.HTTP_201_CREATED)
+        #Using StudentSerializer for the display to show the section detail.
+        return Response(StudentSerializer(student).data, status=status.HTTP_201_CREATED)
 
 class TeacherList(APIView):
     """
@@ -60,7 +61,7 @@ class TeacherList(APIView):
             #return the teacher data + a token to authenticate this teacher.
             return Response(TeacherSerializer(teacher).data, status=status.HTTP_201_CREATED)
         else:
-            return Response({'Forbidden':'Only administators may create teacher accounts.'},
+            return Response({'Forbidden':'Only administrators may create teacher accounts.'},
                 status=status.HTTP_403_FORBIDDEN)
 
 class Login(APIView):
