@@ -22,8 +22,8 @@ class CreateUserSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = User
-        fields = ['id','password','email','first_name','last_name','user_type','last_login','date_joined']
-        read_only_fields = ('user_type','last_login','date_joined',)
+        fields = ['id','password','email','first_name','last_name','date_joined']
+        read_only_fields = ('date_joined',)
         extra_kwargs = {
             'password': {'write_only': True},
         }
@@ -37,6 +37,7 @@ class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
         fields = '__all__'
+        
 
 class CreateStudentSerializer(serializers.ModelSerializer):
     """
