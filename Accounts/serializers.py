@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate
 
 from Management.models import Section,TeacherSection
 from .models import User,Student,Teacher
+from Management.serializers import SectionSerializer
 
 class LoginSerializer(serializers.Serializer):
     email = serializers.EmailField()
@@ -21,15 +22,26 @@ class CreateUserSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = User
-        fields = ['id','password','email','first_name','last_name','user_type','last_login','date_joined']
-        read_only_fields = ('user_type','last_login','date_joined',)
+        fields = ['id','password','email','first_name','last_name','date_joined']
+        read_only_fields = ('date_joined',)
         extra_kwargs = {
             'password': {'write_only': True},
         }
 
+class StudentSerializer(serializers.ModelSerializer):
+    """
+        Only used to display a student with the details of their section.
+    """
+    user = CreateUserSerializer(many=False)
+    section = SectionSerializer(many=False)
+    class Meta:
+        model = Student
+        fields = '__all__'
+        
+
 class CreateStudentSerializer(serializers.ModelSerializer):
     """
-        Used to display and create a student.
+        Used to display and create a student (The details of their section is not displayed, only the code).
     """
     user = CreateUserSerializer(many=False)
     class Meta:
