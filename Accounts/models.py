@@ -131,6 +131,13 @@ class Student(models.Model):
     group = models.PositiveSmallIntegerField(_('group'))
     registration_number = models.CharField(_('registration number'), max_length=20)
 
+    def __str__(self):
+        return self.user.email
+
+    class Meta:
+        verbose_name = _('Student')
+        verbose_name_plural = _('Students')
+
 #Uncomment this when needing to add extra data to the admin users.
 #(obviously gonna have to handle this extra data yourself if you add any.)
 #class Admin(models.Model):
