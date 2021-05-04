@@ -86,7 +86,7 @@ class TeacherSection(models.Model):
     section = models.ForeignKey('Section', verbose_name=_('section'), on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.section.code + ' ; ' + self.teacher.user.last_name + ' ' + self.teacher.user.first_name
+        return self.section.code + ' ; ' + self.teacher.user.email + ' (' + self.teacher.user.last_name + ' ' + self.teacher.user.first_name + ')'
 
     class Meta:
         verbose_name = _('Teacher-Section')

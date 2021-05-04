@@ -8,7 +8,7 @@ from knox.models import AuthToken
 
 #Custom imports
 from .models import User,Student,Teacher
-from .serializers import (CreateUserSerializer, StudentSerializer, CreateStudentSerializer,
+from .serializers import (StudentSerializer,CreateUserSerializer, StudentSerializer, CreateStudentSerializer,
     TeacherSerializer, CreateTeacherSerializer, LoginSerializer)
 
 # Create your views here.
@@ -73,16 +73,20 @@ class Login(APIView):
         serializer = LoginSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data
-        #Return the relevant information about the user.
+        #Generate the user token.
+        token = AuthToken.objects.create(user=user)[1]
+        #Return the relevant information about the user + the authentication token.
         user_data = {}
         if user.user_type == User.Types.STUDENT:
-            user_data = {'student': CreateStudentSerializer(user.student).data}
+            user_data = {'student': StudentSerializer(user.student).data}
+            user_data['student']['token'] = token
         elif user.user_type == User.Types.TEACHER:
             user_data = {'teacher': TeacherSerializer(user.teacher).data}
+            user_data['teacher']['token'] = token
         elif user.user_type == User.Types.ADMINISTRATOR:
             user_data = {'administrator': CreateUserSerializer(user).data}
+            user_data['administrator']['token'] = token
         else:
             return Response({'Invalid_user_type':'Invalid user type.'}, status=status.HTTP_400_BAD_REQUEST)
         
-        user_data['token'] = AuthToken.objects.create(user=user)[1]
         return Response(user_data,status=status.HTTP_201_CREATED)
