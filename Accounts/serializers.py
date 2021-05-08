@@ -133,3 +133,6 @@ class CreateTeacherSerializer(serializers.ModelSerializer):
                 return teacher
         except IntegrityError:
             raise serializers.ValidationError({'assignments':'duplicate assignments.'})
+
+class EmailSerializer(serializers.Serializer):
+    email = serializers.EmailField()

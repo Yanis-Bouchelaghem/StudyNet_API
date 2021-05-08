@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import StudentList,TeacherList,Login,GetUserData
+from .views import StudentList,TeacherList,Login,GetUserData,IsEmailAvailable
 from knox import views as knox_views
 
 urlpatterns = [
@@ -7,6 +7,7 @@ urlpatterns = [
     path('teachers/',TeacherList.as_view(), name='teacher_list'),
     path('login/',Login.as_view(), name='login'),
     path('user_data/',GetUserData.as_view(), name='get_user_data'),
+    path('check_email/',IsEmailAvailable.as_view(), name='check_email'),
     path('logout/',knox_views.LogoutView.as_view(),name='knox_logout'),
     path('logoutall/',knox_views.LogoutAllView.as_view(),name='knox_logout_all'),
 

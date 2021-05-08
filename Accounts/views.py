@@ -9,7 +9,7 @@ from knox.models import AuthToken
 #Custom imports
 from .models import User,Student,Teacher
 from .serializers import (StudentSerializer,CreateUserSerializer, StudentSerializer, CreateStudentSerializer,
-    TeacherSerializer, CreateTeacherSerializer, LoginSerializer)
+    TeacherSerializer, CreateTeacherSerializer, LoginSerializer, EmailSerializer)
 
 # Create your views here.
 class StudentList(APIView):
@@ -106,3 +106,16 @@ class GetUserData(APIView):
         else:
             return Response({'Invalid_user_type':'Invalid user type.'}, status=status.HTTP_400_BAD_REQUEST)
 
+class IsEmailAvailable(APIView):
+    """
+    Expects an email, returns whether or not this email is already taken or not
+    """
+    permission_classes = []
+
+    def post(self, request):
+        serializer = EmailSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        if User.objects.filter(email=serializer.validated_data['email']).exists():
+            return Response({'email_taken':'This email is already taken.'},status=status.HTTP_302_FOUND)
+        else:
+            return Response({'email_available':'This email is available'},status=status.HTTP_200_OK)
