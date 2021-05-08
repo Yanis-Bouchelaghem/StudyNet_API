@@ -1,8 +1,9 @@
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from django.contrib.auth import authenticate
+from django.db import transaction,IntegrityError
 
-from Management.models import Section,TeacherSection
+from Management.models import Section,TeacherSection,Assignment
 from .models import User,Student,Teacher
 from Management.serializers import SectionSerializer,AssignmentSerializer
 
@@ -92,21 +93,43 @@ class CreateTeacherSerializer(serializers.ModelSerializer):
     """
     user = CreateUserSerializer(many=False,required=True)
     sections = serializers.ListField(child=SectionCharField(),required=False)
-    
+    assignments = AssignmentSerializer(many=True,required=True)
     class Meta:
         model = Teacher
         fields = '__all__'
 
-    def create(self, validated_data):
-        user_data = validated_data.pop('user')
-        sections = validated_data.pop('sections',[])
+    def validate(self, attrs):
+        #Check that sections given in "assignments" are also given in "sections"
+        sections = attrs['sections']
+        assignements = attrs['assignments']
+        for assignment in assignements:
+            if not assignment['teacher_section']['section']['code'] in sections:
+                raise serializers.ValidationError({'assignments':'Cannot assign a section not contained in this teacher\'s sections list.'})
+        return attrs
 
-        #Create the user.
-        user = User.objects.create_user(**user_data,user_type=User.Types.TEACHER)
-        #Create the teacher account and assign to it the created user.
-        teacher = Teacher.objects.create(**validated_data,user=user)
-        #Assign to the teacher the given sections.
-        for section in sections:
-            section = Section.objects.get(code=section)
-            TeacherSection.objects.create(teacher=teacher,section=section)
-        return teacher
+    def create(self, validated_data):
+        try:
+            #Make sure to rollback if something goes wrong.
+            with transaction.atomic():
+                user_data = validated_data.pop('user')
+                sections = validated_data.pop('sections',[])
+                assignments = validated_data.pop('assignments',[])
+
+                #Create the user.
+                user = User.objects.create_user(**user_data,user_type=User.Types.TEACHER)
+                #Create the teacher account and assign to it the created user.
+                teacher = Teacher.objects.create(**validated_data,user=user)
+                #Assign to the teacher the given sections.
+                for section in sections:
+                    section = Section.objects.get(code=section)
+                    TeacherSection.objects.create(teacher=teacher,section=section)
+                #Take care of the assignments
+                for assignment in assignments:
+                    teacher_section = TeacherSection.objects.get(teacher=teacher,section=assignment['teacher_section']['section']['code'])
+                    Assignment.objects.create(teacher_section=teacher_section,
+                    module=assignment['module'],
+                    module_type=assignment['module_type'],
+                    concerned_groups=assignment['concerned_groups'])
+                return teacher
+        except IntegrityError:
+            raise serializers.ValidationError({'assignments':'duplicate assignments.'})
