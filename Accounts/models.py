@@ -113,6 +113,7 @@ class Teacher(models.Model):
 
     user = models.OneToOneField('User', verbose_name=_('user'), primary_key=True, on_delete=models.CASCADE)
     grade = models.CharField(_('grade'), max_length=10, choices=Grades.choices, blank=False)
+    department = models.ForeignKey("Management.Department", verbose_name=_("department"), on_delete=models.CASCADE)
     sections = models.ManyToManyField('Management.Section', verbose_name=_('sections'),through='Management.TeacherSection')
 
     def __str__(self):
