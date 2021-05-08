@@ -3,8 +3,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
 
-from .models import Department,Specialty,Section
-from .serializers import DepartmentSerializer,SpecialtySerializer,SectionSerializer
+from .models import Department,Specialty,Section,Assignment
+from .serializers import DepartmentSerializer,SpecialtySerializer,SectionSerializer,AssignmentSerializer
 # Create your views here.
 
 class DepartmentList(APIView):
@@ -52,4 +52,16 @@ class SectionList(APIView):
     def get(self,request):
         sections = self.get_queryset()
         serializer = SectionSerializer(sections, many=True)
+        return Response(serializer.data)
+
+class AssignmentList(APIView):
+    """
+    Retrieves the list of assignments
+    """
+    #TODO : Think about permission classes after finishing development.
+    permission_classes = []
+
+    def get(self,request):
+        assignements = Assignment.objects.all()
+        serializer = AssignmentSerializer(assignements,many=True)
         return Response(serializer.data)
