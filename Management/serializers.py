@@ -17,6 +17,7 @@ class SectionSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class AssignmentSerializer(serializers.ModelSerializer):
+    section = serializers.CharField(source='teacher_section.section.code')
     class Meta:
         model = Assignment
-        fields = '__all__'
+        exclude = ('teacher_section',)
