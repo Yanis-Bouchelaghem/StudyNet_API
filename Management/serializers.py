@@ -21,3 +21,12 @@ class AssignmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Assignment
         exclude = ('teacher_section',)
+
+    def validate(self, attrs):
+        #Check that each group in "concerned_groups" exists in the section.
+        section = Section.objects.get(code=attrs['teacher_section']['section']['code'])
+        for i in attrs['concerned_groups']:
+            if i <= 0 or i > section.number_of_groups:
+                raise serializers.ValidationError({'concerned_groups':'One of the given groups does not exist.'})
+
+        return attrs
