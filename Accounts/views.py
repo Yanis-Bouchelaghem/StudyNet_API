@@ -90,3 +90,19 @@ class Login(APIView):
             return Response({'Invalid_user_type':'Invalid user type.'}, status=status.HTTP_400_BAD_REQUEST)
         
         return Response(user_data,status=status.HTTP_201_CREATED)
+
+class GetUserData(APIView):
+    """
+    Expects a token, returns the data of the user that owns the token.
+    """
+
+    def get(self, request):
+        if request.user.user_type == User.Types.STUDENT:
+            return Response({'student': StudentSerializer(request.user.student).data})
+        elif request.user.user_type == User.Types.TEACHER:
+            return Response({'teacher': TeacherSerializer(request.user.teacher).data})
+        elif request.user.user_type == User.Types.ADMINISTRATOR:
+            return Response({'administrator': CreateUserSerializer(request.user).data})
+        else:
+            return Response({'Invalid_user_type':'Invalid user type.'}, status=status.HTTP_400_BAD_REQUEST)
+
