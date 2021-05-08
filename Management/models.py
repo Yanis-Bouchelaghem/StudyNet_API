@@ -47,6 +47,7 @@ class Section(models.Model):
     number_of_groups = models.PositiveSmallIntegerField(_('number of groups'),
         help_text=_('The number of groups this section is divided into.'))
     specialty = models.ForeignKey('Specialty', verbose_name=_('specialty'), on_delete=models.CASCADE)
+    modules = models.ManyToManyField("Module", verbose_name=_("modules"), through='ModuleSection')
 
     def __str__(self):
         return self.code
@@ -92,7 +93,24 @@ class TeacherSection(models.Model):
         verbose_name = _('Teacher-Section')
         verbose_name_plural = _('Teachers-Sections')
         constraints = [
-            models.UniqueConstraint(fields=['teacher','section'], name='unique_teachers_section')
+            models.UniqueConstraint(fields=['teacher','section'], name='unique_modules_section')
+        ]
+
+class ModuleSection(models.Model):
+    """
+     The through table to represent the relation-ship between a section and the modules it has.
+        (explicitly declared to be able to reference it later.)
+    """
+    module = models.ForeignKey('Module', verbose_name=_('module'), on_delete=models.CASCADE)
+    section = models.ForeignKey('Section', verbose_name=_('section'), on_delete=models.CASCADE)
+    def __str__(self):
+        return self.section.code + ' ; ' + self.module.code
+    
+    class Meta:
+        verbose_name = _('Module-Section')
+        verbose_name_plural = _('Modules-Sections')
+        constraints = [
+            models.UniqueConstraint(fields=['module','section'], name='unique_teachers_section')
         ]
 
 class Assignment(models.Model):
@@ -101,15 +119,15 @@ class Assignment(models.Model):
     """
     id = models.BigAutoField(_('id'),primary_key=True)
     teacher_section = models.ForeignKey('TeacherSection', verbose_name=_('teacher-section'), on_delete=models.CASCADE)
-    module = models.ForeignKey('Module', verbose_name=_('module'), on_delete=models.CASCADE)
+    module_section = models.ForeignKey('ModuleSection', verbose_name=_('module-section'), on_delete=models.CASCADE)
     module_type = models.CharField(_('module type'), choices=Module.Types.choices,max_length=15)
     concerned_groups = ArrayField(base_field=models.PositiveSmallIntegerField(), verbose_name=_('concerned groups'))
     def __str__(self):
-        return self.teacher_section.teacher.user.last_name + ' ' + self.teacher_section.teacher.user.first_name + ' ; ' + self.teacher_section.section.code + ' ; ' + self.module.code + ' ; ' + dict(Module.Types.choices)[self.module_type]
+        return self.teacher_section.teacher.user.last_name + ' ' + self.teacher_section.teacher.user.first_name + ' ; ' + self.teacher_section.section.code + ' ; ' + self.module_section.module.code + ' ; ' + dict(Module.Types.choices)[self.module_type]
 
     class Meta:
         verbose_name = _('Assignment')
         verbose_name_plural = _('Assignments')
         constraints = [
-            models.UniqueConstraint(fields=['teacher_section','module','module_type'], name='unique_assignment')
+            models.UniqueConstraint(fields=['teacher_section','module_section','module_type'], name='unique_assignment')
         ]
