@@ -3,7 +3,7 @@ from rest_framework.exceptions import ValidationError
 from django.contrib.auth import authenticate
 from django.db import transaction,IntegrityError
 
-from Management.models import Section,TeacherSection,Assignment
+from Management.models import Section,TeacherSection,Assignment,ModuleSection
 from .models import User,Student,Teacher
 from Management.serializers import SectionSerializer,AssignmentSerializer
 
@@ -126,8 +126,9 @@ class CreateTeacherSerializer(serializers.ModelSerializer):
                 #Take care of the assignments
                 for assignment in assignments:
                     teacher_section = TeacherSection.objects.get(teacher=teacher,section=assignment['teacher_section']['section']['code'])
+                    module_section = ModuleSection.objects.get(module=assignment['module_section']['module']['code'],section=assignment['teacher_section']['section']['code'])
                     Assignment.objects.create(teacher_section=teacher_section,
-                    module=assignment['module'],
+                    module_section=module_section,
                     module_type=assignment['module_type'],
                     concerned_groups=assignment['concerned_groups'])
                 return teacher
