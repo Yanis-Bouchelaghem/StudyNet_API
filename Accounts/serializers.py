@@ -125,8 +125,10 @@ class CreateTeacherSerializer(serializers.ModelSerializer):
                     TeacherSection.objects.create(teacher=teacher,section=section)
                 #Take care of the assignments
                 for assignment in assignments:
-                    teacher_section = TeacherSection.objects.get(teacher=teacher,section=assignment['teacher_section']['section']['code'])
-                    module_section = ModuleSection.objects.get(module=assignment['module_section']['module']['code'],section=assignment['teacher_section']['section']['code'])
+                    section_code = assignment['teacher_section']['section']['code']
+                    module_code = assignment['module_section']['module']['code']
+                    teacher_section = TeacherSection.objects.get(teacher=teacher,section=section_code)
+                    module_section = ModuleSection.objects.get(module=module_code,section=section_code)
                     Assignment.objects.create(teacher_section=teacher_section,
                     module_section=module_section,
                     module_type=assignment['module_type'],

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Department,Specialty,Section,Assignment
+from .models import Department,Specialty,Section,Assignment,Module,ModuleSection
 
 class DepartmentSerializer(serializers.ModelSerializer):
     class Meta:
@@ -25,11 +25,16 @@ class AssignmentSerializer(serializers.ModelSerializer):
 
     def validate(self, attrs):
         section_code = attrs['teacher_section']['section']['code']
+        module_code = attrs['module_section']['module']['code']
         if Section.objects.filter(code=section_code).exists():
             #Check that each group in "concerned_groups" exists in the section.
             section = Section.objects.get(code=section_code)
             for i in attrs['concerned_groups']:
                 if i <= 0 or i > section.number_of_groups:
                     raise serializers.ValidationError({'concerned_groups':'One of the given groups does not exist.'})
-
+        #Check that the given module does exist.
+        if not Module.objects.filter(code=module_code).exists():
+            raise serializers.ValidationError({'module':'Module does not exist.'})
+        if not ModuleSection.objects.filter(section=section_code,module=module_code).exists():
+            raise serializers.ValidationError({'module':'The module ' + module_code + ' is not assigned to the section ' + section_code})
         return attrs
