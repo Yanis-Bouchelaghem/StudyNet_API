@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate
 
 from Management.models import Section,TeacherSection
 from .models import User,Student,Teacher
-from Management.serializers import SectionSerializer
+from Management.serializers import SectionSerializer,AssignmentSerializer
 
 class LoginSerializer(serializers.Serializer):
     email = serializers.EmailField()
@@ -68,6 +68,8 @@ class TeacherSerializer(serializers.ModelSerializer):
         Only used to display a teacher.
     """
     user = CreateUserSerializer(many=False)
+    assignments = AssignmentSerializer(many=True,required=False)
+    
     class Meta:
         model = Teacher
         fields = '__all__'
