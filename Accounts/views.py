@@ -8,6 +8,7 @@ from knox.models import AuthToken
 
 #Custom imports
 from .models import User,Student,Teacher
+from Management.models import Section
 from .serializers import (StudentSerializer,CreateUserSerializer, StudentSerializer, CreateStudentSerializer,
     TeacherSerializer, CreateTeacherSerializer, LoginSerializer, EmailSerializer)
 
@@ -47,10 +48,24 @@ class TeacherList(APIView):
         Retrieves the list of teachers or create a teacher.
         Requires authentication.
     """
+    def get_queryset(self):
+        section = self.request.query_params.get('section',None)
+        if section:
+            if Section.objects.filter(code=section).exists():
+                section_object = Section.objects.get(code=section)
+                return section_object.teacher_set.all()
+            else:
+                #Section does not exist.
+                return status.HTTP_404_NOT_FOUND
+        return Teacher.objects.all()
+    
     def get(self,request):
-        teachers = Teacher.objects.all()
-        serializer = TeacherSerializer(teachers,many=True)
-        return Response(serializer.data)
+        teachers = self.get_queryset()
+        if teachers != status.HTTP_404_NOT_FOUND:
+            serializer = TeacherSerializer(teachers,many=True)
+            return Response(serializer.data,status=status.HTTP_200_OK)
+        #Given section doesn't exist.
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
     def post(self,request):
         #Check if the user that is creating the teacher is an admin.
