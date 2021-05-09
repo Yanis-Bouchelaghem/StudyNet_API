@@ -35,6 +35,10 @@ class AssignmentSerializer(serializers.ModelSerializer):
         #Check that the given module does exist.
         if not Module.objects.filter(code=module_code).exists():
             raise serializers.ValidationError({'module':'Module does not exist.'})
+        #Check that the given module type is supported by the module
+        if not attrs['module_type'] in Module.objects.get(code=module_code).types:
+            raise serializers.ValidationError({'module_type':'The module ' + module_code + ' does not have teaching of type ' + attrs['module_type']})
+        #Check that the given module is assigned to the section.
         if not ModuleSection.objects.filter(section=section_code,module=module_code).exists():
             raise serializers.ValidationError({'module':'The module ' + module_code + ' is not assigned to the section ' + section_code})
         return attrs
