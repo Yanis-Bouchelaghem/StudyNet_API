@@ -72,24 +72,16 @@ class ModuleList(APIView):
     Retrieves the list of modules based on a section.
     """
     permission_classes = []
-
-    def get_queryset(self):
-        section = self.request.query_params.get('section',None)
-        if section:
-            #Check that the section exists
-            if Section.objects.filter(code=section).exists():
-                #Get the modules of this section
-                section_object = Section.objects.get(code=section)
-                return section_object.modules.all()
-            else:
-                return status.HTTP_404_NOT_FOUND
-        #If no section is given, return all modules.
-        return Module.objects.all()
     
     def get(self, request):
-        modules = self.get_queryset()
-        #Check if the section has been found.
-        if modules != status.HTTP_404_NOT_FOUND:
-            serializer = ModuleSerializer(modules,many=True)
-            return Response(serializer.data,status=status.HTTP_200_OK)
-        return Response(status=status.HTTP_404_NOT_FOUND)
+        section = self.request.query_params.get('section',None)
+        if section:
+            #Check that the section exists.
+            if Section.objects.filter(code=section).exists():
+                #Get the modules of this section.
+                section_object = Section.objects.get(code=section)
+                modules = section_object.modules.all()
+                serializer = ModuleSerializer(modules,many=True,context={'section_code':section})
+                return Response(serializer.data,status=status.HTTP_200_OK)
+        #Section not given or does not exist.
+        return Response(status=status.HTTP_400_BAD_REQUEST)
