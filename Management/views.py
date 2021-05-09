@@ -3,8 +3,9 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
 
-from .models import Department,Specialty,Section,Assignment
-from .serializers import DepartmentSerializer,SpecialtySerializer,SectionSerializer,AssignmentSerializer
+from .models import Department,Specialty,Section,Assignment,Module
+from .serializers import (DepartmentSerializer,SpecialtySerializer,
+SectionSerializer,AssignmentSerializer,ModuleSerializer)
 # Create your views here.
 
 class DepartmentList(APIView):
@@ -65,3 +66,30 @@ class AssignmentList(APIView):
         assignements = Assignment.objects.all()
         serializer = AssignmentSerializer(assignements,many=True)
         return Response(serializer.data)
+
+class ModuleList(APIView):
+    """
+    Retrieves the list of modules based on a section.
+    """
+    permission_classes = []
+
+    def get_queryset(self):
+        section = self.request.query_params.get('section',None)
+        if section:
+            #Check that the section exists
+            if Section.objects.filter(code=section).exists():
+                #Get the modules of this section
+                section_object = Section.objects.get(code=section)
+                return section_object.modules.all()
+            else:
+                return status.HTTP_404_NOT_FOUND
+        #If no section is given, return all modules.
+        return Module.objects.all()
+    
+    def get(self, request):
+        modules = self.get_queryset()
+        #Check if the section has been found.
+        if modules != status.HTTP_404_NOT_FOUND:
+            serializer = ModuleSerializer(modules,many=True)
+            return Response(serializer.data,status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_404_NOT_FOUND)

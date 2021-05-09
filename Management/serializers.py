@@ -16,6 +16,11 @@ class SectionSerializer(serializers.ModelSerializer):
         model = Section
         fields = '__all__'
 
+class ModuleSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Module
+        fields = '__all__'
+
 class AssignmentSerializer(serializers.ModelSerializer):
     section = serializers.CharField(source='teacher_section.section.code')
     module = serializers.CharField(source='module_section.module.code')
