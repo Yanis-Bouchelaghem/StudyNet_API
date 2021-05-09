@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.exceptions import ValidationError
 from django.contrib.postgres.fields import ArrayField
 from django.utils.translation import ugettext_lazy as _
 from utilities import ChoiceArrayField
@@ -131,3 +132,14 @@ class Assignment(models.Model):
         constraints = [
             models.UniqueConstraint(fields=['teacher_section','module_section','module_type'], name='unique_assignment')
         ]
+    
+    def clean(self):
+        if self.module_section and self.teacher_section and self.concerned_groups:
+            #Check that the section is the same in both teacher_section and module_section
+            if not self.teacher_section.section == self.module_section.section:
+                raise ValidationError({'module_section':'Section does not match with that of Teacher-section.'})
+            #Check that the list of concerned groups does not contain groups that don't exist in the section.
+            number_of_groups = self.teacher_section.section.number_of_groups
+            for group in self.concerned_groups:
+                if group <= 0 or group > number_of_groups:
+                    raise ValidationError({'concerned_groups':'One of the specified groups does not exist in section ' + self.teacher_section.section.code })
