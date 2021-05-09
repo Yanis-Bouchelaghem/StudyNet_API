@@ -66,11 +66,20 @@ class CreateStudentSerializer(serializers.ModelSerializer):
 
 class TeacherSerializer(serializers.ModelSerializer):
     """
-        Only used to display a teacher.
+        Only used to display a teacher with his assignments.
     """
     user = CreateUserSerializer(many=False)
     assignments = AssignmentSerializer(many=True,required=False)
     
+    class Meta:
+        model = Teacher
+        fields = '__all__'
+
+class SimpleTeacherSerializer(serializers.ModelSerializer):
+    """
+        Only used to display a teacher without his assignments.
+    """
+    user = CreateUserSerializer(many=False)
     class Meta:
         model = Teacher
         fields = '__all__'

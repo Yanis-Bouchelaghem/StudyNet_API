@@ -10,7 +10,7 @@ from knox.models import AuthToken
 from .models import User,Student,Teacher
 from Management.models import Section
 from .serializers import (StudentSerializer,CreateUserSerializer, StudentSerializer, CreateStudentSerializer,
-    TeacherSerializer, CreateTeacherSerializer, LoginSerializer, EmailSerializer)
+    TeacherSerializer, CreateTeacherSerializer, LoginSerializer, EmailSerializer, SimpleTeacherSerializer)
 
 # Create your views here.
 class StudentList(APIView):
@@ -62,7 +62,7 @@ class TeacherList(APIView):
     def get(self,request):
         teachers = self.get_queryset()
         if teachers != status.HTTP_404_NOT_FOUND:
-            serializer = TeacherSerializer(teachers,many=True)
+            serializer = SimpleTeacherSerializer(teachers,many=True)
             return Response(serializer.data,status=status.HTTP_200_OK)
         #Given section doesn't exist.
         return Response(status=status.HTTP_400_BAD_REQUEST)
