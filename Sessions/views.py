@@ -9,12 +9,20 @@ from .serializers import SessionSerializer
 
 class SessionList(APIView):
     """
-    Retrieves the list of sessions
+    Retrieves the list of sessions.
+    Can be filtered by section.
     """
     #TODO: Remove empty permission classes when done developing.
     permission_classes = []
 
+    def get_queryset(self):
+        section = self.request.query_params.get('section',None)
+        if section:
+            return Session.objects.filter(assignment__teacher_section__section__code=section)
+        else:
+            return Session.objects.all()
+    
     def get(self,request):
-        sessions = Session.objects.all()
+        sessions = self.get_queryset()
         seriliazer = SessionSerializer(sessions, many=True)
         return Response(seriliazer.data)
