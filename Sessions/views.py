@@ -26,3 +26,9 @@ class SessionList(APIView):
         sessions = self.get_queryset()
         seriliazer = SessionSerializer(sessions, many=True)
         return Response(seriliazer.data)
+    
+    def post(self, request):
+        serializer = SessionSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data,status=status.HTTP_201_CREATED)
