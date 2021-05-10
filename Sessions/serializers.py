@@ -20,3 +20,15 @@ class SessionSerializer(serializers.ModelSerializer):
         return instance.assignment.module_section.module.name
     def get_module_type(self, instance):
         return instance.assignment.module_type
+    
+    def validate(self, attrs):
+        #Check that the end time is after the start time
+        if attrs['start_time'] > attrs['end_time']:
+            raise serializers.ValidationError({'end_time':'The end time must be after the start time.'})
+        #Check that all of the concerned groups exist in the assignment
+        concerned_groups = attrs['concerned_groups']
+        assignment_concerned_groups = attrs['assignment'].concerned_groups
+        for group in concerned_groups:
+            if not group in assignment_concerned_groups:
+                raise serializers.ValidationError({'concerned_groups':'One of the specified groups does not exist in assignment.'})
+        return attrs

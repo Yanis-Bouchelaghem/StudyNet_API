@@ -136,7 +136,7 @@ class Assignment(models.Model):
     def clean(self):
         if self.module_section and self.teacher_section and self.concerned_groups:
             #Check that the section is the same in both teacher_section and module_section
-            if not self.teacher_section.section == self.module_section.section:
+            if self.teacher_section.section != self.module_section.section:
                 raise ValidationError({'module_section':'Section does not match with that of Teacher-section.'})
             #Check that the list of concerned groups does not contain groups that don't exist in the section.
             number_of_groups = self.teacher_section.section.number_of_groups
