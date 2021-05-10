@@ -82,7 +82,7 @@ class SimpleTeacherSerializer(serializers.ModelSerializer):
     user = CreateUserSerializer(many=False)
     class Meta:
         model = Teacher
-        fields = '__all__'
+        exclude = ('sections',)
 
 class SectionCharField(serializers.CharField):
     """
