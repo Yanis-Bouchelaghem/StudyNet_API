@@ -39,6 +39,7 @@ class ModuleSerializer(serializers.ModelSerializer):
 
 
 class AssignmentSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(required=False)
     section = serializers.CharField(source='teacher_section.section.code')
     module = serializers.CharField(source='module_section.module.code')
     class Meta:

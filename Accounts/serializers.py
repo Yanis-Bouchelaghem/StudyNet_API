@@ -3,7 +3,7 @@ from rest_framework.exceptions import ValidationError
 from django.contrib.auth import authenticate
 from django.db import transaction,IntegrityError
 
-from Management.models import Section,TeacherSection,Assignment,ModuleSection
+from Management.models import Module, Section,TeacherSection,Assignment,ModuleSection
 from .models import User,Student,Teacher
 from Management.serializers import SectionSerializer,AssignmentSerializer
 
@@ -178,10 +178,10 @@ class UpdateTeacherSerializer(serializers.ModelSerializer):
         sections = attrs['sections']
         assignements = attrs['assignments']
         department = attrs['department']
-        #Check that the sections given in "sections" are part of the "department"
 
-        #Get the section object
+        #Check that the sections given in "sections" are part of the "department"
         for section in sections:
+            #Get the section object
             section_object = Section.objects.get(code=section)
             if section_object.specialty.department.code != department.code:
                 raise serializers.ValidationError({'sections':'One of the specified sections is not part of the department '+department.code})
@@ -194,7 +194,7 @@ class UpdateTeacherSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         try:
             with transaction.atomic():
-                teacher = Teacher.objects.get(user=self.context['teacher_id'])
+                teacher = instance
                 user_data = validated_data.pop('user')
                 sections = validated_data.pop('sections',[])
                 assignments = validated_data.pop('assignments',[])
@@ -219,6 +219,41 @@ class UpdateTeacherSerializer(serializers.ModelSerializer):
                         #relation with this section doesn't exist, create it.
                         section_object = Section.objects.get(code=section)
                         TeacherSection.objects.create(teacher=teacher,section=section_object)
+                #update the teacher's assignments
+                keep_assignments = []
+                for assignment in assignments:
+                    #Retrieve the necessarry relations
+                    section = assignment['teacher_section']['section']['code']
+                    module = assignment['module_section']['module']['code']
+                    teacher_section = TeacherSection.objects.get(teacher=teacher,section=section)
+                    module_section = ModuleSection.objects.get(module=module,section=section)
+                    #Check if the given assignment contains an id
+                    if 'id' in assignment.keys():
+                        #Check if the given id exists in the database
+                        if Assignment.objects.filter(id=assignment['id']).exists():
+                            #Assignment exists, check that it concerns this teacher.
+                            assignment_object = Assignment.objects.get(id=assignment['id'])
+                            if assignment_object.teacher_section.teacher == teacher:
+                                #update the assignment.
+                                assignment_object.teacher_section = teacher_section
+                                assignment_object.module_section = module_section
+                                assignment_object.module_type = assignment['module_type']
+                                assignment_object.concerned_groups = assignment['concerned_groups']
+                                assignment_object.save()
+                                keep_assignments.append(assignment_object.id)
+                    else:
+                        #Doesn't contain an id, create it.
+                        new_assignment = Assignment.objects.create(teacher_section=teacher_section,
+                        module_section=module_section,
+                        module_type=assignment['module_type'],
+                        concerned_groups=assignment['concerned_groups'])
+                        keep_assignments.append(new_assignment.id)
+                #Go through this teacher's assignments and remove
+                #any ones that are missing from the request.
+                for assignment in teacher.assignments:
+                    if assignment.id in keep_assignments:
+                        assignment.delete()
+                #Done, return the teacher instance.
                 return instance
         except IntegrityError:
             raise serializers.ValidationError({{'assignments':'duplicate assignments.'}})
