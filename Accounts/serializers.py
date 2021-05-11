@@ -29,6 +29,14 @@ class CreateUserSerializer(serializers.ModelSerializer):
             'password': {'write_only': True},
         }
 
+class UpdateUserSerializer(serializers.ModelSerializer):
+    """
+        Used to update a user.
+    """
+    class Meta:
+        model = User
+        fields = ['email','first_name','last_name']
+
 class StudentSerializer(serializers.ModelSerializer):
     """
         Only used to display a student with the details of their section.
@@ -152,6 +160,68 @@ class CreateTeacherSerializer(serializers.ModelSerializer):
                 return teacher
         except IntegrityError:
             raise serializers.ValidationError({'assignments':'duplicate assignments.'})
+
+class UpdateTeacherSerializer(serializers.ModelSerializer):
+    """
+        Only used to update a teacher.
+        Requires a teacher id to be given in the context.
+    """
+    user = UpdateUserSerializer(many=False,required=False)
+    sections = serializers.ListField(child=SectionCharField(),required=True)
+    assignments = AssignmentSerializer(many=True,required=True)
+    class Meta:
+        model = Teacher
+        fields = '__all__'
+
+    def validate(self, attrs):
+        sections = attrs['sections']
+        assignements = attrs['assignments']
+        department = attrs['department']
+        #Check that the sections given in "sections" are part of the "department"
+        for section in sections:
+            #Get the section object
+            section_object = Section.objects.get(code=section)
+            if section_object.department.code != department:
+                raise serializers.ValidationError({'sections':'One of the specified sections is not part of the department '+department})
+        #Check that sections given in "assignments" are also given in "sections"
+        for assignment in assignements:
+            if not assignment['teacher_section']['section']['code'] in sections:
+                raise serializers.ValidationError({'assignments':'Cannot assign a section not contained in this teacher\'s sections list.'})
+        return attrs
+
+    def update(self, instance, validated_data):
+        try:
+            with transaction.atomic():
+                teacher = Teacher.objects.get(user=self.context['teacher_id'])
+                user_data = validated_data.pop('user')
+                sections = validated_data.pop('sections',[])
+                assignments = validated_data.pop('assignments',[])
+                #update the user data.
+                instance.user.email = user_data.get('email',instance.user.email)
+                instance.user.first_name = user_data.get('first_name',instance.user.first_name)
+                instance.user.last_name = user_data.get('last_name',instance.user.last_name)
+                instance.user.save()
+                #update the teacher data.
+                instance.grade = validated_data.get('grade',instance.grade)
+                instance.department = validated_data.get('department',instance.department)
+                instance.save()
+                #update the TeacherSection relationships
+                #start by deleting the removed sections
+                old_teacher_section = TeacherSection.objects.filter(teacher=teacher)
+                for teacher_section in old_teacher_section:
+                    if not teacher_section.section.code in sections:
+                        teacher_section.delete()
+                #then add the new sections
+                for section in sections:
+                    if not TeacherSection.objects.filter(teacher=teacher,section=section).exists():
+                        #relation with this section doesn't exist, create it.
+                        TeacherSection.objects.create(teacher=teacher,section=section)
+                
+
+
+
+        except IntegrityError:
+            raise serializers.ValidationError({{'assignments':'duplicate assignments.'}})
 
 class EmailSerializer(serializers.Serializer):
     email = serializers.EmailField()
