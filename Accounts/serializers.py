@@ -101,16 +101,23 @@ class CreateTeacherSerializer(serializers.ModelSerializer):
         Only used to create a teacher with optionally their assigned sections.
     """
     user = CreateUserSerializer(many=False,required=True)
-    sections = serializers.ListField(child=SectionCharField(),required=False)
+    sections = serializers.ListField(child=SectionCharField(),required=True)
     assignments = AssignmentSerializer(many=True,required=True)
     class Meta:
         model = Teacher
         fields = '__all__'
 
     def validate(self, attrs):
-        #Check that sections given in "assignments" are also given in "sections"
         sections = attrs['sections']
         assignements = attrs['assignments']
+        department = attrs['department']
+        #Check that the sections given in "sections" are part of the "department"
+        for section in sections:
+            #Get the section object
+            section_object = Section.objects.get(code=section)
+            if section_object.specialty.department.code != department.code:
+                raise serializers.ValidationError({'sections':'One of the specified sections is not part of the department '+department.code})
+        #Check that sections given in "assignments" are also given in "sections"
         for assignment in assignements:
             if not assignment['teacher_section']['section']['code'] in sections:
                 raise serializers.ValidationError({'assignments':'Cannot assign a section not contained in this teacher\'s sections list.'})
