@@ -118,7 +118,7 @@ class CreateTeacherSerializer(serializers.ModelSerializer):
 
     def validate(self, attrs):
         sections = attrs['sections']
-        assignements = attrs['assignments']
+        assignments = attrs['assignments']
         department = attrs['department']
         #Check that the sections given in "sections" are part of the "department"
         for section in sections:
@@ -127,7 +127,7 @@ class CreateTeacherSerializer(serializers.ModelSerializer):
             if section_object.specialty.department.code != department.code:
                 raise serializers.ValidationError({'sections':'One of the specified sections is not part of the department '+department.code})
         #Check that sections given in "assignments" are also given in "sections"
-        for assignment in assignements:
+        for assignment in assignments:
             if not assignment['teacher_section']['section']['code'] in sections:
                 raise serializers.ValidationError({'assignments':'Cannot assign a section not contained in this teacher\'s sections list.'})
         return attrs
@@ -194,10 +194,13 @@ class UpdateTeacherSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         try:
             with transaction.atomic():
-                teacher = instance
                 user_data = validated_data.pop('user')
                 sections = validated_data.pop('sections',[])
                 assignments = validated_data.pop('assignments',[])
+
+                if instance.user.email != user_data.get('email',instance.user.email):
+                    if User.objects.filter(email=user_data.get('email')).exists():
+                        raise serializers.ValidationError({'email':'The given email is already assigned to another user.'})
                 #update the user data.
                 instance.user.email = user_data.get('email',instance.user.email)
                 instance.user.first_name = user_data.get('first_name',instance.user.first_name)
@@ -207,25 +210,35 @@ class UpdateTeacherSerializer(serializers.ModelSerializer):
                 instance.grade = validated_data.get('grade',instance.grade)
                 instance.department = validated_data.get('department',instance.department)
                 instance.save()
+
                 #update the TeacherSection relationships
-                #start by deleting the removed sections
-                old_teacher_section = TeacherSection.objects.filter(teacher=teacher)
+                ##start by deleting the removed sections
+                old_teacher_section = TeacherSection.objects.filter(teacher=instance)
                 for teacher_section in old_teacher_section:
                     if not teacher_section.section.code in sections:
                         teacher_section.delete()
-                #then add the new sections
+                ##then add the new sections
                 for section in sections:
-                    if not TeacherSection.objects.filter(teacher=teacher,section=section).exists():
+                    if not TeacherSection.objects.filter(teacher=instance,section=section).exists():
                         #relation with this section doesn't exist, create it.
                         section_object = Section.objects.get(code=section)
-                        TeacherSection.objects.create(teacher=teacher,section=section_object)
+                        TeacherSection.objects.create(teacher=instance,section=section_object)
+
                 #update the teacher's assignments
                 keep_assignments = []
+                for assignment in assignments:
+                    if 'id' in assignment.keys():
+                        keep_assignments.append(assignment['id'])
+                #Go through this teacher's assignments and remove
+                #any ones that are missing from the request.
+                for assignment in instance.assignments:
+                    if not assignment.id in keep_assignments:
+                        assignment.delete()
                 for assignment in assignments:
                     #Retrieve the necessarry relations
                     section = assignment['teacher_section']['section']['code']
                     module = assignment['module_section']['module']['code']
-                    teacher_section = TeacherSection.objects.get(teacher=teacher,section=section)
+                    teacher_section = TeacherSection.objects.get(teacher=instance,section=section)
                     module_section = ModuleSection.objects.get(module=module,section=section)
                     #Check if the given assignment contains an id
                     if 'id' in assignment.keys():
@@ -233,30 +246,23 @@ class UpdateTeacherSerializer(serializers.ModelSerializer):
                         if Assignment.objects.filter(id=assignment['id']).exists():
                             #Assignment exists, check that it concerns this teacher.
                             assignment_object = Assignment.objects.get(id=assignment['id'])
-                            if assignment_object.teacher_section.teacher == teacher:
+                            if assignment_object.teacher_section.teacher == instance:
                                 #update the assignment.
                                 assignment_object.teacher_section = teacher_section
                                 assignment_object.module_section = module_section
                                 assignment_object.module_type = assignment['module_type']
                                 assignment_object.concerned_groups = assignment['concerned_groups']
                                 assignment_object.save()
-                                keep_assignments.append(assignment_object.id)
                     else:
                         #Doesn't contain an id, create it.
                         new_assignment = Assignment.objects.create(teacher_section=teacher_section,
                         module_section=module_section,
                         module_type=assignment['module_type'],
                         concerned_groups=assignment['concerned_groups'])
-                        keep_assignments.append(new_assignment.id)
-                #Go through this teacher's assignments and remove
-                #any ones that are missing from the request.
-                for assignment in teacher.assignments:
-                    if assignment.id in keep_assignments:
-                        assignment.delete()
                 #Done, return the teacher instance.
                 return instance
         except IntegrityError:
-            raise serializers.ValidationError({{'assignments':'duplicate assignments.'}})
+            raise serializers.ValidationError({'assignments':'duplicate assignments.'})
 
 class EmailSerializer(serializers.Serializer):
     email = serializers.EmailField()
