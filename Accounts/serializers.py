@@ -33,6 +33,7 @@ class UpdateUserSerializer(serializers.ModelSerializer):
     """
         Used to update a user.
     """
+    email = serializers.EmailField(required=False)
     class Meta:
         model = User
         fields = ['email','first_name','last_name']
@@ -166,8 +167,8 @@ class UpdateTeacherSerializer(serializers.ModelSerializer):
         Only used to update a teacher.
         Requires a teacher id to be given in the context.
     """
-    user = UpdateUserSerializer(many=False,required=False)
-    sections = serializers.ListField(child=SectionCharField(),required=True)
+    user = UpdateUserSerializer(many=False,required=True)
+    sections = serializers.ListField(child=SectionCharField(),write_only=True)
     assignments = AssignmentSerializer(many=True,required=True)
     class Meta:
         model = Teacher
@@ -178,11 +179,12 @@ class UpdateTeacherSerializer(serializers.ModelSerializer):
         assignements = attrs['assignments']
         department = attrs['department']
         #Check that the sections given in "sections" are part of the "department"
+
+        #Get the section object
         for section in sections:
-            #Get the section object
             section_object = Section.objects.get(code=section)
-            if section_object.department.code != department:
-                raise serializers.ValidationError({'sections':'One of the specified sections is not part of the department '+department})
+            if section_object.specialty.department.code != department.code:
+                raise serializers.ValidationError({'sections':'One of the specified sections is not part of the department '+department.code})
         #Check that sections given in "assignments" are also given in "sections"
         for assignment in assignements:
             if not assignment['teacher_section']['section']['code'] in sections:
@@ -215,11 +217,9 @@ class UpdateTeacherSerializer(serializers.ModelSerializer):
                 for section in sections:
                     if not TeacherSection.objects.filter(teacher=teacher,section=section).exists():
                         #relation with this section doesn't exist, create it.
-                        TeacherSection.objects.create(teacher=teacher,section=section)
-                
-
-
-
+                        section_object = Section.objects.get(code=section)
+                        TeacherSection.objects.create(teacher=teacher,section=section_object)
+                return instance
         except IntegrityError:
             raise serializers.ValidationError({{'assignments':'duplicate assignments.'}})
 

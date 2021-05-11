@@ -1,4 +1,5 @@
 #View related imports
+from django.http.response import Http404
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework import status
@@ -9,8 +10,7 @@ from knox.models import AuthToken
 #Custom imports
 from .models import User,Student,Teacher
 from Management.models import Section
-from .serializers import (StudentSerializer,CreateUserSerializer, StudentSerializer, CreateStudentSerializer,
-    TeacherSerializer, CreateTeacherSerializer, LoginSerializer, EmailSerializer, SimpleTeacherSerializer)
+from .serializers import *
 
 # Create your views here.
 class StudentList(APIView):
@@ -84,6 +84,33 @@ class TeacherList(APIView):
         else:
             return Response({'Forbidden':'Only administrators may create teacher accounts.'},
                 status=status.HTTP_403_FORBIDDEN)
+
+class TeacherDetail(APIView):
+    """
+        Retrieves the list of students based on a section or create a student.
+    """
+
+    def get_object(self, pk):
+        try:
+            return Teacher.objects.get(pk=pk)
+        except:
+            raise Http404
+
+    def get(self, request, pk):
+        teacher = self.get_object(pk)
+        serializer = TeacherSerializer(teacher)
+        return Response(serializer.data)
+
+    def put(self, request, pk):
+        #Check if the user that is updating the teacher is an admin.
+        if request.user.user_type == User.Types.ADMINISTRATOR:
+            teacher = self.get_object(pk)
+            serializer = UpdateTeacherSerializer(teacher, data=request.data,context={'teacher_id':pk})
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            serializer = TeacherSerializer(teacher)
+            return Response(serializer.data)
+        return Response(status=status.HTTP_403_FORBIDDEN)
 
 class Login(APIView):
     """
