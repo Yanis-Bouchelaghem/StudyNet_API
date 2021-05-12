@@ -12,12 +12,12 @@ class Session(models.Model):
         and a comment.
     """
     class DaysOfWeek(models.IntegerChoices):
-        SATURDAY = 0,_("Saturday")
-        SUNDAY = 1,_("Sunday")
-        MONDAY = 2,_("Monday")
-        TUESDAY = 3,_("Tuesday")
-        WEDNESDAY = 4,_("Wednesday")
-        THURSDAY = 5,_("Thursday")
+        SATURDAY = 1,_("Saturday")
+        SUNDAY = 2,_("Sunday")
+        MONDAY = 3,_("Monday")
+        TUESDAY = 4,_("Tuesday")
+        WEDNESDAY = 5,_("Wednesday")
+        THURSDAY = 6,_("Thursday")
 
 
     id = models.BigAutoField(_('id'), primary_key=True)
