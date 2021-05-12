@@ -1,3 +1,4 @@
+from django.http.response import Http404
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework import status
@@ -46,8 +47,17 @@ class SectionList(APIView):
 
     def get_queryset(self):
         specialty = self.request.query_params.get('specialty',None)
+        department = self.request.query_params.get('department',None)
         if specialty:
-            return Section.objects.filter(specialty=specialty)
+            if Specialty.objects.filter(code=specialty).exists():
+                return Section.objects.filter(specialty=specialty)
+            else:
+                raise Http404
+        if department:
+            if Department.objects.filter(code=department).exists():
+                return Section.objects.filter(specialty__department__code=department)
+            else:
+                raise Http404
         return Section.objects.all()
 
     def get(self,request):
