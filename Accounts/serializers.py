@@ -111,14 +111,14 @@ class CreateTeacherSerializer(serializers.ModelSerializer):
     """
     user = CreateUserSerializer(many=False,required=True)
     sections = serializers.ListField(child=SectionCharField(),required=True)
-    assignments = AssignmentSerializer(many=True,required=True)
+    assignments = AssignmentSerializer(many=True,required=False)
     class Meta:
         model = Teacher
         fields = '__all__'
 
     def validate(self, attrs):
         sections = attrs['sections']
-        assignments = attrs['assignments']
+        assignments = attrs.get('assignments',[])
         department = attrs['department']
         #Check that the sections given in "sections" are part of the "department"
         for section in sections:
@@ -169,14 +169,14 @@ class UpdateTeacherSerializer(serializers.ModelSerializer):
     """
     user = UpdateUserSerializer(many=False,required=True)
     sections = serializers.ListField(child=SectionCharField(),write_only=True)
-    assignments = AssignmentSerializer(many=True,required=True)
+    assignments = AssignmentSerializer(many=True,required=False)
     class Meta:
         model = Teacher
         fields = '__all__'
 
     def validate(self, attrs):
         sections = attrs['sections']
-        assignements = attrs['assignments']
+        assignements = attrs.get('assignments',[])
         department = attrs['department']
 
         #Check that the sections given in "sections" are part of the "department"

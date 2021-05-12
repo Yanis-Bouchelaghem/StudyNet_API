@@ -58,7 +58,6 @@ class TestSectionRetrieve(TestSetup):
         result = self.client.get(url,{'specialty':'GD'})
         self.assertEqual(result.status_code,status.HTTP_200_OK)
         self.assertEqual(len(result.data),Section.objects.filter(specialty='GD').count())
-        #Test filter by a non existent department
+        #Test filter by a non existent specialty
         result = self.client.get(url,{'specialty':'NonExistent'})
-        self.assertEqual(result.status_code,status.HTTP_200_OK)
-        self.assertEqual(len(result.data),Section.objects.filter(specialty='NonExistent').count())
+        self.assertEqual(result.status_code,status.HTTP_404_NOT_FOUND)
