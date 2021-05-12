@@ -1,3 +1,4 @@
+from django.db.models.fields import PositiveIntegerRelDbTypeMixin
 from django.urls import reverse
 from rest_framework import status
 
@@ -72,9 +73,9 @@ class TestUserRegister(TestSetup):
             password='teacherpass',user_type=User.Types.TEACHER)
         teacher_user3 = User.objects.create_user(email='teacher3@me.com',first_name='teacher',last_name='teacher',
             password='teacherpass',user_type=User.Types.TEACHER)
-        Teacher.objects.create(user=teacher_user1,grade='MAB')
-        Teacher.objects.create(user=teacher_user2,grade='MAA')
-        Teacher.objects.create(user=teacher_user3,grade='MCB')
+        Teacher.objects.create(user=teacher_user1,grade='MAB',department=self.department1)
+        Teacher.objects.create(user=teacher_user2,grade='MAA',department=self.department1)
+        Teacher.objects.create(user=teacher_user3,grade='MCB',department=self.department2)
 
         url = reverse('teacher_list')
         #Use a student token for retrieval.

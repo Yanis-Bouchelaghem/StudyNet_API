@@ -34,6 +34,7 @@ class TestSetup(APITestCase):
                 "last_name": "teacher1"
             },
             "grade": "MAB",
+            "department" : self.department1.code,
             "sections": [
                 self.section1.code,
                 self.section2.code
@@ -74,7 +75,7 @@ class TestSetup(APITestCase):
         """
         teacher_user = User.objects.create_user(email='teacher@me.com',first_name='teacher',last_name='teacher',
             password='teacherpass',user_type=User.Types.TEACHER)
-        teacher_account = Teacher.objects.create(user=teacher_user,grade='MAB')
+        teacher_account = Teacher.objects.create(user=teacher_user,grade='MAB',department=self.department1)
         token = AuthToken.objects.create(user=teacher_user)
         return {
             'user' : teacher_user,
