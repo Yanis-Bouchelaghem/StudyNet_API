@@ -1,4 +1,5 @@
 #View related imports
+from django.http.response import Http404
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework import status
@@ -8,8 +9,8 @@ from knox.models import AuthToken
 
 #Custom imports
 from .models import User,Student,Teacher
-from .serializers import (StudentSerializer,CreateUserSerializer, StudentSerializer, CreateStudentSerializer,
-    TeacherSerializer, CreateTeacherSerializer, LoginSerializer)
+from Management.models import Section
+from .serializers import *
 
 # Create your views here.
 class StudentList(APIView):
@@ -47,10 +48,30 @@ class TeacherList(APIView):
         Retrieves the list of teachers or create a teacher.
         Requires authentication.
     """
+    def get_queryset(self):
+        section = self.request.query_params.get('section',None)
+        if section:
+            if Section.objects.filter(code=section).exists():
+                section_object = Section.objects.get(code=section)
+                return section_object.teacher_set.all()
+            else:
+                #Section does not exist.
+                return status.HTTP_404_NOT_FOUND
+        return Teacher.objects.all()
+    
     def get(self,request):
-        teachers = Teacher.objects.all()
-        serializer = TeacherSerializer(teachers,many=True)
-        return Response(serializer.data)
+        teachers = self.get_queryset()
+        if teachers != status.HTTP_404_NOT_FOUND:
+            serializer = None
+            if request.user.user_type == User.Types.ADMINISTRATOR:
+                #If the user making the request is an admin, display the assignments.
+                serializer = TeacherSerializer(teachers,many=True)
+            else:
+                #If the user making the request is not an admin, do not display the assignments.
+                serializer = SimpleTeacherSerializer(teachers,many=True)
+            return Response(serializer.data,status=status.HTTP_200_OK)
+        #Given section doesn't exist.
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
     def post(self,request):
         #Check if the user that is creating the teacher is an admin.
@@ -63,6 +84,33 @@ class TeacherList(APIView):
         else:
             return Response({'Forbidden':'Only administrators may create teacher accounts.'},
                 status=status.HTTP_403_FORBIDDEN)
+
+class TeacherDetail(APIView):
+    """
+        Retrieves the list of students based on a section or create a student.
+    """
+
+    def get_object(self, pk):
+        try:
+            return Teacher.objects.get(pk=pk)
+        except:
+            raise Http404
+
+    def get(self, request, pk):
+        teacher = self.get_object(pk)
+        serializer = TeacherSerializer(teacher)
+        return Response(serializer.data)
+
+    def put(self, request, pk):
+        #Check if the user that is updating the teacher is an admin.
+        if request.user.user_type == User.Types.ADMINISTRATOR:
+            teacher = self.get_object(pk)
+            serializer = UpdateTeacherSerializer(teacher, data=request.data,context={'teacher_id':pk})
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            serializer = TeacherSerializer(teacher)
+            return Response(serializer.data)
+        return Response(status=status.HTTP_403_FORBIDDEN)
 
 class Login(APIView):
     """
@@ -90,3 +138,32 @@ class Login(APIView):
             return Response({'Invalid_user_type':'Invalid user type.'}, status=status.HTTP_400_BAD_REQUEST)
         
         return Response(user_data,status=status.HTTP_201_CREATED)
+
+class GetUserData(APIView):
+    """
+    Expects a token, returns the data of the user that owns the token.
+    """
+
+    def get(self, request):
+        if request.user.user_type == User.Types.STUDENT:
+            return Response({'student': StudentSerializer(request.user.student).data})
+        elif request.user.user_type == User.Types.TEACHER:
+            return Response({'teacher': TeacherSerializer(request.user.teacher).data})
+        elif request.user.user_type == User.Types.ADMINISTRATOR:
+            return Response({'administrator': CreateUserSerializer(request.user).data})
+        else:
+            return Response({'Invalid_user_type':'Invalid user type.'}, status=status.HTTP_400_BAD_REQUEST)
+
+class IsEmailAvailable(APIView):
+    """
+    Expects an email, returns whether or not this email is already taken or not
+    """
+    permission_classes = []
+
+    def post(self, request):
+        serializer = EmailSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        if User.objects.filter(email=serializer.validated_data['email']).exists():
+            return Response({'email_taken':'This email is already taken.'},status=status.HTTP_302_FOUND)
+        else:
+            return Response({'email_available':'This email is available'},status=status.HTTP_200_OK)

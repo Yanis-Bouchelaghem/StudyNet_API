@@ -21,4 +21,6 @@ urlpatterns = [
     path('api/',include('Accounts.urls')),
     path('api/',include('Management.urls')),
     path('api/',include('External.urls')),
+    path('api/',include('Sessions.urls')),
+    
 ]
