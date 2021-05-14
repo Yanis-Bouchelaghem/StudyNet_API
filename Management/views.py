@@ -65,6 +65,20 @@ class SectionList(APIView):
         serializer = SectionSerializer(sections, many=True)
         return Response(serializer.data)
 
+class SectionDetail(APIView):
+    permission_classes = []
+
+    def get_object(self, pk):
+        try:
+            return Section.objects.get(pk=pk)
+        except:
+            raise Http404
+
+    def get(self, request, pk):
+        teacher = self.get_object(pk)
+        serializer = SectionSerializer(teacher)
+        return Response(serializer.data)
+
 class AssignmentList(APIView):
     """
     Retrieves the list of assignments
