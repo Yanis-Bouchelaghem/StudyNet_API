@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from django.db.models import Q
 from .models import Session
 
 class SessionSerializer(serializers.ModelSerializer):
@@ -31,4 +32,10 @@ class SessionSerializer(serializers.ModelSerializer):
         for group in concerned_groups:
             if not group in assignment_concerned_groups:
                 raise serializers.ValidationError({'concerned_groups':'One of the specified groups does not exist in assignment.'})
+        #Check that no other session is overlapping with this one.
+        section = attrs['assignment'].module_section.section
+        Q_section = Q(assignment__module_section__section=section)
+        Q_overlap = Q(end_time__gte=attrs['start_time']) & Q(start_time__lte= attrs['end_time'])
+        if Session.objects.filter(Q(assignment__module_section__section=section),Q_overlap).exists():
+            raise serializers.ValidationError({'start_time':'This session is overlapping another one.'})
         return attrs
