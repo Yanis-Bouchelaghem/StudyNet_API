@@ -5,6 +5,7 @@ from rest_framework.views import APIView
 
 from .models import Session
 from .serializers import SessionSerializer
+from Accounts.models import User
 # Create your views here.
 
 class SessionList(APIView):
@@ -12,8 +13,6 @@ class SessionList(APIView):
     Retrieves the list of sessions.
     Can be filtered by section.
     """
-    #TODO: Remove empty permission classes when done developing.
-    permission_classes = []
 
     def get_queryset(self):
         section = self.request.query_params.get('section',None)
@@ -28,7 +27,10 @@ class SessionList(APIView):
         return Response(seriliazer.data)
     
     def post(self, request):
-        serializer = SessionSerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data,status=status.HTTP_201_CREATED)
+        if request.user.user_type == User.Types.TEACHER:
+            serializer = SessionSerializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            serializer.save()
+            return Response(serializer.data,status=status.HTTP_201_CREATED)
+        else:
+            return Response({"Unauthorized":"Only teachers may create sessions."},status=status.HTTP_401_UNAUTHORIZED)
