@@ -46,14 +46,14 @@ class SessionDetail(APIView):
     
     def get(self,request, pk):
         session = self.get_object(pk)
-        serializer = SessionSerializer(session)
+        serializer = SessionSerializer(session, context={'teacher_id':request.user.id})
         return Response(serializer.data)
     
     def put(self, request, pk):
         session = self.get_object(pk)
         if request.user.user_type == User.Types.TEACHER:
             if session.assignment.teacher_section.teacher.user.id == request.user.id:
-                serializer = SessionSerializer(session, data=request.data, context={'id':pk})
+                serializer = SessionSerializer(session, data=request.data, context={'id':pk,'teacher_id':request.user.id})
                 serializer.is_valid(raise_exception=True)
                 serializer.save()
                 return Response(serializer.data)

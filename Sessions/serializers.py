@@ -26,6 +26,9 @@ class SessionSerializer(serializers.ModelSerializer):
         #Check that the end time is after the start time
         if attrs['start_time'] > attrs['end_time']:
             raise serializers.ValidationError({'end_time':'The end time must be after the start time.'})
+        #A teacher should only be able to create a session using one of his assignments, not the assignment of another teacher.
+        if attrs['assignment'].teacher_section.teacher.user.id != self.context['teacher_id']:
+            raise serializers.ValidationError({'assignment':'This assignment does not concern you.'})
         #Check that all of the concerned groups exist in the assignment
         concerned_groups = attrs['concerned_groups']
         assignment_concerned_groups = attrs['assignment'].concerned_groups
@@ -37,7 +40,7 @@ class SessionSerializer(serializers.ModelSerializer):
         Q_section = Q(assignment__module_section__section=section)
         Q_overlap = Q(end_time__gte=attrs['start_time']) & Q(start_time__lte= attrs['end_time']) #Returns true if two sessions are overlapping.
         if 'id' in self.context.keys():
-            #This is an update, we exclude this session from the search, otherwise we might find this session overlapping itself.
+            #This is an update, we exclude this session from the search, otherwise we might get a false positive (this session overlapping itself is not an issue).
             Q_overlap = Q_overlap & ~Q(id=self.context['id'])
         if Session.objects.filter(Q_section,Q_overlap).exists():
             raise serializers.ValidationError({'start_time':'This session is overlapping another one.'})
