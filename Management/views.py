@@ -1,3 +1,4 @@
+from django.db import models
 from django.http.response import Http404
 from django.shortcuts import render
 from rest_framework.response import Response
@@ -109,3 +110,20 @@ class ModuleList(APIView):
                 return Response(serializer.data,status=status.HTTP_200_OK)
         #Section not given or does not exist.
         return Response(status=status.HTTP_400_BAD_REQUEST)
+
+class ModuleDetail(APIView):
+    """
+    Retrieves a specific module
+    """
+    permission_classes = []
+
+    def get_object(self, pk):
+        try:
+            return Module.objects.get(pk=pk)
+        except:
+            raise Http404
+
+    def get(self, request, pk):
+        module = self.get_object(pk)
+        serializer = ModuleSerializer(module)
+        return Response(serializer.data)
