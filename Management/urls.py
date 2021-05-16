@@ -8,4 +8,5 @@ urlpatterns = [
     path('sections/<str:pk>/',SectionDetail.as_view(), name='section_detail'),
     path('assignments/',AssignmentList.as_view(), name='Assignment_list'),
     path('modules/', ModuleList.as_view(), name='module_list'),
+    path('modules/<str:pk>/', ModuleDetail.as_view(), name='module_detail'),
 ]
