@@ -38,8 +38,6 @@ class SessionList(APIView):
 
 class SessionDetail(APIView):
 
-    permission_classes = []
-
     def get_object(self, pk):
         try:
             return Session.objects.get(pk=pk)
@@ -53,7 +51,13 @@ class SessionDetail(APIView):
     
     def put(self, request, pk):
         session = self.get_object(pk)
-        serializer = SessionSerializer(session, data=request.data, context={'id':pk})
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-        return Response(serializer.data)
+        if request.user.user_type == User.Types.TEACHER:
+            if session.assignment.teacher_section.teacher.user.id == request.user.id:
+                serializer = SessionSerializer(session, data=request.data, context={'id':pk})
+                serializer.is_valid(raise_exception=True)
+                serializer.save()
+                return Response(serializer.data)
+            else:
+                return Response({'Unauthorized':'You can only update your own sessions.'},status=status.HTTP_401_UNAUTHORIZED)
+        else:
+            return Response({'Unauthorized':'Only teachers can update their sessions.'},status=status.HTTP_401_UNAUTHORIZED)
