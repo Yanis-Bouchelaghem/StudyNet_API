@@ -14,7 +14,7 @@ class SessionSerializer(serializers.ModelSerializer):
         fields = '__all__'
     
     def get_teacher_name(self, instance):
-        return instance.assignment.teacher_section.teacher.user.last_name[0]+'. '+ instance.assignment.teacher_section.teacher.user.first_name
+        return instance.assignment.teacher_section.teacher.user.first_name[0]+'. '+ instance.assignment.teacher_section.teacher.user.last_name
     def get_teacher_email(self, instance):
         return instance.assignment.teacher_section.teacher.user.email
     def get_module(self, instance):

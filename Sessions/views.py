@@ -1,6 +1,7 @@
+from django.http.response import Http404
 from django.shortcuts import render
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import serializers, status
 from rest_framework.views import APIView
 
 from .models import Session
@@ -34,3 +35,18 @@ class SessionList(APIView):
             return Response(serializer.data,status=status.HTTP_201_CREATED)
         else:
             return Response({"Unauthorized":"Only teachers may create sessions."},status=status.HTTP_401_UNAUTHORIZED)
+
+class SessionDetail(APIView):
+
+    permission_classes = []
+
+    def get_object(self, pk):
+        try:
+            return Session.objects.get(pk=pk)
+        except:
+            raise Http404
+    
+    def get(self,request, pk):
+        session = self.get_object(pk)
+        serializer = SessionSerializer(session)
+        return Response(serializer.data)
