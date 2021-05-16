@@ -62,13 +62,7 @@ class TeacherList(APIView):
     def get(self,request):
         teachers = self.get_queryset()
         if teachers != status.HTTP_404_NOT_FOUND:
-            serializer = None
-            if request.user.user_type == User.Types.ADMINISTRATOR:
-                #If the user making the request is an admin, display the assignments.
-                serializer = TeacherSerializer(teachers,many=True)
-            else:
-                #If the user making the request is not an admin, do not display the assignments.
-                serializer = SimpleTeacherSerializer(teachers,many=True)
+            serializer = TeacherSerializer(teachers,many=True)
             return Response(serializer.data,status=status.HTTP_200_OK)
         #Given section doesn't exist.
         return Response(status=status.HTTP_400_BAD_REQUEST)
