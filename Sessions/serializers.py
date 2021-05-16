@@ -36,14 +36,9 @@ class SessionSerializer(serializers.ModelSerializer):
         section = attrs['assignment'].module_section.section
         Q_section = Q(assignment__module_section__section=section)
         Q_overlap = Q(end_time__gte=attrs['start_time']) & Q(start_time__lte= attrs['end_time']) #Returns true if two sessions are overlapping.
-        result = False
         if 'id' in self.context.keys():
             #This is an update, we exclude this session from the search, otherwise we might find this session overlapping itself.
-            result = Session.objects.filter(Q_section,Q_overlap,~Q(id=self.context['id'])).exists()
-            test = Session.objects.filter(Q_section,Q_overlap,~Q(id=self.context['id']))
-        else:
-            #This is a creation
-            result = Session.objects.filter(Q_section,Q_overlap).exists()
-        if result:
+            Q_overlap = Q_overlap & ~Q(id=self.context['id'])
+        if Session.objects.filter(Q_section,Q_overlap).exists():
             raise serializers.ValidationError({'start_time':'This session is overlapping another one.'})
         return attrs
