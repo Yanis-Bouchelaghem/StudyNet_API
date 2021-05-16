@@ -50,3 +50,10 @@ class SessionDetail(APIView):
         session = self.get_object(pk)
         serializer = SessionSerializer(session)
         return Response(serializer.data)
+    
+    def put(self, request, pk):
+        session = self.get_object(pk)
+        serializer = SessionSerializer(session, data=request.data, context={'id':pk})
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(serializer.data)

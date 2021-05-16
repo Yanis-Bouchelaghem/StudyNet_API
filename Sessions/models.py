@@ -32,7 +32,7 @@ class Session(models.Model):
     comment = models.TextField(_('comment'), blank=True)
 
     def __str__(self):
-        return self.meeting_link
+        return str(self.id)
 
     class Meta:
         verbose_name = _('Session  ')
