@@ -7,6 +7,7 @@ class SessionSerializer(serializers.ModelSerializer):
     teacher_email = serializers.SerializerMethodField()
     module = serializers.SerializerMethodField()
     module_type = serializers.SerializerMethodField()
+    section = serializers.SerializerMethodField()
 
     read_only_fields = ('teacher_name','teacher_email','module','module_type')
     class Meta:
@@ -21,6 +22,8 @@ class SessionSerializer(serializers.ModelSerializer):
         return instance.assignment.module_section.module.name
     def get_module_type(self, instance):
         return instance.assignment.module_type
+    def get_section(self, instance):
+        return instance.assignment.module_section.section.code
     
     def validate(self, attrs):
         #Check that the end time is after the start time
