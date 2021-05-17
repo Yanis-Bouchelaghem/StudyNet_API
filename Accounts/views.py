@@ -50,14 +50,18 @@ class TeacherList(APIView):
     """
     def get_queryset(self):
         section = self.request.query_params.get('section',None)
+        department = self.request.query_params.get('department',None)
         if section:
-            if Section.objects.filter(code=section).exists():
+            try:
                 section_object = Section.objects.get(code=section)
                 return section_object.teacher_set.all()
-            else:
-                #Section does not exist.
-                return status.HTTP_404_NOT_FOUND
-        return Teacher.objects.all()
+            except:
+                raise Http404
+        if department:
+            return Teacher.objects.filter(department=department)
+        
+        #no section or department specified
+        return status.HTTP_404_NOT_FOUND
     
     def get(self,request):
         teachers = self.get_queryset()
