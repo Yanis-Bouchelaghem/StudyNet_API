@@ -29,7 +29,7 @@ class SessionList(APIView):
     
     def post(self, request):
         if request.user.user_type == User.Types.TEACHER:
-            serializer = SessionSerializer(data=request.data)
+            serializer = SessionSerializer(data=request.data, context={'teacher_id':request.user.id})
             serializer.is_valid(raise_exception=True)
             serializer.save()
             return Response(serializer.data,status=status.HTTP_201_CREATED)
