@@ -46,5 +46,5 @@ class SessionSerializer(serializers.ModelSerializer):
             #This is an update, we exclude this session from the search, otherwise we might get a false positive (this session overlapping itself is not an issue).
             Q_overlap = Q_overlap & ~Q(id=self.context['id'])
         if Session.objects.filter(Q_section,Q_overlap).exists():
-            raise serializers.ValidationError({'start_time':'This session is overlapping another one.'})
+            raise serializers.ValidationError({'overlapping':'This session is overlapping another one.'})
         return attrs
