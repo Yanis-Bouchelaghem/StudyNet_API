@@ -19,7 +19,7 @@ class SessionSerializer(serializers.ModelSerializer):
     def get_teacher_email(self, instance):
         return instance.assignment.teacher_section.teacher.user.email
     def get_module(self, instance):
-        return instance.assignment.module_section.module.name
+        return instance.assignment.module_section.module.code
     def get_module_type(self, instance):
         return instance.assignment.module_type
     def get_section(self, instance):
