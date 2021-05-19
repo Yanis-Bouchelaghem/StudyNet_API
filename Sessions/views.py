@@ -61,3 +61,16 @@ class SessionDetail(APIView):
                 return Response({'Unauthorized':'You can only update your own sessions.'},status=status.HTTP_401_UNAUTHORIZED)
         else:
             return Response({'Unauthorized':'Only teachers can update their sessions.'},status=status.HTTP_401_UNAUTHORIZED)
+    
+    def delete(self, request, pk):
+        session = self.get_object(pk)
+        #Check that this user is a teacher
+        if request.user.user_type == User.Types.TEACHER:
+            #Check that this session has been created by this teacher
+            if session.assignment.teacher_section.teacher.user.id == request.user.id:
+                session.delete()
+                return Response(status=status.HTTP_204_NO_CONTENT)
+            else:
+                return Response({'Unauthorized':'You can only delete your own sessions.'}, status=status.status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response({'Unauthorized':'Only teachers can delete their sessions.'}, status=status.status.HTTP_400_BAD_REQUEST)
