@@ -40,11 +40,12 @@ class SessionSerializer(serializers.ModelSerializer):
                 raise serializers.ValidationError({'concerned_groups':'One of the specified groups does not exist in assignment.'})
         #Check that no other session is overlapping with this one.
         section = attrs['assignment'].module_section.section
-        Q_section = Q(assignment__module_section__section=section)
+        Q_section = Q(assignment__module_section__section=section) #Has to be the same section
+        Q_day = Q(day=attrs['day']) #Has to be the same day
         Q_overlap = Q(end_time__gte=attrs['start_time']) & Q(start_time__lte= attrs['end_time']) #Returns true if two sessions are overlapping.
         if 'id' in self.context.keys():
             #This is an update, we exclude this session from the search, otherwise we might get a false positive (this session overlapping itself is not an issue).
             Q_overlap = Q_overlap & ~Q(id=self.context['id'])
-        if Session.objects.filter(Q_section,Q_overlap).exists():
+        if Session.objects.filter(Q_section,Q_day,Q_overlap).exists():
             raise serializers.ValidationError({'overlapping':'This session is overlapping another one.'})
         return attrs
