@@ -71,6 +71,6 @@ class SessionDetail(APIView):
                 session.delete()
                 return Response(status=status.HTTP_204_NO_CONTENT)
             else:
-                return Response({'Unauthorized':'You can only delete your own sessions.'}, status=status.status.HTTP_400_BAD_REQUEST)
+                return Response({'Unauthorized':'You can only delete your own sessions.'}, status=status.HTTP_400_BAD_REQUEST)
         else:
-            return Response({'Unauthorized':'Only teachers can delete their sessions.'}, status=status.status.HTTP_400_BAD_REQUEST)
+            return Response({'Unauthorized':'Only teachers can delete their sessions.'}, status=status.HTTP_401_UNAUTHORIZED)
