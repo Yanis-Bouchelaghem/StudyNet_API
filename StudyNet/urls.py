@@ -22,5 +22,6 @@ urlpatterns = [
     path('api/',include('Management.urls')),
     path('api/',include('External.urls')),
     path('api/',include('Sessions.urls')),
+    path('api/',include('Homeworks.urls')),
     
 ]
