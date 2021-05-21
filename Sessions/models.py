@@ -37,6 +37,7 @@ class Session(models.Model):
     class Meta:
         verbose_name = _('Session  ')
         verbose_name_plural = _('Sessions')
+        ordering = ('start_time',)
 
 class SessionHistory(models.Model):
     """
