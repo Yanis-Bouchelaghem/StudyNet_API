@@ -15,7 +15,8 @@ class Homework(models.Model):
     assignment = models.ForeignKey("Management.Assignment", verbose_name=_("assignment"), on_delete=models.CASCADE)
     concerned_groups = ArrayField(base_field=models.PositiveSmallIntegerField(), verbose_name=_('concerned groups'))
     title = models.CharField(_("title"), max_length=150)
-    due_date = models.DateTimeField(_("due date"), auto_now=False, auto_now_add=False)
+    due_date = models.DateField(_("due date"), auto_now=False, auto_now_add=False)
+    due_time = models.TimeField(_("due time"), auto_now=False, auto_now_add=False)
     comment = models.TextField(_("comment"), blank=True)
     def __str__(self):
         return self.title
@@ -36,7 +37,8 @@ class HomeworkHistory(models.Model):
     module_type = models.CharField(_('module type'), choices=Module.Types.choices,max_length=15)
     concerned_groups = ArrayField(base_field=models.PositiveSmallIntegerField(), verbose_name=_('concerned groups'))
     title = models.CharField(_("title"), max_length=150)
-    due_date = models.DateTimeField(_("due date"), auto_now=False, auto_now_add=False)
+    due_date = models.DateField(_("due date"), auto_now=False, auto_now_add=False)
+    due_time = models.TimeField(_("due time"), auto_now=False, auto_now_add=False)
     comment = models.TextField(_("comment"),blank=True)
     action_date = models.DateTimeField(_('action date'), default=timezone.now)
     action_type = models.CharField(_('action type'), choices=ActionTypes.choices,max_length=15)
