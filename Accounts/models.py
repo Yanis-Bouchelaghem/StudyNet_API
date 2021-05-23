@@ -144,10 +144,30 @@ class Student(models.Model):
         verbose_name = _('Student')
         verbose_name_plural = _('Students')
 
-#Uncomment this when needing to add extra data to the admin users.
-#(obviously gonna have to handle this extra data yourself if you add any.)
-#class Admin(models.Model):
-#    """
-#        Represents an admin with their user data...
-#    """
-#    user = models.OneToOneField('user', verbose_name=_('user'), primary_key=True, on_delete=models.CASCADE)
+## Receivers
+from django.dispatch import receiver
+from django.urls import reverse
+from django_rest_passwordreset.signals import reset_password_token_created
+from django.core.mail import send_mail  
+
+
+@receiver(reset_password_token_created)
+def password_reset_token_created(sender, instance, reset_password_token, *args, **kwargs):
+
+    email_plaintext_message = (
+        ("Hello {}.\nWe've received a request to reset your password for your StudyNet account associated with {}."+
+    "\n\nYour code is {}\n\nThis code is valid for the next 24 hours."+
+    "\nIf you did not request a password reset, you can safely ignore this email."+
+    "\nThis email has been sent automatically."+
+    "\n— The StudyNet team")
+    .format(reset_password_token.user.last_name,reset_password_token.user.email,reset_password_token.key))
+    send_mail(
+        # title:
+        "Password Reset for {title}".format(title="StudyNet"),
+        # message:
+        email_plaintext_message,
+        # from:
+        "noreply@somehost.local",
+        # to:
+        [reset_password_token.user.email]
+    )
