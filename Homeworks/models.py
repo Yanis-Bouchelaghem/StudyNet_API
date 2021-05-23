@@ -24,6 +24,7 @@ class Homework(models.Model):
     class Meta:
         verbose_name = _('Homework')
         verbose_name_plural = _('Homeworks')
+        ordering = ('due_date','due_time',)
 
 class HomeworkHistory(models.Model):
     """
