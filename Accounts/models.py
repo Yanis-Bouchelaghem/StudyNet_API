@@ -156,10 +156,11 @@ from django.conf import settings
 def password_reset_token_created(sender, instance, reset_password_token, *args, **kwargs):
     email_plaintext_message = (
         ("Hello {}.\nWe've received a request to reset your password for your StudyNet account associated with {}."+
-    "\n\nYour code is {}\n\nThis code is valid for the next 24 hours."+
-    "\nIf you did not request a password reset, you can safely ignore this email."+
-    "\nThis email has been sent automatically."+
-    "\n— The StudyNet team")
+    "\n\nHere is your code: {}"+
+    "\n\nIf you did not request a password reset, you can safely ignore this email."+
+    "\nThank you."+
+    "\n\nThis email has been sent automatically."+
+    "\n— The Studynet team")
     .format(reset_password_token.user.last_name,reset_password_token.user.email,reset_password_token.key))
     send_mail(
         # title:
