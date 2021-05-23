@@ -17,6 +17,10 @@ class LoginSerializer(serializers.Serializer):
             return user
         raise serializers.ValidationError('Incorrect credentials.')
 
+class ChangePasswordSerializer(serializers.Serializer):
+    old_password = serializers.CharField()
+    new_password = serializers.CharField()
+
 class CreateUserSerializer(serializers.ModelSerializer):
     """
         Used to display and create a user.

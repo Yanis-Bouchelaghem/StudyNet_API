@@ -6,7 +6,7 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 from knox.models import AuthToken
-
+from django.contrib.auth import authenticate
 #Custom imports
 from .models import User,Student,Teacher
 from Management.models import Section
@@ -165,3 +165,22 @@ class IsEmailAvailable(APIView):
             return Response({'email_taken':'This email is already taken.'},status=status.HTTP_302_FOUND)
         else:
             return Response({'email_available':'This email is available'},status=status.HTTP_200_OK)
+
+class ChangePassword(APIView):
+    """
+    Expects the old password and the new password,
+    changes the user's password to the new one.
+    """
+    def post(self, request):
+        serializer = ChangePasswordSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        #Try to authenticate the user using the old password.
+        user = authenticate(email=request.user.email,password=serializer.data['old_password'])
+        if user:
+            #Authentication successful, we change the password to the new one.
+            user.set_password(serializer.data['new_password'])
+            user.save()
+            return Response(status=status.HTTP_200_OK)
+        else:
+            #Authentication failed.
+            return Response({'invalid_password':'Old password is invalid.'},status=status.HTTP_400_BAD_REQUEST)
