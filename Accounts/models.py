@@ -149,11 +149,11 @@ from django.dispatch import receiver
 from django.urls import reverse
 from django_rest_passwordreset.signals import reset_password_token_created
 from django.core.mail import send_mail  
+from django.conf import settings
 
 
 @receiver(reset_password_token_created)
 def password_reset_token_created(sender, instance, reset_password_token, *args, **kwargs):
-
     email_plaintext_message = (
         ("Hello {}.\nWe've received a request to reset your password for your StudyNet account associated with {}."+
     "\n\nYour code is {}\n\nThis code is valid for the next 24 hours."+
@@ -163,11 +163,11 @@ def password_reset_token_created(sender, instance, reset_password_token, *args, 
     .format(reset_password_token.user.last_name,reset_password_token.user.email,reset_password_token.key))
     send_mail(
         # title:
-        "Password Reset for {title}".format(title="StudyNet"),
+        "Password reset for {title}".format(title="Studynet"),
         # message:
         email_plaintext_message,
         # from:
-        "noreply@somehost.local",
+        settings.EMAIL_HOST_USER,
         # to:
         [reset_password_token.user.email]
     )
