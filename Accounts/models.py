@@ -146,7 +146,6 @@ class Student(models.Model):
 
 ## Receivers
 from django.dispatch import receiver
-from django.urls import reverse
 from django_rest_passwordreset.signals import reset_password_token_created
 from django.core.mail import send_mail  
 from django.conf import settings
@@ -155,12 +154,11 @@ from django.conf import settings
 @receiver(reset_password_token_created)
 def password_reset_token_created(sender, instance, reset_password_token, *args, **kwargs):
     email_plaintext_message = (
-        ("Hello {}.\nWe've received a request to reset your password for your StudyNet account associated with {}."+
+        ("Hello {}.\nWe've received a request to reset your password for your Studynet account associated with {}."+
     "\n\nHere is your code: {}"+
     "\n\nIf you did not request a password reset, you can safely ignore this email."+
     "\nThank you."+
-    "\n\nThis email has been sent automatically."+
-    "\n— The Studynet team")
+    "\n\n— The Studynet team")
     .format(reset_password_token.user.last_name,reset_password_token.user.email,reset_password_token.key))
     send_mail(
         # title:

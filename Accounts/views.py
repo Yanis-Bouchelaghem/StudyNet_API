@@ -184,3 +184,24 @@ class ChangePassword(APIView):
         else:
             #Authentication failed.
             return Response({'invalid_password':'Old password is invalid.'},status=status.HTTP_400_BAD_REQUEST)
+
+class ChangeStudentSection(APIView):
+    """
+    Expects the code of a section,
+    assigns this section to the requesting student.
+    """
+    def post(self, request):
+        if request.user.user_type == User.Types.STUDENT:
+            #Check the validity of the given section code
+            serializer = SimpleSectionCodeSerializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            #Get the section and the student
+            section = Section.objects.get(code=serializer.data['section'])
+            student = request.user.student
+            #Update the section
+            student.section = section
+            student.save()
+            return Response(status=status.HTTP_200_OK)
+        else:
+            Response({'Unauthorized':'Only students can change their section'},status=status.HTTP_401_UNAUTHORIZED)
+        

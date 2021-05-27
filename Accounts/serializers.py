@@ -109,6 +109,12 @@ class SectionCharField(serializers.CharField):
             raise ValidationError('section \"' + value + '\" does not exist.')
         return value
 
+class SimpleSectionCodeSerializer(serializers.Serializer):
+    """
+        This serializer only expects a section code
+    """
+    section = SectionCharField()
+
 class CreateTeacherSerializer(serializers.ModelSerializer):
     """
         Only used to create a teacher with optionally their assigned sections.
