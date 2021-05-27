@@ -1,5 +1,5 @@
 from django.urls import path,include
-from .views import StudentList,TeacherList,Login,GetUserData,IsEmailAvailable,TeacherDetail,ChangePassword
+from .views import StudentList,TeacherList,Login,GetUserData,IsEmailAvailable,TeacherDetail,ChangePassword,ChangeStudentSection
 from knox import views as knox_views
 
 urlpatterns = [
@@ -13,5 +13,6 @@ urlpatterns = [
     path('logoutall/',knox_views.LogoutAllView.as_view(),name='knox_logout_all'),
     path('change_password/',ChangePassword.as_view(), name='change_password'),
     path('change_password_email/', include('django_rest_passwordreset.urls', namespace='change_password_email')),
+    path('change_section/',ChangeStudentSection.as_view(),name='change_student_section'),
 
 ]
