@@ -11,6 +11,7 @@ from django.contrib.auth import authenticate
 from .models import User,Student,Teacher
 from Management.models import Section
 from .serializers import *
+from Management.serializers import SectionSerializer
 
 # Create your views here.
 class StudentList(APIView):
@@ -201,7 +202,8 @@ class ChangeStudentSection(APIView):
             #Update the section
             student.section = section
             student.save()
-            return Response(status=status.HTTP_200_OK)
+            #Return the selected section in the response.
+            return Response(SectionSerializer(section).data,status=status.HTTP_200_OK)
         else:
             Response({'Unauthorized':'Only students can change their section'},status=status.HTTP_401_UNAUTHORIZED)
         
