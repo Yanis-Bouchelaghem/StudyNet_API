@@ -39,6 +39,6 @@ def notifySessionDeleted(session):
     module_name = session.assignment.module_section.module.name
     fcm_send_topic_message(
         topic_name=section_code.replace(' ','_'),
-        message_body=("Teacher "+ teacher_name + " deleted a session for the module \""
+        message_body=("Teacher "+ teacher_name + " removed a session for the module \""
         + module_name),
-        message_title="Session deleted by teacher "+ teacher_name +".")
+        message_title="Session removed by teacher "+ teacher_name +".")

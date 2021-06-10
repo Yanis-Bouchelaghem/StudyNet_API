@@ -6,3 +6,4 @@ DATABASE_PASSWORD=database_password
 HOST=localhost
 EMAIL_HOST_USER=email@example.me
 EMAIL_HOST_PASSWORD=emailpassword
+FCM_SERVER_KEY=serverkey

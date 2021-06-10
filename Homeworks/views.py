@@ -5,7 +5,9 @@ from rest_framework import serializers, status
 from rest_framework.views import APIView
 
 from Accounts.models import User
-from .models import Homework
+from .notifications import *
+from utilities import ActionTypes
+from .models import Homework,HomeworkHistory
 from .serializers import HomeworkSerializer
 # Create your views here.
 
@@ -31,7 +33,11 @@ class HomeworkList(APIView):
         if request.user.user_type == User.Types.TEACHER:
             serializer = HomeworkSerializer(data=request.data, context={'teacher_id':request.user.id})
             serializer.is_valid(raise_exception=True)
-            serializer.save()
+            homework = serializer.save()
+            #Add the creation of this homework to the history
+            addToHomeworkHistory(homework,ActionTypes.ADD,request.user)
+            #Send the notification to the students
+            notifyHomeworkCreated(homework)
             return Response(serializer.data,status=status.HTTP_201_CREATED)
         else:
             return Response({"Unauthorized":"Only teachers may create homeworks."},status=status.HTTP_401_UNAUTHORIZED)
@@ -55,7 +61,11 @@ class HomeworkDetail(APIView):
             if homework.assignment.teacher_section.teacher.user.id == request.user.id:
                 serializer = HomeworkSerializer(homework, data=request.data, context={'teacher_id':request.user.id})
                 serializer.is_valid(raise_exception=True)
-                serializer.save()
+                homework = serializer.save()
+                #Add the update of this homework to the history
+                addToHomeworkHistory(homework,ActionTypes.UPDATE,request.user)
+                #Send the notification to the students
+                notifyHomeworkUpdated(homework)
                 return Response(serializer.data)
             else:
                 return Response({'Unauthorized':'You can only update your own homeworks.'},status=status.HTTP_401_UNAUTHORIZED)
@@ -69,8 +79,27 @@ class HomeworkDetail(APIView):
             #Check that this homework has been created by this teacher
             if homework.assignment.teacher_section.teacher.user.id == request.user.id:
                 homework.delete()
+                #Add the deletion of this homework to the history
+                addToHomeworkHistory(homework,ActionTypes.DELETE,request.user)
+                #Send the notification to the students
+                notifyHomeworkDeleted(homework)
                 return Response(status=status.HTTP_204_NO_CONTENT)
             else:
                 return Response({'Unauthorized':'You can only delete your own homeworks.'}, status=status.HTTP_400_BAD_REQUEST)
         else:
             return Response({'Unauthorized':'Only teachers can delete their homeworks.'}, status=status.HTTP_401_UNAUTHORIZED)
+
+def addToHomeworkHistory(homework, action_type, user):
+    HomeworkHistory.objects.create(
+                    teacher=homework.assignment.teacher_section.teacher,
+                    section=homework.assignment.teacher_section.section,
+                    module=homework.assignment.module_section.module,
+                    module_type=homework.assignment.module_type,
+                    concerned_groups=homework.concerned_groups,
+                    title=homework.title,
+                    due_date=homework.due_date,
+                    due_time=homework.due_time,
+                    comment=homework.comment,
+                    action_type=action_type,
+                    author=user
+                )
