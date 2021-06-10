@@ -6,6 +6,7 @@ from rest_framework.views import APIView
 
 from utilities import ActionTypes
 from .models import Session,SessionHistory
+from .notifications import *
 from .serializers import SessionSerializer
 from Accounts.models import User
 # Create your views here.
@@ -35,6 +36,8 @@ class SessionList(APIView):
             session = serializer.save()
             #Add the creation of this session to the history
             addToSessionHistory(session,ActionTypes.ADD,request.user)
+            #Send the notification to the students
+            notifySessionCreated(session)
             return Response(serializer.data,status=status.HTTP_201_CREATED)
         else:
             return Response({"Unauthorized":"Only teachers may create sessions."},status=status.HTTP_401_UNAUTHORIZED)
@@ -61,6 +64,8 @@ class SessionDetail(APIView):
                 session = serializer.save()
                 #Add the update of this session to the history
                 addToSessionHistory(session,ActionTypes.UPDATE,request.user)
+                #Send the notification to the students
+                notifySessionUpdated(session)
                 return Response(serializer.data)
             else:
                 return Response({'Unauthorized':'You can only update your own sessions.'},status=status.HTTP_401_UNAUTHORIZED)
@@ -76,6 +81,8 @@ class SessionDetail(APIView):
                 session.delete()
                 #Add the deletion of this session to the history
                 addToSessionHistory(session,ActionTypes.DELETE,request.user)
+                #Send the notification to the students
+                notifySessionDeleted(session)
                 return Response(status=status.HTTP_204_NO_CONTENT)
             else:
                 return Response({'Unauthorized':'You can only delete your own sessions.'}, status=status.HTTP_400_BAD_REQUEST)
