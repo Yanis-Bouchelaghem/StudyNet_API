@@ -12,7 +12,7 @@ def notifySessionCreated(session):
     fcm_send_topic_message(
         topic_name=section_code.replace(' ','_'),
         message_body=("Teacher "+ teacher_name + " created a new session for the module \""
-        + module_name
+        + module_name + "\""
         +".\nStart time : " + start_time
         +"\nEnd time : " + end_time),
         message_title="New session created by teacher "+ teacher_name +".")
@@ -27,7 +27,7 @@ def notifySessionUpdated(session):
     fcm_send_topic_message(
         topic_name=section_code.replace(' ','_'),
         message_body=("Teacher "+ teacher_name + " updated a session for the module \""
-        + module_name),
+        + module_name + "\""),
         message_title="Session updated by teacher "+ teacher_name +".")
 
 def notifySessionDeleted(session):
@@ -40,5 +40,5 @@ def notifySessionDeleted(session):
     fcm_send_topic_message(
         topic_name=section_code.replace(' ','_'),
         message_body=("Teacher "+ teacher_name + " removed a session for the module \""
-        + module_name),
+        + module_name+ "\""),
         message_title="Session removed by teacher "+ teacher_name +".")
