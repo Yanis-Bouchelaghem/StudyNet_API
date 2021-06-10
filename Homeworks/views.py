@@ -5,6 +5,7 @@ from rest_framework import serializers, status
 from rest_framework.views import APIView
 
 from Accounts.models import User
+from .notifications import *
 from .models import Homework
 from .serializers import HomeworkSerializer
 # Create your views here.
@@ -31,7 +32,9 @@ class HomeworkList(APIView):
         if request.user.user_type == User.Types.TEACHER:
             serializer = HomeworkSerializer(data=request.data, context={'teacher_id':request.user.id})
             serializer.is_valid(raise_exception=True)
-            serializer.save()
+            homework = serializer.save()
+            #Send the notification to the students
+            notifyHomeworkCreated(homework)
             return Response(serializer.data,status=status.HTTP_201_CREATED)
         else:
             return Response({"Unauthorized":"Only teachers may create homeworks."},status=status.HTTP_401_UNAUTHORIZED)
@@ -55,7 +58,9 @@ class HomeworkDetail(APIView):
             if homework.assignment.teacher_section.teacher.user.id == request.user.id:
                 serializer = HomeworkSerializer(homework, data=request.data, context={'teacher_id':request.user.id})
                 serializer.is_valid(raise_exception=True)
-                serializer.save()
+                homework = serializer.save()
+                #Send the notification to the students
+                notifyHomeworkUpdated(homework)
                 return Response(serializer.data)
             else:
                 return Response({'Unauthorized':'You can only update your own homeworks.'},status=status.HTTP_401_UNAUTHORIZED)
@@ -69,6 +74,8 @@ class HomeworkDetail(APIView):
             #Check that this homework has been created by this teacher
             if homework.assignment.teacher_section.teacher.user.id == request.user.id:
                 homework.delete()
+                #Send the notification to the students
+                notifyHomeworkDeleted(homework)
                 return Response(status=status.HTTP_204_NO_CONTENT)
             else:
                 return Response({'Unauthorized':'You can only delete your own homeworks.'}, status=status.HTTP_400_BAD_REQUEST)
