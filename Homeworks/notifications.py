@@ -12,7 +12,8 @@ def notifyHomeworkCreated(homework):
         message_body=("Teacher "+ teacher_name + " created a new homework for the module \""
         + module_name +"\""),
         message_title="New homework created by teacher "+ teacher_name +".",
-        data_message={"test_data":"test data"})
+        data_message={"test_data":"test data"},
+        message_icon="app_logo")
 
 def notifyHomeworkUpdated(homework):
     """
@@ -25,7 +26,8 @@ def notifyHomeworkUpdated(homework):
         topic_name=section_code.replace(' ','_'),
         message_body=("Teacher "+ teacher_name + " updated a homework for the module \""
         + module_name + "\""),
-        message_title="A homework has been updated by teacher "+ teacher_name +".")
+        message_title="A homework has been updated by teacher "+ teacher_name +".",
+        message_icon="app_logo")
 
 def notifyHomeworkDeleted(session):
     """
@@ -38,4 +40,5 @@ def notifyHomeworkDeleted(session):
         topic_name=section_code.replace(' ','_'),
         message_body=("Teacher "+ teacher_name + " removed a homework for the module \""
         + module_name + "\""),
-        message_title="A homework has been removed by teacher "+ teacher_name +".")
+        message_title="A homework has been removed by teacher "+ teacher_name +".",
+        message_icon="app_logo")
