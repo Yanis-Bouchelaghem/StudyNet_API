@@ -46,9 +46,10 @@ def notifySessionUpdated(oldSession, newSession):
     #Send the notification using the constructed string.
     section_code = newSession.assignment.teacher_section.section.code
     teacher_name = newSession.assignment.teacher_section.teacher.user.last_name
+    old_module = oldSession.assignment.module_section.module.name
     fcm_send_topic_message(
         topic_name=section_code.replace(' ','_'),
-        message_body=("Teacher "+ teacher_name + " updated a session.\nModified information:\n"
+        message_body=("Teacher "+ teacher_name + " updated a session for the module "+ old_module + ".\nModified information:\n"
         + modified_fields),
         message_title="Session updated by teacher "+ teacher_name +".")
 

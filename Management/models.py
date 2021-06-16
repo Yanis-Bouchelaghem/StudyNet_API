@@ -48,7 +48,7 @@ class Section(models.Model):
     number_of_groups = models.PositiveSmallIntegerField(_('number of groups'),
         help_text=_('The number of groups this section is divided into.'))
     specialty = models.ForeignKey('Specialty', verbose_name=_('specialty'), on_delete=models.CASCADE)
-    modules = models.ManyToManyField("Module", verbose_name=_("modules"), through='ModuleSection')
+    modules = models.ManyToManyField('Module', verbose_name=_('modules'), through='ModuleSection')
 
     def __str__(self):
         return self.code
