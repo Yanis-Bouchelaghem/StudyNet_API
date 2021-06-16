@@ -3,6 +3,7 @@ from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework import serializers, status
 from rest_framework.views import APIView
+import copy
 
 from utilities import ActionTypes
 from .models import Session,SessionHistory
@@ -61,11 +62,13 @@ class SessionDetail(APIView):
             if session.assignment.teacher_section.teacher.user.id == request.user.id:
                 serializer = SessionSerializer(session, data=request.data, context={'id':pk,'teacher_id':request.user.id})
                 serializer.is_valid(raise_exception=True)
-                session = serializer.save()
+                #make a copy of the old session data
+                old_session = copy.deepcopy(session)
+                serializer.save()
                 #Add the update of this session to the history
                 addToSessionHistory(session,ActionTypes.UPDATE,request.user)
                 #Send the notification to the students
-                notifySessionUpdated(session)
+                notifySessionUpdated(old_session,session)
                 return Response(serializer.data)
             else:
                 return Response({'Unauthorized':'You can only update your own sessions.'},status=status.HTTP_401_UNAUTHORIZED)
