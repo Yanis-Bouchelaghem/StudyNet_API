@@ -16,7 +16,8 @@ def notifySessionCreated(session):
         + module_name + "\""
         +".\nStart time : " + start_time
         +"\nEnd time : " + end_time),
-        message_title="New session created by teacher "+ teacher_name +".")
+        message_title="New session created by teacher "+ teacher_name +".",
+        message_icon="app_logo")
 
 def notifySessionUpdated(oldSession, newSession):
     """
@@ -51,7 +52,8 @@ def notifySessionUpdated(oldSession, newSession):
         topic_name=section_code.replace(' ','_'),
         message_body=("Teacher "+ teacher_name + " updated a session for the module "+ old_module + ".\nModified information:\n"
         + modified_fields),
-        message_title="Session updated by teacher "+ teacher_name +".")
+        message_title="Session updated by teacher "+ teacher_name +".",
+        message_icon="app_logo")
 
 def notifySessionDeleted(session):
     """
@@ -64,4 +66,5 @@ def notifySessionDeleted(session):
         topic_name=section_code.replace(' ','_'),
         message_body=("Teacher "+ teacher_name + " removed a session for the module \""
         + module_name+ "\""),
-        message_title="Session removed by teacher "+ teacher_name +".")
+        message_title="Session removed by teacher "+ teacher_name +".",
+        message_icon="app_logo")
