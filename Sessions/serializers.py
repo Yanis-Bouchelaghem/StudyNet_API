@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from django.db.models import Q
+from rest_framework.views import APIView
 from .models import Session
 
 class SessionSerializer(serializers.ModelSerializer):
@@ -48,4 +49,16 @@ class SessionSerializer(serializers.ModelSerializer):
             Q_overlap = Q_overlap & ~Q(id=self.context['id'])
         if Session.objects.filter(Q_section,Q_day,Q_overlap).exists():
             raise serializers.ValidationError({'overlapping':'This session is overlapping another one.'})
+        return attrs
+
+class SessionReportSerializer(serializers.Serializer):
+    id = serializers.IntegerField()
+    comment = serializers.CharField()
+    class Meta:
+        fields = ['id','comment',]
+
+    def validate(self, attrs):
+        #Check that the given id exists
+        if not Session.objects.filter(pk = attrs['id']).exists():
+            raise serializers.ValidationError({'id':'This id does not exist.'})
         return attrs

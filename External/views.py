@@ -71,8 +71,6 @@ class UnregisterTeacherFCM(APIView):
                 return Response(status = status.HTTP_200_OK)
             except FCMDevice.DoesNotExist:
                 return Response(status = status.HTTP_404_NOT_FOUND)
-                
-
         else:
             return Response({'invalid_user_type':'Only teachers can subscribe to individual notifications.'},
             status = status.HTTP_404_NOT_FOUND)

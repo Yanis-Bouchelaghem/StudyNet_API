@@ -1,4 +1,6 @@
 from fcm_django.fcm import fcm_send_topic_message
+from fcm_django.models import FCMDevice
+
 from .models import Session
 
 def notifySessionCreated(session):
@@ -68,3 +70,17 @@ def notifySessionDeleted(session):
         + module_name+ "\""),
         message_title="Session removed by teacher "+ teacher_name +".",
         message_icon="app_logo")
+
+def notifyTeacherReport(session, comment, admin):
+    """
+    Sends a push notification to the teacher's device(s)
+    """
+    #Send the notifications to all of the devices that
+    #are registered by the teacher of this session
+    teacherDevices = FCMDevice.objects.filter(user=session.assignment.teacher_section.teacher.user)
+    teacherDevices.send_message(title="Administrator "+admin.last_name +
+     " has reported one of your sessions",
+      body=("Administrator "+admin.last_name+" has reported your session for the module \""+
+      session.assignment.module_section.module.name+"\" scheduled at " + str(session.start_time)+
+      "\nComment : " + comment))
+
