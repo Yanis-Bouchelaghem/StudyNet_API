@@ -82,5 +82,5 @@ def notifyTeacherReport(session, comment, admin):
      " has reported one of your sessions",
       body=("Administrator "+admin.last_name+" has reported your session for the module \""+
       session.assignment.module_section.module.name+"\" scheduled at " + str(session.start_time)+
-      "\nComment : " + comment))
+      " for the section " + session.assignment.module_section.section.code +"\nComment : " + comment))
 
