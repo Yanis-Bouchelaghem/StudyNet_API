@@ -3,6 +3,7 @@ from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework import serializers, status
 from rest_framework.views import APIView
+import copy
 
 from Accounts.models import User
 from .notifications import *
@@ -61,11 +62,13 @@ class HomeworkDetail(APIView):
             if homework.assignment.teacher_section.teacher.user.id == request.user.id:
                 serializer = HomeworkSerializer(homework, data=request.data, context={'teacher_id':request.user.id})
                 serializer.is_valid(raise_exception=True)
+                #make a copy of the old homework data
+                old_homework = copy.deepcopy(homework)
                 homework = serializer.save()
                 #Add the update of this homework to the history
                 addToHomeworkHistory(homework,ActionTypes.UPDATE,request.user)
                 #Send the notification to the students
-                notifyHomeworkUpdated(homework)
+                notifyHomeworkUpdated(old_homework,homework)
                 return Response(serializer.data)
             else:
                 return Response({'Unauthorized':'You can only update your own homeworks.'},status=status.HTTP_401_UNAUTHORIZED)
