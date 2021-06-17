@@ -77,10 +77,11 @@ def notifyTeacherReport(session, comment, admin):
     """
     #Send the notifications to all of the devices that
     #are registered by the teacher of this session
-    teacherDevices = FCMDevice.objects.filter(user=session.assignment.teacher_section.teacher.user)
-    teacherDevices.send_message(title="Administrator "+admin.last_name +
+    teacher_devices = FCMDevice.objects.filter(user=session.assignment.teacher_section.teacher.user)
+    teacher_devices.send_message(title="Administrator "+admin.last_name +
      " has reported one of your sessions",
       body=("Administrator "+admin.last_name+" has reported your session for the module \""+
       session.assignment.module_section.module.name+"\" scheduled at " + str(session.start_time)+
-      " for the section " + session.assignment.module_section.section.code +"\nComment : " + comment))
+      " for the section " + session.assignment.module_section.section.code +"\nComment : " + comment),
+      icon="app_logo")
 
