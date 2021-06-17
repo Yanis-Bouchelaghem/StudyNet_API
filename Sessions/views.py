@@ -8,7 +8,7 @@ import copy
 from utilities import ActionTypes
 from .models import Session,SessionHistory
 from .notifications import *
-from .serializers import SessionSerializer
+from .serializers import SessionSerializer,SessionReportSerializer
 from Accounts.models import User
 # Create your views here.
 
@@ -92,6 +92,21 @@ class SessionDetail(APIView):
         else:
             return Response({'Unauthorized':'Only teachers can delete their sessions.'}, status=status.HTTP_401_UNAUTHORIZED)
 
+class ReportSession(APIView):
+
+    def post(self, request):
+        #Check that this user is an administrator
+        if request.user.user_type == User.Types.ADMINISTRATOR:
+            serializer = SessionReportSerializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            session = Session.objects.get(pk=serializer.data['id'])
+            #Notify the teacher
+            notifyTeacherReport(session,serializer.data['comment'], request.user)
+            return Response(status=status.HTTP_200_OK)
+        else:
+            return Response({'invalid_user_type':'Only administrators can report sessions.'},
+            status = status.HTTP_400_BAD_REQUEST)
+
 #Creates an entry in the session history table using the given data.
 def addToSessionHistory(session, action_type, user):
     SessionHistory.objects.create(
@@ -109,3 +124,4 @@ def addToSessionHistory(session, action_type, user):
                     action_type=action_type,
                     author=user
                 )
+

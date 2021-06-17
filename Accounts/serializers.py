@@ -109,11 +109,19 @@ class SectionCharField(serializers.CharField):
             raise ValidationError('section \"' + value + '\" does not exist.')
         return value
 
-class SimpleSectionCodeSerializer(serializers.Serializer):
+class ChangeSectionSerializer(serializers.Serializer):
     """
-        This serializer only expects a section code
+        This serializer only expects a section code and a group
     """
     section = SectionCharField()
+    group = serializers.IntegerField()
+
+    def validate(self, attrs):
+        section = Section.objects.get(pk=attrs['section'])
+        #Check if the given group exists in the section.
+        if section.number_of_groups < attrs['group']:
+            raise serializers.ValidationError({'group':'Given group does not exist in the section.'})
+        return attrs
 
 class CreateTeacherSerializer(serializers.ModelSerializer):
     """

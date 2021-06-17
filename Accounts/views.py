@@ -194,13 +194,15 @@ class ChangeStudentSection(APIView):
     def post(self, request):
         if request.user.user_type == User.Types.STUDENT:
             #Check the validity of the given section code
-            serializer = SimpleSectionCodeSerializer(data=request.data)
+            serializer = ChangeSectionSerializer(data=request.data)
             serializer.is_valid(raise_exception=True)
             #Get the section and the student
             section = Section.objects.get(code=serializer.data['section'])
+            group = serializer.data['group']
             student = request.user.student
-            #Update the section
+            #Update the section and the group for the student
             student.section = section
+            student.group = group
             student.save()
             #Return the selected section in the response.
             return Response(SectionSerializer(section).data,status=status.HTTP_200_OK)
