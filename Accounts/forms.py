@@ -1,6 +1,8 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
+from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
+from django import forms
 
 from .models import User,Teacher,Student
 #Inlines
@@ -60,6 +62,9 @@ class CustomUserAdmin(UserAdmin):
             if obj.user_type == User.Types.STUDENT or obj.user_type == User.Types.TEACHER:
                 obj.is_complete = False
                 obj.is_active = False
+            #If a superuser is being created, check that the creator is a superuser or an admin
+            if obj.user_type == User.Types.SUPERUSER and request.user.user_type != User.Types.SUPERUSER:
+                raise forms.ValidationError({'user_type':'Only superusers can create other superusers.'})
         else:
             if not obj.is_complete:
                 #If a student's information is completed, mark him as complete and activate him.
