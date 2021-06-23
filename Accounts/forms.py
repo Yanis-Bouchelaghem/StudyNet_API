@@ -1,6 +1,9 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.models import Group
+from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
+from django import forms
 
 from .models import User,Teacher,Student
 #Inlines
@@ -27,8 +30,7 @@ class CustomUserAdmin(UserAdmin):
         (None, {'fields': ('id','email', 'password')}),
         (_('Personal info'), {'fields': ('first_name', 'last_name')}),
         (_('Type'), {'fields': ('user_type',)}),
-        (_('Permissions'), {'fields': ('is_active', 'is_complete', 'is_staff', 'is_superuser',
-                                       'groups', 'user_permissions')}),
+        (_('Permissions'), {'fields': ('is_active', 'is_complete', 'is_staff', 'is_superuser')}),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
     )
     add_fieldsets = (
@@ -60,6 +62,17 @@ class CustomUserAdmin(UserAdmin):
             if obj.user_type == User.Types.STUDENT or obj.user_type == User.Types.TEACHER:
                 obj.is_complete = False
                 obj.is_active = False
+            #If a superuser is being created, check that the creator is a superuser or an admin
+            if obj.user_type == User.Types.SUPERUSER and request.user.user_type != User.Types.SUPERUSER:
+                raise forms.ValidationError({'user_type':'Only superusers can create other superusers.'})
+            #If an admin is being created, give him staff permission and add him to the administrator group
+            if obj.user_type == User.Types.ADMINISTRATOR:
+                obj.is_staff = True
+                obj.save()
+                admin_group = Group.objects.get(name='Administrator')
+                admin_group.user_set.add(obj)
+                
+
         else:
             if not obj.is_complete:
                 #If a student's information is completed, mark him as complete and activate him.
