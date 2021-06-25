@@ -6,4 +6,4 @@ class AppVersionAdmin(admin.ModelAdmin):
     search_fields = ('version',)
     list_filter = ('is_supported',)
 # Register your models here.
-admin.site.register(AppVersionSupport,AppVersionAdmin)
+#admin.site.register(AppVersionSupport,AppVersionAdmin)
