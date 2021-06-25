@@ -3,6 +3,7 @@ from django.contrib import admin
 from .models import User,Teacher,Student
 from .forms import CustomUserAdmin
 
+admin.site.site_header = 'Studynet administration'
 
 class EnseignantAdmin(admin.ModelAdmin):
     list_display = ('user','grade','department')
