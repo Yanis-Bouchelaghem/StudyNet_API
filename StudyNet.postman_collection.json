@@ -1,0 +1,3130 @@
+{
+	"info": {
+		"_postman_id": "1404a610-1ff8-4692-86f6-bb7ace9432cf",
+		"name": "StudyNet",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Heroku",
+			"item": [
+				{
+					"name": "Retrieve teachers based on a section.",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token 375faf2a1cbe76aebf593953554305e444fccf8b0335b76a4d14fcced614ec70",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://study-net-api.herokuapp.com/api/teachers/?section=ISIL B L3",
+							"protocol": "https",
+							"host": [
+								"study-net-api",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"teachers",
+								""
+							],
+							"query": [
+								{
+									"key": "section",
+									"value": "ISIL B L3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve teachers based on a department.",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token c0575e067f81b0efe2b510bf166221c328985ee38e997f488c6c7a5575220dfd",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/teachers/?department=INFO",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"teachers",
+								""
+							],
+							"query": [
+								{
+									"key": "department",
+									"value": "INFO"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve a specific teacher.",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token e4639eee6f7da2993c9d4ea775108435d894a34926997ce918f39f1f4ded3d08",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://study-net-api.herokuapp.com/api/teachers/3",
+							"protocol": "https",
+							"host": [
+								"study-net-api",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"teachers",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve all students.",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token 4fac247c467be0fb913fbef859f9e21dca59561b",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://study-net-api.herokuapp.com/api/students/",
+							"protocol": "https",
+							"host": [
+								"study-net-api",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"students",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve students based on section.",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token 4fac247c467be0fb913fbef859f9e21dca59561b",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://study-net-api.herokuapp.com/api/students/?section=ISIL B",
+							"protocol": "https",
+							"host": [
+								"study-net-api",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"students",
+								""
+							],
+							"query": [
+								{
+									"key": "section",
+									"value": "ISIL B"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve all departments.",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token 4fac247c467be0fb913fbef859f9e21dca59561b",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://study-net-api.herokuapp.com/api/departments/",
+							"protocol": "https",
+							"host": [
+								"study-net-api",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"departments",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve specialties based on department.",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token 4fac247c467be0fb913fbef859f9e21dca59561b",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://study-net-api.herokuapp.com/api/specialties/?department=INFO",
+							"protocol": "https",
+							"host": [
+								"study-net-api",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"specialties",
+								""
+							],
+							"query": [
+								{
+									"key": "department",
+									"value": "INFO"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve sections based on department.",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token 4fac247c467be0fb913fbef859f9e21dca59561b",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://study-net-api.herokuapp.com/api/sections/?department=INFO",
+							"protocol": "https",
+							"host": [
+								"study-net-api",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"sections",
+								""
+							],
+							"query": [
+								{
+									"key": "department",
+									"value": "INFO"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve sections based on specialty.",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token 4fac247c467be0fb913fbef859f9e21dca59561b",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://study-net-api.herokuapp.com/api/sections/?specialty=ISIL",
+							"protocol": "https",
+							"host": [
+								"study-net-api",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"sections",
+								""
+							],
+							"query": [
+								{
+									"key": "specialty",
+									"value": "ISIL"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve a section using its code.",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token 4fac247c467be0fb913fbef859f9e21dca59561b",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/sections/ISIL B L2/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"sections",
+								"ISIL B L2",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve sessions based on a section.",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token c54efbf917664e81de3fbaa9f18ec6011a5d96f2febb690be66a2d3ceb359739",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://study-net-api.herokuapp.com/api/sessions/?section=ISIL B L3",
+							"protocol": "https",
+							"host": [
+								"study-net-api",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"sessions",
+								""
+							],
+							"query": [
+								{
+									"key": "section",
+									"value": "ISIL B L3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve a specific session.",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token e8fef0e6c76872551924726db7a573714f252ca692f110c296e0a833a39b41c6",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/sessions/1/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"sessions",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve all assignments.",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token c54efbf917664e81de3fbaa9f18ec6011a5d96f2febb690be66a2d3ceb359739",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://study-net-api.herokuapp.com/api/assignments/",
+							"protocol": "https",
+							"host": [
+								"study-net-api",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"assignments",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve user data using token.",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token e4639eee6f7da2993c9d4ea775108435d894a34926997ce918f39f1f4ded3d08",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://study-net-api.herokuapp.com/api/user_data/",
+							"protocol": "https",
+							"host": [
+								"study-net-api",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"user_data",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve modules based on section.",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token 4fac247c467be0fb913fbef859f9e21dca59561b",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://study-net-api.herokuapp.com/api/modules/?section=ISIL B L3",
+							"protocol": "https",
+							"host": [
+								"study-net-api",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"modules",
+								""
+							],
+							"query": [
+								{
+									"key": "section",
+									"value": "ISIL B L3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve module based on module code.",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token 4fac247c467be0fb913fbef859f9e21dca59561b",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/modules/COMPIL/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"modules",
+								"COMPIL",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create student.",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token 4fac247c467be0fb913fbef859f9e21dca59561b",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user\": {\r\n        \"email\": \"lastblast@outlook.fr\",\r\n        \"password\": \"studentpass123\",\r\n        \"first_name\": \"stud\",\r\n        \"last_name\": \"student\"\r\n    },\r\n    \"registration_number\": \"181831068130\",\r\n    \"group\": 1,\r\n    \"section\": \"ISIL B L3\"\r\n}"
+						},
+						"url": {
+							"raw": "https://study-net-api.herokuapp.com/api/students/",
+							"protocol": "https",
+							"host": [
+								"study-net-api",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"students",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a teacher with his assigned sections & assignments.",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token e4639eee6f7da2993c9d4ea775108435d894a34926997ce918f39f1f4ded3d08",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user\": {\r\n        \"email\": \"teacher16@me.com\",\r\n        \"password\": \"teacherpass123\",\r\n        \"first_name\": \"yanis\",\r\n        \"last_name\": \"bouch\"\r\n    },\r\n    \"grade\": \"MAB\",\r\n    \"department\": \"INFO\",\r\n    \"sections\": [\r\n        \"ISIL B L3\"\r\n    ],\r\n    \"assignments\": [\r\n        {\r\n            \"section\": \"ISIL B L3\",\r\n            \"module_type\": \"LECTURE\",\r\n            \"concerned_groups\": [\r\n                1,\r\n                2,\r\n                3\r\n            ],\r\n            \"module\": \"COMPIL\"\r\n        },\r\n        {\r\n            \"section\": \"ISIL B L3\",\r\n            \"module_type\": \"DIRECTED\",\r\n            \"concerned_groups\": [\r\n                1,\r\n                2,\r\n                3\r\n            ],\r\n            \"module\": \"COMPIL\"\r\n        }\r\n    ]\r\n}"
+						},
+						"url": {
+							"raw": "https://study-net-api.herokuapp.com/api/teachers/",
+							"protocol": "https",
+							"host": [
+								"study-net-api",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"teachers",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login.",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token 4fac247c467be0fb913fbef859f9e21dca59561b",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"student1@me.com\",\r\n    \"password\": \"studentpass\"\r\n}"
+						},
+						"url": {
+							"raw": "https://study-net-api.herokuapp.com/api/login/",
+							"protocol": "https",
+							"host": [
+								"study-net-api",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout.",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token 4fac247c467be0fb913fbef859f9e21dca59561b",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://study-net-api.herokuapp.com/api/logout/",
+							"protocol": "https",
+							"host": [
+								"study-net-api",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"logout",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout all.",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token 944c0818172ca408ea4df01237aa6be08ebad8b0833f657fb3d4253e1785b60c",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "https://study-net-api.herokuapp.com/api/logoutall/",
+							"protocol": "https",
+							"host": [
+								"study-net-api",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"logoutall",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check if an email is available.",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token e4639eee6f7da2993c9d4ea775108435d894a34926997ce918f39f1f4ded3d08",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"teacher@me.com\"\r\n}"
+						},
+						"url": {
+							"raw": "https://study-net-api.herokuapp.com/api/check_email/",
+							"protocol": "https",
+							"host": [
+								"study-net-api",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"check_email",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a session.",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token c54efbf917664e81de3fbaa9f18ec6011a5d96f2febb690be66a2d3ceb359739",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"concerned_groups\": [\r\n        1,\r\n        2,\r\n        3\r\n    ],\r\n    \"day\": 1,\r\n    \"start_time\": \"18:15:00\",\r\n    \"end_time\": \"18:16:00\",\r\n    \"meeting_link\": \"dtdsqt\",\r\n    \"meeting_number\": \"\",\r\n    \"meeting_password\": \"\",\r\n    \"comment\": \"\",\r\n    \"assignment\": 1\r\n}"
+						},
+						"url": {
+							"raw": "https://study-net-api.herokuapp.com/api/sessions/",
+							"protocol": "https",
+							"host": [
+								"study-net-api",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"sessions",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a homework.",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token 95a676f58a9eb6170f70159c939b23c6da47917c0a6eacc72f6ba95f6867030b",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"concerned_groups\": [\r\n        1,\r\n        2,\r\n        3\r\n    ],\r\n    \"title\": \"title test\",\r\n    \"due_date\": \"2021-05-22\",\r\n    \"due_time\": \"10:00\",\r\n    \"comment\" : \"testooooo\",\r\n    \"assignment\": 37\r\n}"
+						},
+						"url": {
+							"raw": "https://study-net-api.herokuapp.com/api/homeworks/",
+							"protocol": "https",
+							"host": [
+								"study-net-api",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"homeworks",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check if specific app version is supported.",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token 4fac247c467be0fb913fbef859f9e21dca59561b",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"version\": \"V0.1\"\r\n}"
+						},
+						"url": {
+							"raw": "https://study-net-api.herokuapp.com/api/appversion/",
+							"protocol": "https",
+							"host": [
+								"study-net-api",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"appversion",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change password using old password & token.",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token 77ac86eefe05b5603a23463d90480404883989e11937c62e5326b6d2fae13ffc",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"old_password\":\"studentpass123\",\r\n    \"new_password\":\"studentpass123\"\r\n}"
+						},
+						"url": {
+							"raw": "https://study-net-api.herokuapp.com/api/change_password/",
+							"protocol": "https",
+							"host": [
+								"study-net-api",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"change_password",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request password change using email.",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token eee0ff4bb63a971a9a4f91ba5a471e43bd86973e187ef11bddead2c7a093cf72",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"bouchelaghemyanis7@gmail.com\"\r\n}"
+						},
+						"url": {
+							"raw": "https://study-net-api.herokuapp.com/api/change_password_email/",
+							"protocol": "https",
+							"host": [
+								"study-net-api",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"change_password_email",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change password using code from email.",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token eee0ff4bb63a971a9a4f91ba5a471e43bd86973e187ef11bddead2c7a093cf72",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\":\"studentpass123\",\r\n    \"token\":\"ac739ffac\"\r\n}"
+						},
+						"url": {
+							"raw": "https://study-net-api.herokuapp.com/api/change_password_email/confirm/",
+							"protocol": "https",
+							"host": [
+								"study-net-api",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"change_password_email",
+								"confirm",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change student section.",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token 8a509fe534a12e3af881d3d77cf6d85b04b8933778104a58f72da138cd073454",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"section\": \"ISIL B L3\"\r\n}"
+						},
+						"url": {
+							"raw": "https://study-net-api.herokuapp.com/api/change_section/",
+							"protocol": "https",
+							"host": [
+								"study-net-api",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"change_section",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register teacher FCM token",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token 73fcbe9f40fdb19096f9f0046d68e9dc8404721ed099b8f24cc8603c953001f5",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"FCM_token\": \"testTokenhaha\"\r\n}"
+						},
+						"url": {
+							"raw": "https://study-net-api.herokuapp.com/api/registerFCM/",
+							"protocol": "https",
+							"host": [
+								"study-net-api",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"registerFCM",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Unregister teacher FCM token",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token 73fcbe9f40fdb19096f9f0046d68e9dc8404721ed099b8f24cc8603c953001f5",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"FCM_token\": \"c25iaZGGScenpMG0MI_a4R:APA91bFn_y_lZEYsEUrIGU7sMWfw8Ls1PziHYRyrrB5CmRlc_UmLaZjibQeiCPVfx-1YXkFFqrRkYz6x633RYo0RrTvK7OQYj0mj8tcZTkfc3TGmstbAFM--JJXSYX6qYycPq9UiDfDk\"\r\n}"
+						},
+						"url": {
+							"raw": "https://study-net-api.herokuapp.com/api/unregisterFCM/",
+							"protocol": "https",
+							"host": [
+								"study-net-api",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"unregisterFCM",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Report a session.",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token 3628c192b1ebe40a465c66750692dd53df532b50ebe0d51ca7a91a386cb925c5",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 65,\r\n    \"comment\": \"This session is too late into the day, please consider moving it to an earlier time.\"\r\n}"
+						},
+						"url": {
+							"raw": "https://study-net-api.herokuapp.com/api/sessions/report/",
+							"protocol": "https",
+							"host": [
+								"study-net-api",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"sessions",
+								"report",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a specific teacher.",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token e4639eee6f7da2993c9d4ea775108435d894a34926997ce918f39f1f4ded3d08",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user\": {\r\n        \"email\": \"teacher5@me.com\",\r\n        \"first_name\": \"yanis\",\r\n        \"last_name\": \"bouch\"\r\n    },\r\n    \"assignments\": [\r\n        {\r\n            \"section\": \"ISIL B L3\",\r\n            \"module\": \"COMPIL\",\r\n            \"module_type\": \"PRACTICAL\",\r\n            \"concerned_groups\": [\r\n                1,\r\n                2,\r\n                3\r\n            ]\r\n        }\r\n    ],\r\n    \"grade\": \"MAB\",\r\n    \"department\": \"INFO\",\r\n    \"sections\": [\r\n        \"ISIL B L3\"\r\n    ]\r\n}"
+						},
+						"url": {
+							"raw": "https://study-net-api.herokuapp.com/api/teachers/10",
+							"protocol": "https",
+							"host": [
+								"study-net-api",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"teachers",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a specific session.",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token e8fef0e6c76872551924726db7a573714f252ca692f110c296e0a833a39b41c6",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"concerned_groups\": [\r\n        1,\r\n        2\r\n    ],\r\n    \"day\": 1,\r\n    \"start_time\": \"10:21:11\",\r\n    \"end_time\": \"10:25:11\",\r\n    \"meeting_link\": \"Meeting link\",\r\n    \"meeting_number\": \"\",\r\n    \"meeting_password\": \"\",\r\n    \"comment\": \"\",\r\n    \"assignment\": 61\r\n}"
+						},
+						"url": {
+							"raw": "https://study-net-api.herokuapp.com/api/sessions/33/",
+							"protocol": "https",
+							"host": [
+								"study-net-api",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"sessions",
+								"33",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a specific homework.",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token 95a676f58a9eb6170f70159c939b23c6da47917c0a6eacc72f6ba95f6867030b",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"concerned_groups\": [\r\n        1,\r\n        2\r\n    ],\r\n    \"title\": \"title t\",\r\n    \"due_date\": \"2021-05-22\",\r\n    \"due_time\": \"10:00\",\r\n    \"comment\" : \"test\",\r\n    \"assignment\": 37\r\n}"
+						},
+						"url": {
+							"raw": "https://study-net-api.herokuapp.com/api/homeworks/1/",
+							"protocol": "https",
+							"host": [
+								"study-net-api",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"homeworks",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a specific session.",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token e8fef0e6c76872551924726db7a573714f252ca692f110c296e0a833a39b41c6",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"concerned_groups\": [\r\n        1,\r\n        2\r\n    ],\r\n    \"day\": 1,\r\n    \"start_time\": \"10:21:11\",\r\n    \"end_time\": \"10:25:11\",\r\n    \"meeting_link\": \"Meeting link\",\r\n    \"meeting_number\": \"\",\r\n    \"meeting_password\": \"\",\r\n    \"comment\": \"\",\r\n    \"assignment\": 61\r\n}"
+						},
+						"url": {
+							"raw": "https://study-net-api.herokuapp.com/sessions/33/",
+							"protocol": "https",
+							"host": [
+								"study-net-api",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"sessions",
+								"33",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a specific homework.",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token 95a676f58a9eb6170f70159c939b23c6da47917c0a6eacc72f6ba95f6867030b",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"concerned_groups\": [\r\n        1,\r\n        2\r\n    ],\r\n    \"title\": \"title t\",\r\n    \"due_date\": \"2021-05-22\",\r\n    \"due_time\": \"10:00\",\r\n    \"comment\" : \"testooooo\",\r\n    \"assignment\": 61\r\n}"
+						},
+						"url": {
+							"raw": "https://study-net-api.herokuapp.com/api/homeworks/1/",
+							"protocol": "https",
+							"host": [
+								"study-net-api",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"homeworks",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Local",
+			"item": [
+				{
+					"name": "Retrieve teachers based on a section.",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token c0575e067f81b0efe2b510bf166221c328985ee38e997f488c6c7a5575220dfd",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/teachers/?section=ISIL B L3",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"teachers",
+								""
+							],
+							"query": [
+								{
+									"key": "section",
+									"value": "ISIL B L3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve teachers based on a department.",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token c0575e067f81b0efe2b510bf166221c328985ee38e997f488c6c7a5575220dfd",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/teachers/?department=INFO",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"teachers",
+								""
+							],
+							"query": [
+								{
+									"key": "department",
+									"value": "INFO"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve a specific teacher.",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token 92fcbe43409333e3a8336283169392619d797eaa0dfb04a3d017362bd474b6a5",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/teachers/5",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"teachers",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve all students.",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token 4fac247c467be0fb913fbef859f9e21dca59561b",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n        \"user\": {\r\n            \"email\": \"user26@me.com\",\r\n            \"password\": \"userpass\",\r\n            \"first_name\": \"user1\",\r\n            \"last_name\": \"user1.1\"\r\n        },\r\n        \"registration_number\": \"181831068130\",\r\n        \"group\":5,\r\n        \"section\": \"ISIL B L3\"\r\n    }"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/students/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"students",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve students based on section.",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token 4fac247c467be0fb913fbef859f9e21dca59561b",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n        \"user\": {\r\n            \"email\": \"user26@me.com\",\r\n            \"password\": \"userpass\",\r\n            \"first_name\": \"user1\",\r\n            \"last_name\": \"user1.1\"\r\n        },\r\n        \"registration_number\": \"181831068130\",\r\n        \"group\":5,\r\n        \"section\": \"ISIL B L3\"\r\n    }"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/students/?section=ISIL B L3",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"students",
+								""
+							],
+							"query": [
+								{
+									"key": "section",
+									"value": "ISIL B L3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve all departments.",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token 4fac247c467be0fb913fbef859f9e21dca59561b",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/departments/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"departments",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve specialties based on department.",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token 4fac247c467be0fb913fbef859f9e21dca59561b",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/specialties/?department=INFO",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"specialties",
+								""
+							],
+							"query": [
+								{
+									"key": "department",
+									"value": "INFO"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve sections based on department.",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token 4fac247c467be0fb913fbef859f9e21dca59561b",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/sections/?department=INFO",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"sections",
+								""
+							],
+							"query": [
+								{
+									"key": "department",
+									"value": "INFO"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve sections based on specialty.",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token 4fac247c467be0fb913fbef859f9e21dca59561b",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/sections/?specialty=ISIL",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"sections",
+								""
+							],
+							"query": [
+								{
+									"key": "specialty",
+									"value": "ISIL"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve section using it's code.",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token 4fac247c467be0fb913fbef859f9e21dca59561b",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/sections/ISIL B L2",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"sections",
+								"ISIL B L2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve sessions based on a section.",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token 21bd67fdccb2fa28336f10b6fea9841427536c32b309290702929231fdd0f49b",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/sessions/?section=ISIL B L2",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"sessions",
+								""
+							],
+							"query": [
+								{
+									"key": "section",
+									"value": "ISIL B L2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve a specific session.",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token e8fef0e6c76872551924726db7a573714f252ca692f110c296e0a833a39b41c6",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/sessions/1/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"sessions",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve all assignments.",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token c54efbf917664e81de3fbaa9f18ec6011a5d96f2febb690be66a2d3ceb359739",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/assignments/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"assignments",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve user data using token.",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token e4639eee6f7da2993c9d4ea775108435d894a34926997ce918f39f1f4ded3d08",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/user_data/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"user_data",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve modules based on section.",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token 4fac247c467be0fb913fbef859f9e21dca59561b",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/modules/?section=ISIL B L2",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"modules",
+								""
+							],
+							"query": [
+								{
+									"key": "section",
+									"value": "ISIL B L2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve module based on module code.",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token 4fac247c467be0fb913fbef859f9e21dca59561b",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/modules/COMPIL/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"modules",
+								"COMPIL",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve homeworks based on a section.",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token c0575e067f81b0efe2b510bf166221c328985ee38e997f488c6c7a5575220dfd",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/homeworks/?section=ISIL B L2",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"homeworks",
+								""
+							],
+							"query": [
+								{
+									"key": "section",
+									"value": "ISIL B L2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create student.",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token 4fac247c467be0fb913fbef859f9e21dca59561b",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user\": {\r\n        \"email\": \"student@me.com\",\r\n        \"password\": \"studentpass123\",\r\n        \"first_name\": \"user1\",\r\n        \"last_name\": \"user1.1\"\r\n    },\r\n    \"registration_number\": \"181831068130\",\r\n    \"group\": 2,\r\n    \"section\": \"ISIL B L3\"\r\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/students/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"students",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a teacher with his assigned sections & assignments.",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token d2824dcfe57f83ee65e8385c6e4f814b859ad747d151c926a79b29a8244f59fb",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user\": {\r\n        \"email\": \"teacher13@me.com\",\r\n        \"password\": \"teacherpass123\",\r\n        \"first_name\": \"yanis\",\r\n        \"last_name\": \"bouch\"\r\n    },\r\n    \"grade\": \"MAB\",\r\n    \"department\": \"INFO\",\r\n    \"sections\": [\r\n        \"ISIL B L3\"\r\n    ],\r\n    \"assignments\": [\r\n        {\r\n            \"section\": \"ISIL B L3\",\r\n            \"module_type\": \"LECTURE\",\r\n            \"concerned_groups\": [\r\n                1,\r\n                2,\r\n                3\r\n            ],\r\n            \"module\": \"COMPIL\"\r\n        },\r\n        {\r\n            \"section\": \"ISIL B L3\",\r\n            \"module_type\": \"DIRECTED\",\r\n            \"concerned_groups\": [\r\n                1,\r\n                2,\r\n                3\r\n            ],\r\n            \"module\": \"COMPIL\"\r\n        }\r\n    ]\r\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/teachers/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"teachers",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login.",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token 4fac247c467be0fb913fbef859f9e21dca59561b",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"teacher4@me.com\",\r\n    \"password\": \"teacherpass123\"\r\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/login/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout.",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token 4fac247c467be0fb913fbef859f9e21dca59561b",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/logout/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"logout",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout all.",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token 944c0818172ca408ea4df01237aa6be08ebad8b0833f657fb3d4253e1785b60c",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/logoutall/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"logoutall",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check if an email is available.",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token c54efbf917664e81de3fbaa9f18ec6011a5d96f2febb690be66a2d3ceb359739",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"superuser@me.com\"\r\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/check_email/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"check_email",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a session.",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token e8fef0e6c76872551924726db7a573714f252ca692f110c296e0a833a39b41c6",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"concerned_groups\": [\r\n        1,\r\n        2\r\n    ],\r\n    \"day\": 1,\r\n    \"start_time\": \"18:21:11\",\r\n    \"end_time\": \"18:21:11\",\r\n    \"meeting_link\": \"dtdsqt\",\r\n    \"meeting_number\": \"\",\r\n    \"meeting_password\": \"\",\r\n    \"comment\": \"\",\r\n    \"assignment\": 60\r\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/sessions/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"sessions",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a homework.",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token 9edc7031e44025516ac621f51d09e1be0d53c82b1121435aca2f8837ebb7979d",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"concerned_groups\": [\r\n        1,\r\n        2,\r\n        3\r\n    ],\r\n    \"title\": \"title test\",\r\n    \"due_date\": \"2021-05-22\",\r\n    \"due_time\": \"10:00\",\r\n    \"comment\" : \"testooooo\",\r\n    \"assignment\": 61\r\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/homeworks/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"homeworks",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Check if specific app version is supported.",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token 4fac247c467be0fb913fbef859f9e21dca59561b",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"version\": \"V0.1\"\r\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/appversion/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"appversion",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change password using old password & token.",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token 63cc6006e2acc8c78a11d8719c5c9cc90ffebd8a7f254969ca0592113927a2e7",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"old_password\":\"studentpass123\",\r\n    \"new_password\":\"studentpass123\"\r\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/change_password/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"change_password",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request password change using email.",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token eee0ff4bb63a971a9a4f91ba5a471e43bd86973e187ef11bddead2c7a093cf72",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"bouchelaghemyanis7@gmail.com\"\r\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/change_password_email/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"change_password_email",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change password using code from email.",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token eee0ff4bb63a971a9a4f91ba5a471e43bd86973e187ef11bddead2c7a093cf72",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\":\"studentpass123\",\r\n    \"token\":\"3793d0de\"\r\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/change_password_email/confirm/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"change_password_email",
+								"confirm",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Change student section.",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token 8a509fe534a12e3af881d3d77cf6d85b04b8933778104a58f72da138cd073454",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"section\": \"ISIL B L2\"\r\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/change_section/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"change_section",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register teacher FCM token",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token 73fcbe9f40fdb19096f9f0046d68e9dc8404721ed099b8f24cc8603c953001f5",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"FCM_token\": \"testTokenhaha\"\r\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/registerFCM/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"registerFCM",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Unregister teacher FCM token",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token 73fcbe9f40fdb19096f9f0046d68e9dc8404721ed099b8f24cc8603c953001f5",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"FCM_token\": \"testTokenhaha\"\r\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/unregisterFCM/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"unregisterFCM",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Report a session.",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token 3628c192b1ebe40a465c66750692dd53df532b50ebe0d51ca7a91a386cb925c5",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"id\": 65,\r\n    \"comment\": \"This session is too late into the day, please consider moving it to an earlier time.\"\r\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/sessions/report/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"sessions",
+								"report",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a specific teacher.",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token 92fcbe43409333e3a8336283169392619d797eaa0dfb04a3d017362bd474b6a5",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"user\": {\r\n        \"email\": \"teacher5@me.com\",\r\n        \"first_name\": \"yanis\",\r\n        \"last_name\": \"bouch\"\r\n    },\r\n    \"assignments\": [\r\n        {\r\n            \"section\": \"ISIL B L2\",\r\n            \"module\": \"COMPIL\",\r\n            \"module_type\": \"PRACTICAL\",\r\n            \"concerned_groups\": [\r\n                1,\r\n                2,\r\n                3\r\n            ]\r\n        }\r\n    ],\r\n    \"grade\": \"MAB\",\r\n    \"department\": \"INFO\",\r\n    \"sections\": [\r\n        \"ISIL B L3\",\r\n        \"ISIL B L2\"\r\n    ]\r\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/teachers/10",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"teachers",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a specific session.",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token bf7eabc1f13cdfd51faa36cbe4756885f8e8c35a83478022ea2f6e03235c5def",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"concerned_groups\": [\r\n        1,\r\n        2\r\n    ],\r\n    \"day\": 1,\r\n    \"start_time\": \"10:21:11\",\r\n    \"end_time\": \"10:25:11\",\r\n    \"meeting_link\": \"Meeting link\",\r\n    \"meeting_number\": \"154196\",\r\n    \"meeting_password\": \"qst\",\r\n    \"comment\": \"qstsq\",\r\n    \"assignment\": 61\r\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/sessions/39/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"sessions",
+								"39",
+								""
+							]
+						},
+						"description": "Requires a teacher token.\nTeacher can only update his own sessions.\nTeacher can only use his own assignments."
+					},
+					"response": []
+				},
+				{
+					"name": "Update a specific homework.",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token 9edc7031e44025516ac621f51d09e1be0d53c82b1121435aca2f8837ebb7979d",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"concerned_groups\": [\r\n        1,\r\n        2\r\n    ],\r\n    \"title\": \"title t\",\r\n    \"due_date\": \"2021-05-22\",\r\n    \"due_time\": \"10:00\",\r\n    \"comment\" : \"testooooo\",\r\n    \"assignment\": 61\r\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/homeworks/7/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"homeworks",
+								"7",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a specific session.",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token e8fef0e6c76872551924726db7a573714f252ca692f110c296e0a833a39b41c6",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"concerned_groups\": [\r\n        1,\r\n        2\r\n    ],\r\n    \"day\": 1,\r\n    \"start_time\": \"10:21:11\",\r\n    \"end_time\": \"10:25:11\",\r\n    \"meeting_link\": \"Meeting link\",\r\n    \"meeting_number\": \"\",\r\n    \"meeting_password\": \"\",\r\n    \"comment\": \"\",\r\n    \"assignment\": 61\r\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/sessions/33/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"sessions",
+								"33",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a specific homework.",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Token 9edc7031e44025516ac621f51d09e1be0d53c82b1121435aca2f8837ebb7979d",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"concerned_groups\": [\r\n        1,\r\n        2\r\n    ],\r\n    \"title\": \"title t\",\r\n    \"due_date\": \"2021-05-22\",\r\n    \"due_time\": \"10:00\",\r\n    \"comment\" : \"testooooo\",\r\n    \"assignment\": 61\r\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/api/homeworks/7/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"api",
+								"homeworks",
+								"7",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
