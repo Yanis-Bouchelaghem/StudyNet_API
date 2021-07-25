@@ -1,5 +1,8 @@
+
+
 # The Studynet API
 This is a RESTful API developed for the android mobile application **Studynet**. The app can be found [Here](https://github.com/itsAbdou/Studynet "Studynet app").
+![studynet](https://i.imgur.com/E9WONAO.jpeg)
 ## Description
 This Django Rest Framework backend is developed to process and manage data related to the organization of online university education.
 
@@ -130,7 +133,7 @@ To install all dependencies : in the root directory,  run :
 pip install -r requirements.txt
 ```
 ### running migrations
-Inside of the `Studynet/` folder, you will find a `.env example` file, it contains an example of the `.env` file that will contain important environment variable, it needs to be created in that same folder.
+Inside of the `Studynet/` folder, you will find a `.env example` file, it contains an example of the `.env` file that will contain important environment variables, it needs to be created in that same folder.
 
 Make sure the database credentials are properly configured in the `.env` file you just created.
 
