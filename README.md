@@ -30,7 +30,7 @@ Here are a few endpoint examples :
 * **api/students/**
 
 This endpoint allows the creation of a student account, it expects a `POST` request containing the following information:
-```JSON
+```yaml
 {
     "user": {
         "email": "dummyemail@me.com",
@@ -44,7 +44,7 @@ This endpoint allows the creation of a student account, it expects a `POST` requ
 }
 ```
 In case all of the information is correct, the backend will create the student account and return the following result :
-```JSON
+```yaml
 {
     "user": {
         "id": 54,
@@ -82,7 +82,7 @@ This endpoint returns information about the sessions concerning sections, it exp
 the url can optionally contain a parameter called `section` that specifies the code of a section that the sessions should be filtered on, if no section is provided, all existing sessions are returned.
 
  Example result :
- ```JSON
+ ```yaml
  [
     {
         "id": 38,
