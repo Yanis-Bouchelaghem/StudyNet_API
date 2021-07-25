@@ -14,6 +14,10 @@ It offers three types of users :
 A permission system ensures that each user has access to endpoints related to their function only.
 
 This project requires the PostgreSQL data base engine, as it uses PostgreSQL specific fields.
+### Features
+* Endpoints protected by a permission system.
+* Sending push notifications to the mobile app to keep the users updated on the sessions and homeworks.
+* Sending emails to users for password resetting.
 ## Endpoints
 The API offers many endpoints to enable the mobile app to read and insert relevant information.
 
