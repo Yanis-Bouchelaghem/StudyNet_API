@@ -21,7 +21,7 @@ This project requires the PostgreSQL data base engine, as it uses PostgreSQL spe
 ## Endpoints
 The API offers many endpoints to enable the mobile app to read and insert relevant information.
 
-The base link to the API is : https://study-net-api.herokuapp.com/api/
+The base link to the API is : https://study-net-api.herokuapp.com/api/ (Site is currently down as Heroku have ceased providing free services.)
 
 An exhaustive list of all available endpoints can be found in an [exported postman collection](https://github.com/AlphaSh0w/StudyNet_API/blob/Develop/StudyNet.postman_collection.json).
 
